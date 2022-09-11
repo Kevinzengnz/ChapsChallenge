@@ -1,8 +1,8 @@
 | Module        | Member Name           | Gitlab account    |
 | ------------- |-----------------------|-------------------|
-|               | Sankeerth Alookaran   | alookasank        |
-|               | Kevin Zeng            | zengkevi          |
-|               | Oliver Silk           | silkoliv          |
-|               | Hayden Curtis         | curtishayd        |
-|               | Leon Zhou             | zhouzhi           |
-|               | Alicia Robinson       | robinsalic2       |
+| Recorder      | Sankeerth Alookaran   | alookasank        |
+| App           | Kevin Zeng            | zengkevi          |
+| Renderer      | Oliver Silk           | silkoliv          |
+| Fuzz          | Hayden Curtis         | curtishayd        |
+| Persistency   | Leon Zhou             | zhouzhi           |
+| Domain        | Alicia Robinson       | robinsalic2       |
