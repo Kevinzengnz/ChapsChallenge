@@ -1,11 +1,11 @@
-package nz.ac.vuw.ecs.swen225.gp22.app;
+package nz.ac.vuw.ecs.swen225.gp22.domain;
 
 import java.util.Random;
 
 /**
  * Point class for representing points in the game board
- * @author Kevin Zeng
- * ID: 300563468
+ * @author Alicia Robinson
+ * ID: 300560663
  */
 record Point(int x, int y){
     //Note: x==width, y==height

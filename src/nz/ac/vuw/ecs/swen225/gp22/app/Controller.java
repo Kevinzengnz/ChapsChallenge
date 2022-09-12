@@ -1,5 +1,8 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
+import nz.ac.vuw.ecs.swen225.gp22.domain.ControllableDirection;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
+
 import java.awt.event.KeyEvent;
 
 /**

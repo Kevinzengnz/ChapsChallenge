@@ -5,22 +5,23 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 
 import java.awt.*;
 
-public class Collectable implements Entity{
+public class Tile implements Entity{
     protected Sprite sprite;
     protected Point point;
-    protected int depth = 1;
-    public Collectable(Sprite sprite, Point point) {
+    protected int depth = 0;
+
+    public Tile(Sprite sprite, Point point) {
         this.sprite = sprite;
         this.point = point;
     }
 
     @Override
-    public Sprite getSprite() { return this.sprite; }
+    public Sprite getSprite() {
+        return this.sprite;
+    }
 
     @Override
-    public Point getPoint() {
-        return this.point;
-    }
+    public Point getPoint() { return this.point; }
 
     @Override
     public int getDepth() {

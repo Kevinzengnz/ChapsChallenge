@@ -1,12 +1,11 @@
-package nz.ac.vuw.ecs.swen225.gp22.app;
-
+package nz.ac.vuw.ecs.swen225.gp22.domain;
 import java.util.function.Function;
 
 /**
  * Abstract class for objects in the game which have direction and
  * can be controlled by the user
- * @author Kevin Zeng
- * ID: 300563468
+ * @author Alicia Robinson
+ * ID: 300560663
  */
 public abstract class ControllableDirection{
     private Direction direction=Direction.None;
