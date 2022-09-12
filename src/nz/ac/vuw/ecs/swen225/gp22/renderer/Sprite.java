@@ -6,9 +6,9 @@ import java.io.File;
 import java.io.IOException;
 
 public enum Sprite {
-    FLOOR("Tiles/floor.png"),
-    WALL("Tiles/wall.png"),
-    PLAYER("Actors/player.png");
+    FLOOR("Assets/Tiles/floor.png"),
+    WALL("Assets/Tiles/wall.png"),
+    PLAYER("Assets/Actors/player.png");
 
     public final BufferedImage image;
     Sprite(String filename) {
