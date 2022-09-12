@@ -3,12 +3,12 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
 import java.util.Random;
 
 /**
- *
+ * Point class for representing points in the game board
  * @author Kevin Zeng
  * ID: 300563468
  */
 record Point(int x, int y){
-    //Note: x==with, y==height
+    //Note: x==width, y==height
     public Point add(int x,int y){
         return new Point(x()+x, y()+y);
     }

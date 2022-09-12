@@ -7,9 +7,9 @@ import java.awt.event.KeyEvent;
  * @author Kevin Zeng
  * ID: 300563468
  */
-class Controller extends Keys{
+ public class Controller extends Keys{
 
-    Controller(Object c){
+    Controller(ControllableDirection c){
         //UP, DOWN, LEFT, RIGHT ARROWS -- move Chap within the maze
         setAction(KeyEvent.VK_UP,c.set(Direction::up),c.set(Direction::unUp));
         setAction(KeyEvent.VK_DOWN,c.set(Direction::down),c.set(Direction::unDown));
