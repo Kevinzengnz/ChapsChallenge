@@ -1,19 +1,24 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
+/**
+ *
+ * @author Kevin Zeng
+ * ID: 300563468
+ */
 enum Direction{
-    None(0d,0d){},
-    Up(0d,-1d){
+    None(0,0){},
+    Up(0,-1){
         @Override
         Direction unUp(){return None;}
     },
-    Right(+1d,0d){
+    Right(+1,0){
         @Override
         Direction unRight(){return None;}
     },
-    Down(0d,+1d){
+    Down(0,+1){
         Direction unDown(){return None;}
     },
-    Left(-1d,0d){
+    Left(-1,0){
         @Override
         Direction unLeft(){return None;}
     };
@@ -26,6 +31,6 @@ enum Direction{
     Direction unRight(){return this;}
     Direction unDown(){return this;}
     Direction unLeft(){return this;}
-    Point arrow(Double speed){ return arrow.times(speed,speed);}
-    Direction(double x,double y){ arrow=new Point(x,y); }
+    Point arrow(Integer speed){ return arrow.times(speed,speed);}
+    Direction(int x,int y){ arrow=new Point(x,y); }
 }
