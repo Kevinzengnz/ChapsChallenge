@@ -27,7 +27,9 @@ public enum Sprite {
     KEY_YELLOW("Assets/Items/yellow_key.png"),
     KEY_GREEN("Assets/Items/green_key.png"),
 
-    COIN("Assets/Items/coin.png");
+    COIN("Assets/Items/coin.png"),
+
+    UI_TWO("Assets/UI/2.png");
 
     public final BufferedImage image;
     Sprite(String filename) {
