@@ -18,8 +18,6 @@ public class Renderer extends JPanel {
     private Sprite[][] tiles = new Sprite[9][9];   // Tiles which are within sight of the camera
     private List<Actor> actors = new ArrayList<>(); // Actors which are within sight of the camera
 
-    int counter = 100;
-
     /**
      * Updates the renderer with what to draw.
      */
@@ -31,7 +29,7 @@ public class Renderer extends JPanel {
                 int row = j-cameraY+visionDistance;
                 int col = i-cameraX+visionDistance;
                 if (i < 0 || j < 0 || j > allTiles.length || i > allTiles[0].length)  {
-                    tiles[row][col] = Sprite.FLOOR;
+                    tiles[row][col] = null;
                     continue;
                 }
                 tiles[row][col] = allTiles[j][i].sprite;
@@ -55,7 +53,7 @@ public class Renderer extends JPanel {
         final int left = (getWidth() - visionSize * tileSize) / 2;
         final int top = (getHeight() - visionSize * tileSize) / 2;
         g.setColor(Color.WHITE);
-        g.fillRect(left, top, visionSize * tileSize, visionSize * tileSize);
+        g.drawRect(left-1, top-1, visionSize * tileSize+1, visionSize * tileSize+1);
         drawTiles(g, left, top);
         drawActors(g, left, top);
     }
@@ -64,6 +62,7 @@ public class Renderer extends JPanel {
         for (int i=0;i<visionSize;i++) {
             for (int j=0;j<visionSize;j++) {
                 Sprite sprite = tiles[j][i];
+                if (sprite == null) continue;
                 g.drawImage(sprite.image, left + i * tileSize, top + j * tileSize, null);
             }
         }
@@ -83,11 +82,11 @@ public class Renderer extends JPanel {
 
     // temp (until actual classes are completed)
     public static class Tile {
-        public Sprite sprite = Sprite.WALL;
+        public Sprite sprite = Sprite.FLOOR;
     }
     public static class Actor {
         public Point pos;
-        public Sprite sprite = Sprite.PLAYER;
+        public Sprite sprite = Sprite.PLAYER_DOWN;
     }
 }
 
