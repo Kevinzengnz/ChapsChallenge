@@ -18,6 +18,7 @@ class Keys implements KeyListener {
     public void setAction(int keyCode,Runnable onPressed,Runnable onReleased){
         actionsPressed.put(keyCode,onPressed);
         actionsReleased.put(keyCode,onReleased);
+
     }
     @Override
     public void keyTyped(KeyEvent e){}
@@ -26,7 +27,7 @@ class Keys implements KeyListener {
         assert SwingUtilities.isEventDispatchThread();
         actionsPressed.getOrDefault(e.getKeyCode(),()->{}).run();
         if(e.isControlDown()) {
-            ctrlActionsReleased.getOrDefault(e.getKeyCode(), () -> {}).run();
+            ctrlActionsPressed.getOrDefault(e.getKeyCode(), () -> {}).run();
         }
     }
 
