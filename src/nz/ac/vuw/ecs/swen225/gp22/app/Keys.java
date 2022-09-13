@@ -45,7 +45,7 @@ class Keys implements KeyListener {
     private Map<Integer,Runnable> ctrlActionsPressed = new HashMap<>();
     private Map<Integer,Runnable> ctrlActionsReleased = new HashMap<>();
     public void setCtrlAction(int keyCode,Runnable onPressed,Runnable onReleased){
-        actionsPressed.put(keyCode,onPressed);
-        actionsReleased.put(keyCode,onReleased);
+        ctrlActionsPressed.put(keyCode,onPressed);
+        ctrlActionsReleased.put(keyCode,onReleased);
     }
 }
