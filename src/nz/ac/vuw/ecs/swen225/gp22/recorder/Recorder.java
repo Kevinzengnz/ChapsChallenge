@@ -3,6 +3,12 @@ package nz.ac.vuw.ecs.swen225.gp22.recorder;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
 import nz.ac.vuw.ecs.swen225.gp22.app.*;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Recorder class that will handle recording a game.
  * @author Sankeerth Alookaran
@@ -10,27 +16,38 @@ import nz.ac.vuw.ecs.swen225.gp22.app.*;
  */
 public class Recorder {
     private boolean isRecording;
+    private String replayFile;
+    private List<Action> actionHistory;
 
     /**
      * Start recording the current game into the specified save file path.
-     * @param saveFile File to save recording into.
+     * @param replayFile File to save recording into.
      */
-    public void startRecording(String saveFile){
-        setRecording(true);
+    public void startRecording(String replayFile){
+        if(!this.isRecording) {
+            this.actionHistory = new ArrayList<>();
+            this.replayFile = replayFile;
+            setRecording(true);
+        }
     }
 
     /**
      * Ends the recording of the game and saves the replay file.
      */
     public void endRecording(){
-        setRecording(false);
+        if(this.isRecording) {
+            saveRecording();
+            setRecording(false);
+        }
     }
 
     /**
      * Call this function every time an action takes place in the game. Will save the action to history for recording.
      */
-    public void onAction(){
-
+    public void onAction(Action action){
+        if(this.isRecording){
+            this.actionHistory.add(action);
+        }
     }
 
     /**
@@ -39,5 +56,12 @@ public class Recorder {
      */
     private void setRecording(boolean isRecording){
         this.isRecording=isRecording;
+    }
+
+    /**
+     * Saves recording into the replay file.
+     */
+    private void saveRecording(){
+
     }
 }

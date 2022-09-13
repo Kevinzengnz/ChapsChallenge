@@ -1,5 +1,8 @@
 package nz.ac.vuw.ecs.swen225.gp22.renderer;
 
+import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -20,6 +23,8 @@ public class Renderer extends JPanel {
     // Entities currently visible
     private List<Entity> entities = new ArrayList<>();
 
+    private List<Animation> animations = new ArrayList<>();
+
     public Renderer() {
     }
 
@@ -30,16 +35,20 @@ public class Renderer extends JPanel {
         cameraX = camX;
         cameraY = camY;
         this.inventory = inventory;
-        entities.clear();
+        animations.forEach(Animation::update);
+        animations = animations.stream().filter(Animation::isRunning).toList();
+        entities = new ArrayList<>();
         entities = allEntities.stream()
                 .filter(this::isEntityVisible)
-                .sorted(Comparator.comparingInt((Entity e) -> e.depth))
+                .filter(e -> animations.stream().noneMatch(a -> a.getEntity() == e))
+                .sorted(Comparator.comparingInt(Entity::getDepth))
                 .toList();
+
     }
 
     boolean isEntityVisible(Entity entity) {
-        return entity.pos.x >= cameraX - visionDistance && entity.pos.x <= cameraX + visionDistance
-                && entity.pos.y >= cameraY - visionDistance && entity.pos.y <= cameraY + visionDistance;
+        return entity.getPoint().x() >= cameraX - visionDistance && entity.getPoint().x() <= cameraX + visionDistance
+                && entity.getPoint().y() >= cameraY - visionDistance && entity.getPoint().y() <= cameraY + visionDistance;
     }
 
     @Override
@@ -51,14 +60,15 @@ public class Renderer extends JPanel {
         g.setColor(Color.WHITE);
         g.drawRect(cellsLeft-1, cellsTop-1, visionSize * tileSize+1, visionSize * tileSize+1);
         drawEntities(g, cellsLeft, cellsTop);
+        drawAnimations(g, cellsLeft, cellsTop);
         drawInventory(g, cellsTop);
     }
 
     public void drawEntities(Graphics g, int left, int top) {
         for (Entity entity : entities) {
-            Sprite sprite = entity.sprite;
-            Point screenPos = worldToScreen(entity.pos);
-            g.drawImage(sprite.image, left + screenPos.x, top + screenPos.y, null);
+            Sprite sprite = entity.getSprite();
+            Point screenPos = worldToScreen(entity.getPoint());
+            g.drawImage(sprite.image, left + screenPos.x(), top + screenPos.y(), null);
         }
     }
 
@@ -79,13 +89,30 @@ public class Renderer extends JPanel {
         }
     }
 
-    public Point worldToScreen(Point point) {
-        return new Point((point.x - cameraX + visionDistance) * tileSize, (point.y - cameraY + visionDistance) * tileSize);
+    public void drawAnimations(Graphics g, int left, int top) {
+        for (Animation anim : animations) {
+            g.drawImage(anim.getSprite().image, left + anim.getX(), top + anim.getY(), null);
+        }
     }
 
-    public record Entity(Sprite sprite, Point pos, int depth) {
+    /**
+     * Converts a tile coordinate into a point for rendering
+     * @param point
+     * @return
+     */
+    public Point worldToScreen(Point point) {
+        return new Point((point.x() - cameraX + visionDistance) * tileSize, (point.y() - cameraY + visionDistance) * tileSize);
+    }
+
+    public void addAnimation(Animation animation) {
+        if (animations.stream().anyMatch(a -> a.getEntity().equals(animation.getEntity()))) throw new IllegalArgumentException("Entity already has an animation");
+        animations = new ArrayList<>(animations);
+        animations.add(animation);
     }
 
     record Key(Sprite sprite, int amount) { }
+
+
+
 }
 
