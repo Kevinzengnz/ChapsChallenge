@@ -1,9 +1,9 @@
-package nz.ac.vuw.ecs.swen225.gp22.app;
+package nz.ac.vuw.ecs.swen225.gp22.domain;
 
 /**
  *
- * @author Kevin Zeng
- * ID: 300563468
+ * @author Alicia Robinson
+ * ID: 300560663
  */
 enum Direction{
     None(0,0){},
