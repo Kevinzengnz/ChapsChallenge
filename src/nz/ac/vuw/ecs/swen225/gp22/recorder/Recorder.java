@@ -55,15 +55,6 @@ public class Recorder {
      * Creates empty replay file at specified replay file path.
      */
     private void createReplayFile(){
-        try{
-            File newFile = new File("replays/"+this.replayFile+".xml");
-            newFile.createNewFile();
-            FileWriter newWriter = new FileWriter("replays/"+this.replayFile+".xml");
-            newWriter.write("<test></test>");
-            newWriter.close();
-        }catch (IOException e){
-            System.err.println("Error creating replay file "+this.replayFile);
-            e.printStackTrace();
-        }
+
     }
 }
