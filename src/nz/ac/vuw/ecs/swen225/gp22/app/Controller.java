@@ -10,23 +10,28 @@ import java.awt.event.KeyEvent;
  * @author Kevin Zeng
  * ID: 300563468
  */
- public class Controller extends Keys{
+public class Controller extends Keys{
 
-    Controller(ControllableDirection c){
+    Controller(Object c){
         //UP, DOWN, LEFT, RIGHT ARROWS -- move Chap within the maze
-        setAction(KeyEvent.VK_UP,c.set(Direction::up),c.set(Direction::unUp));
+        /*setAction(KeyEvent.VK_UP,c.set(Direction::up),c.set(Direction::unUp));
         setAction(KeyEvent.VK_DOWN,c.set(Direction::down),c.set(Direction::unDown));
         setAction(KeyEvent.VK_LEFT,c.set(Direction::left),c.set(Direction::unLeft));
-        setAction(KeyEvent.VK_RIGHT,c.set(Direction::right),c.set(Direction::unRight));
+        setAction(KeyEvent.VK_RIGHT,c.set(Direction::right),c.set(Direction::unRight));*/
 
         //SPACE - pause the game and display a “game is paused” dialog
-        setAction(KeyEvent.VK_SPACE,/*Pause Game method*/() -> {},() -> {});
+        setAction(KeyEvent.VK_SPACE,/*Pause Game method*/() -> {System.out.println("game paused");},() -> {});
 
         //ESC - close the “game is paused” dialog and resume the game
-        setAction(KeyEvent.VK_ESCAPE,/*Unpause*/() -> {},() -> {});
+        setAction(KeyEvent.VK_ESCAPE,/*Unpause*/() -> {System.out.println("game unpaused");},() -> {});
 
         //1. CTRL-X - exit the game, the current game state will be lost, the next time the game is
         //started, it will resume from the last unfinished level
+        setCtrlAction(KeyEvent.VK_X,() -> {},() -> {System.out.println("game exit, no save");});
+        setCtrlAction(KeyEvent.VK_S,() -> {},() -> {System.out.println("game exit, saved");});
+        setCtrlAction(KeyEvent.VK_R,() -> {},() -> {System.out.println("resume saved game");});
+        setCtrlAction(KeyEvent.VK_1,() -> {},() -> {System.out.println("level 1");});
+        setCtrlAction(KeyEvent.VK_2,() -> {},() -> {System.out.println("level 2");});
         //2. CTRL-S - exit the game, saves the game state, game will resume next time the
         //application will be started
         //3. CTRL-R - resume a saved game -- this will pop up a file selector to select a saved game

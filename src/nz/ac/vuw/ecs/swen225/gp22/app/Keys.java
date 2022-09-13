@@ -25,11 +25,26 @@ class Keys implements KeyListener {
     public void keyPressed(KeyEvent e){
         assert SwingUtilities.isEventDispatchThread();
         actionsPressed.getOrDefault(e.getKeyCode(),()->{}).run();
+        if(e.isControlDown()) {
+            ctrlActionsReleased.getOrDefault(e.getKeyCode(), () -> {}).run();
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e){
         assert SwingUtilities.isEventDispatchThread();
         actionsReleased.getOrDefault(e.getKeyCode(),()->{}).run();
+        if(e.isControlDown()) {
+            ctrlActionsReleased.getOrDefault(e.getKeyCode(), () -> {}).run();
+        }
+    }
+
+
+    //functionality for control
+    private Map<Integer,Runnable> ctrlActionsPressed = new HashMap<>();
+    private Map<Integer,Runnable> ctrlActionsReleased = new HashMap<>();
+    public void setCtrlAction(int keyCode,Runnable onPressed,Runnable onReleased){
+        actionsPressed.put(keyCode,onPressed);
+        actionsReleased.put(keyCode,onReleased);
     }
 }
