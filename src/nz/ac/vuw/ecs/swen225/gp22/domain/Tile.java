@@ -15,6 +15,10 @@ public class Tile implements Entity{
         this.point = point;
     }
 
+    public Tile(Point point) {
+        this.point = point;
+    }
+
     @Override
     public Sprite getSprite() {
         return this.sprite;
