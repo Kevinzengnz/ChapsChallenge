@@ -22,12 +22,13 @@ public interface Entity {
     enum Colours{
         YELLOW(Sprite.DOOR_YELLOW, Sprite.KEY_YELLOW),
         GREEN(Sprite.DOOR_GREEN, Sprite.KEY_GREEN),
+        BLUE(Sprite.KEY_BLUE, Sprite.KEY_BLUE),
         RED(Sprite.DOOR_RED, Sprite.KEY_RED);
 
-        Sprite key;
-        Sprite door;
+        final Sprite key;
+        final Sprite door;
 
-        Colours(Sprite key, Sprite door){
+        Colours(Sprite door, Sprite key){
             this.key = key;
             this.door = door;
         }
