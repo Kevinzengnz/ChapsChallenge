@@ -35,7 +35,7 @@ public class Renderer extends JPanel {
         camera.update(camX, camY);
         this.inventory = inventory;
         animations.forEach(Animation::update);
-        animations = animations.stream().filter(Animation::isRunning).toList();
+        endAnimations(animations.stream().filter(Animation::isFinished).toList());
         entities = new ArrayList<>();
         entities = allEntities.stream()
                 .filter(this::isEntityVisible)
@@ -43,6 +43,13 @@ public class Renderer extends JPanel {
                 .sorted(Comparator.comparingInt(Entity::getDepth))
                 .toList();
 
+    }
+
+    public void endAnimations(List<Animation> removeList) {
+        for (Animation animation : removeList) {
+            animations.remove(animation);
+
+        }
     }
 
     boolean isEntityVisible(Entity entity) {
@@ -108,12 +115,10 @@ public class Renderer extends JPanel {
     public Point worldToScreen(Point point) {
         return new Point((point.x() + camera.visionDistance) * tileSize - camera.getX(),
                 (point.y() + camera.visionDistance) * tileSize - camera.getY());
-        //return new Point((point.x() - camera.getTileX() + camera.visionDistance) * tileSize, (point.y() - camera.getTileY() + camera.visionDistance) * tileSize);
     }
 
 
     public void addAnimation(Animation animation) {
-        if (animations.stream().anyMatch(a -> a.getEntity().equals(animation.getEntity()))) throw new IllegalArgumentException("Entity already has an animation");
         if (animation.getEntity() instanceof Player) {
             camera.addAnimation(animation.copy());
         }

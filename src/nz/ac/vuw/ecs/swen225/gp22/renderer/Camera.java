@@ -24,11 +24,11 @@ public class Camera {
 
 
     public int getX() {
-        if (animation.isRunning()) return animation.getX();
+        if (!animation.isFinished()) return animation.getX();
         return tileX  * tileSize;
     }
     public int getY() {
-        if (animation.isRunning()) return animation.getY();
+        if (!animation.isFinished()) return animation.getY();
         return tileY * tileSize;
     }
     public int getTileX() {
@@ -39,7 +39,6 @@ public class Camera {
     }
 
     public void addAnimation(Animation newAnimation) {
-        if (animation != null && animation.isRunning()) throw new IllegalStateException("Camera already has an animation");
         this.animation = newAnimation;
     }
 

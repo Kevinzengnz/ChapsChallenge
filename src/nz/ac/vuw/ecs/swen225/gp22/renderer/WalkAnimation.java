@@ -13,11 +13,11 @@ public class WalkAnimation extends MoveAnimation{
     @Override
     public Sprite getSprite() {
         return switch (direction) {
-            case None -> null;
-            case Up -> Sprite.PLAYER_UP;
+            case None  -> null;
+            case Up    -> Sprite.PLAYER_UP;
             case Right -> Sprite.PLAYER_RIGHT;
-            case Down -> Sprite.PLAYER_DOWN;
-            case Left -> Sprite.PLAYER_LEFT;
+            case Down  -> Sprite.PLAYER_DOWN;
+            case Left  -> Sprite.PLAYER_LEFT;
         };
     }
 }

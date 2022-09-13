@@ -1,18 +1,36 @@
 package nz.ac.vuw.ecs.swen225.gp22.renderer;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
-import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
-import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 
-import java.awt.*;
+abstract public class Animation {
 
-public interface Animation {
-    int getX();
-    int getY();
-    Sprite getSprite();
-    boolean isRunning();
-    Entity getEntity();
-    void update();
+    public Animation(Point tile, int length, Entity entity) {
+        this.tile = tile;
+        this.x = tile.x() * tileSize;
+        this.y = tile.y() * tileSize;
+        this.length = length;
+        this.entity = entity;
+    }
+    Point tile;
+    double x, y;
+    Entity entity;
+    int length;
+    static final int tileSize = 64;
+    int getX() {
+        return (int) x;
+    }
+    int getY() {
+        return (int) y;
+    }
+    Sprite getSprite() {
+        return entity.getSprite();
+    }
+    abstract boolean isFinished();
+    Entity getEntity() {
+        return entity;
+    }
+    abstract void update();
 
-    Animation copy();
+    abstract Animation copy();
 }
