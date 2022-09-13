@@ -5,32 +5,32 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
  * @author Alicia Robinson
  * ID: 300560663
  */
-enum Direction{
+public enum Direction{
     None(0,0){},
     Up(0,-1){
         @Override
-        Direction unUp(){return None;}
+        public Direction unUp(){return None;}
     },
     Right(+1,0){
         @Override
-        Direction unRight(){return None;}
+        public Direction unRight(){return None;}
     },
     Down(0,+1){
-        Direction unDown(){return None;}
+        public Direction unDown(){return None;}
     },
     Left(-1,0){
         @Override
-        Direction unLeft(){return None;}
+        public Direction unLeft(){return None;}
     };
     public final Point arrow;
-    Direction up(){return Up;}
-    Direction right(){return Right;}
-    Direction down(){return Down;}
-    Direction left(){return Left;}
-    Direction unUp(){return this;}
-    Direction unRight(){return this;}
-    Direction unDown(){return this;}
-    Direction unLeft(){return this;}
-    Point arrow(Integer speed){ return arrow.times(speed,speed);}
+    public Direction up(){return Up;}
+    public Direction right(){return Right;}
+    public Direction down(){return Down;}
+    public Direction left(){return Left;}
+    public Direction unUp(){return this;}
+    public Direction unRight(){return this;}
+    public Direction unDown(){return this;}
+    public Direction unLeft(){return this;}
+    public Point arrow(Integer speed){ return arrow.times(speed,speed);}
     Direction(int x,int y){ arrow=new Point(x,y); }
 }

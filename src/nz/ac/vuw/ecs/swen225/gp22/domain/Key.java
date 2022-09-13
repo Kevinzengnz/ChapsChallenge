@@ -1,10 +1,26 @@
 //Alicia Robinson 300560663
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
-import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
+import java.util.Objects;
 
 public class Key extends Collectable{
-    public Key(Sprite sprite, Point point) {
-        super(sprite, point);
+    Colours colour;
+    public Key(String colourString, Point point) {
+        super(point);
+        colour = getColour(colourString.toUpperCase());
+        this.sprite = colour.key;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Key key = (Key) o;
+        return colour == key.colour;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(colour);
     }
 }

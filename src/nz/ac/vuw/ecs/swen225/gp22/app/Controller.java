@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.ControllableDirection;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
 
 import java.awt.event.KeyEvent;
 
@@ -12,12 +13,17 @@ import java.awt.event.KeyEvent;
  */
 public class Controller extends Keys{
 
-    Controller(Object c){
+    Controller(Player c){
         //UP, DOWN, LEFT, RIGHT ARROWS -- move Chap within the maze
-        /*setAction(KeyEvent.VK_UP,c.set(Direction::up),c.set(Direction::unUp));
-        setAction(KeyEvent.VK_DOWN,c.set(Direction::down),c.set(Direction::unDown));
-        setAction(KeyEvent.VK_LEFT,c.set(Direction::left),c.set(Direction::unLeft));
-        setAction(KeyEvent.VK_RIGHT,c.set(Direction::right),c.set(Direction::unRight));*/
+        setAction(KeyEvent.VK_UP,() -> {c.setDirection(Direction.Up);
+            c.move();},() -> {});
+
+        setAction(KeyEvent.VK_DOWN,() -> {c.setDirection(Direction.Down);
+            c.move();},() -> {});
+        setAction(KeyEvent.VK_LEFT,() -> {c.setDirection(Direction.Left);
+            c.move();},() -> {});
+        setAction(KeyEvent.VK_RIGHT,() -> {c.setDirection(Direction.Right);
+            c.move();},() -> {});
 
         //SPACE - pause the game and display a “game is paused” dialog
         setAction(KeyEvent.VK_SPACE,/*Pause Game method*/() -> {System.out.println("game paused");},() -> {});
@@ -25,20 +31,18 @@ public class Controller extends Keys{
         //ESC - close the “game is paused” dialog and resume the game
         setAction(KeyEvent.VK_ESCAPE,/*Unpause*/() -> {System.out.println("game unpaused");},() -> {});
 
-        //1. CTRL-X - exit the game, the current game state will be lost, the next time the game is
+        //CTRL-X - exit the game, the current game state will be lost, the next time the game is
         //started, it will resume from the last unfinished level
         setCtrlAction(KeyEvent.VK_X,() -> {},() -> {System.out.println("game exit, no save");});
-        setCtrlAction(KeyEvent.VK_S,() -> {},() -> {System.out.println("game exit, saved");});
-        setCtrlAction(KeyEvent.VK_R,() -> {},() -> {System.out.println("resume saved game");});
-        setCtrlAction(KeyEvent.VK_1,() -> {},() -> {System.out.println("level 1");});
-        setCtrlAction(KeyEvent.VK_2,() -> {},() -> {System.out.println("level 2");});
-        //2. CTRL-S - exit the game, saves the game state, game will resume next time the
+        //CTRL-S - exit the game, saves the game state, game will resume next time the
         //application will be started
-        //3. CTRL-R - resume a saved game -- this will pop up a file selector to select a saved game
+        setCtrlAction(KeyEvent.VK_S,() -> {},() -> {System.out.println("game exit, saved");});
+        //CTRL-R - resume a saved game -- this will pop up a file selector to select a saved game
         //to be loaded
-        //4. CTRL-1 - start a new game at level 1
-        //5. CTRL-2 - start a new game at level 2
-        //comment
-
+        setCtrlAction(KeyEvent.VK_R,() -> {},() -> System.out.println("resume saved game"));
+        //CTRL-1 - start a new game at level 1
+        setCtrlAction(KeyEvent.VK_1,() -> {},() -> {System.out.println("level 1");});
+        //CTRL-2 - start a new game at level 2
+        setCtrlAction(KeyEvent.VK_2,() -> {},() -> {System.out.println("level 2");});
     }
 }

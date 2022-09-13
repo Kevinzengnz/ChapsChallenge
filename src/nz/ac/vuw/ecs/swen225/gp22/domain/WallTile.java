@@ -6,6 +6,6 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 public class WallTile extends Tile{
 
     public WallTile(Sprite sprite, Point point) {
-        super(sprite, point);
+        super(Sprite.WALL, point);
     }
 }
