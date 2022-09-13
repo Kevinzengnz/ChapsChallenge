@@ -11,13 +11,10 @@ public class Actor extends ControllableDirection implements Entity{
         this.point = point;
     }
 
-    @Override
     public Sprite getSprite() { return this.sprite; }
-    @Override
     public Point getPoint() {
         return this.point;
     }
-    @Override
     public int getDepth() {
         return this.depth;
     }
