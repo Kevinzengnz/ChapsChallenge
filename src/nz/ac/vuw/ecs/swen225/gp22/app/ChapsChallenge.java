@@ -39,7 +39,6 @@ public class ChapsChallenge extends JFrame{
         setSize(1366, 768);
         setVisible(true);
 
-        renderer.addAnimation(new MoveAnimation(new Point(3, 4), Direction.Right, 15, p));
         //Creates timer, so it runs in approximately 30 frames per second
         new Timer(34,unused->{
             assert SwingUtilities.isEventDispatchThread();
