@@ -23,7 +23,7 @@ public class Player extends Actor{
         return keys;
     }
     public void move(){
-        point.add(direction.arrow);
+        point = point.add(direction.arrow);
     }
     @Override
     public Sprite getSprite() {
