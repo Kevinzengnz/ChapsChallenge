@@ -7,7 +7,7 @@ import java.util.Random;
  * @author Alicia Robinson
  * ID: 300560663
  */
-record Point(int x, int y){
+public record Point(int x, int y){
     //Note: x==width, y==height
     public Point add(int x,int y){
         return new Point(x()+x, y()+y);

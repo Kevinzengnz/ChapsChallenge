@@ -1,6 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.renderer;
 
-import nz.ac.vuw.ecs.swen225.gp22.app.Direction;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Animation;
