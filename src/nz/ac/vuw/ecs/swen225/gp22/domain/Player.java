@@ -22,4 +22,17 @@ public class Player extends Actor{
     public List<Key> getKeys(){
         return keys;
     }
+    public void move(){
+
+    }
+    @Override
+    public Sprite getSprite() {
+        return switch (getDirection()) {
+            case None  -> null;
+            case Up    -> Sprite.PLAYER_UP;
+            case Right -> Sprite.PLAYER_RIGHT;
+            case Down  -> Sprite.PLAYER_DOWN;
+            case Left  -> Sprite.PLAYER_LEFT;
+        };
+    }
 }
