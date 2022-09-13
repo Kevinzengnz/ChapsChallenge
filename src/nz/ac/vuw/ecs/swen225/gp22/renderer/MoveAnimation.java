@@ -68,6 +68,11 @@ public class MoveAnimation implements Animation {
         count--;
     }
 
+    @Override
+    public Animation copy() {
+        return new MoveAnimation(startTile, direction, length, entity);
+    }
+
     public void setTileSize(int tileSize) {
         this.tileSize = tileSize;
     }

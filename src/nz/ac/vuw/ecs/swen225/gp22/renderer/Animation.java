@@ -13,4 +13,6 @@ public interface Animation {
     boolean isRunning();
     Entity getEntity();
     void update();
+
+    Animation copy();
 }
