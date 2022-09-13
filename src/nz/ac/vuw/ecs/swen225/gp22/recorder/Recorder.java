@@ -6,6 +6,8 @@ import nz.ac.vuw.ecs.swen225.gp22.app.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Recorder class that will handle recording a game.
@@ -15,6 +17,7 @@ import java.io.IOException;
 public class Recorder {
     private boolean isRecording;
     private String replayFile;
+    private List<Action> actionHistory;
 
     /**
      * Start recording the current game into the specified save file path.
@@ -22,6 +25,7 @@ public class Recorder {
      */
     public void startRecording(String replayFile){
         if(!this.isRecording) {
+            this.actionHistory = new ArrayList<>();
             this.replayFile = replayFile;
             setRecording(true);
         }
@@ -32,6 +36,7 @@ public class Recorder {
      */
     public void endRecording(){
         if(this.isRecording) {
+            saveRecording();
             setRecording(false);
         }
     }
@@ -39,8 +44,10 @@ public class Recorder {
     /**
      * Call this function every time an action takes place in the game. Will save the action to history for recording.
      */
-    public void onAction(){
-
+    public void onAction(Action action){
+        if(this.isRecording){
+            this.actionHistory.add(action);
+        }
     }
 
     /**
@@ -52,9 +59,9 @@ public class Recorder {
     }
 
     /**
-     * Creates empty replay file at specified replay file path.
+     * Saves recording into the replay file.
      */
-    private void createReplayFile(){
+    private void saveRecording(){
 
     }
 }
