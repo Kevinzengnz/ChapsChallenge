@@ -11,6 +11,7 @@ public class Actor implements Entity{
         this.sprite = sprite;
         this.point = point;
     }
+    public void setDirection(Direction direction){ this.direction = direction; }
     public Direction getDirection(){ return direction; }
     public Sprite getSprite() { return this.sprite; }
     public Point getPoint() {
