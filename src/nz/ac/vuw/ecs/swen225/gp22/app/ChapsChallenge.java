@@ -54,7 +54,6 @@ public class ChapsChallenge extends JFrame{
         setPreferredSize(getSize());//to keep the current size
         viewport.addKeyListener(controller);
         add(BorderLayout.CENTER,viewport);
-
         pack();                     //after pack
         viewport.requestFocus();
     }

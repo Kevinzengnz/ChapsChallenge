@@ -1,6 +1,5 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
-import nz.ac.vuw.ecs.swen225.gp22.domain.ControllableDirection;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
 
@@ -17,7 +16,6 @@ public class Controller extends Keys{
         //UP, DOWN, LEFT, RIGHT ARROWS -- move Chap within the maze
         setAction(KeyEvent.VK_UP,() -> {c.setDirection(Direction.Up);
             c.move();},() -> {});
-
         setAction(KeyEvent.VK_DOWN,() -> {c.setDirection(Direction.Down);
             c.move();},() -> {});
         setAction(KeyEvent.VK_LEFT,() -> {c.setDirection(Direction.Left);
