@@ -8,25 +8,45 @@ package nz.ac.vuw.ecs.swen225.gp22.recorder;
 public class Replay {
     private int tps;
 
+    /**
+     * Loads a recording into the replay from specified file name.
+     * @param replayName File name of recording.
+     */
     public void loadReplay(String replayName){
 
     }
 
+    /**
+     * Plays replay automatically.
+     */
     public void autoPlay(){
 
     }
 
+    /**
+     * Pauses automatic replay.
+     */
     public void autoPause(){
 
     }
 
-    public void setReplaySpeed(int tps){this.tps=tps;}
+    /**
+     * Sets speed of automatic replay in game ticks per second.
+     * @param tps Number of game ticks per second. Must be above 0.
+     */
+    public void setReplaySpeed(int tps){this.tps=(tps>0)?tps:this.tps;}
 
+    /**
+     * Move to next game tick in replay. Pauses autoplay.
+     */
     public void nextTick(){
-
+        autoPause();
     }
 
+    /**
+     * Move to previous game tick in replay. Pauses autoplay.
+     */
     public void prevTick(){
-
+        autoPause();
     }
 }
