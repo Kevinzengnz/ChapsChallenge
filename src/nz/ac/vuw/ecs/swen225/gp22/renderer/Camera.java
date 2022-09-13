@@ -24,11 +24,11 @@ public class Camera {
 
 
     public int getX() {
-        if (!animation.isFinished()) return animation.getX();
+        if (animation != null && !animation.isFinished()) return animation.getX();
         return tileX  * tileSize;
     }
     public int getY() {
-        if (!animation.isFinished()) return animation.getY();
+        if (animation != null && !animation.isFinished()) return animation.getY();
         return tileY * tileSize;
     }
     public int getTileX() {
