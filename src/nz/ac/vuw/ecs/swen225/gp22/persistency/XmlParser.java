@@ -14,6 +14,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class XmlParser {
+    /**
+     * This method is used to parse the xml file and return the document
+     * @param url the xml file to be parsed
+     * @return the document of the xml file
+     */
     public Document parse(File url) throws DocumentException {
         SAXReader reader = new SAXReader();
         Document document = reader.read(url);
