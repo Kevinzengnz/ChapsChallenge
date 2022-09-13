@@ -1,11 +1,13 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.MoveAnimation;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -47,6 +49,13 @@ public class ChapsChallenge extends JFrame{
 
         //Phase one
         Controller controller = new Controller(p);
+        JPanel viewport = new JPanel();
+        viewport.setFocusable(true);
+        setPreferredSize(getSize());//to keep the current size
+        viewport.addKeyListener(controller);
+        add(BorderLayout.CENTER,viewport);
 
+        pack();                     //after pack
+        viewport.requestFocus();
     }
 }
