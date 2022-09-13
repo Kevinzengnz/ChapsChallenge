@@ -1,11 +1,9 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
-import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
+import nz.ac.vuw.ecs.swen225.gp22.domain.*;
+import nz.ac.vuw.ecs.swen225.gp22.renderer.MoveAnimation;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -32,12 +30,23 @@ public class ChapsChallenge extends JFrame{
             }
         }
 
-        Player p = new Player(Sprite.PLAYER_DOWN, new Point(3, 4));
+        Player p = new Player(new Point(3, 4));
         entities.add(p);
         renderer.update(p.getPoint().x(), p.getPoint().y(), entities, new ArrayList<>());
         add(renderer);
         setSize(1366, 768);
         setVisible(true);
+
+        renderer.addAnimation(new MoveAnimation(new Point(3, 4), Direction.Right, 15, p));
+        //Creates timer, so it runs in approximately 30 frames per second
+        new Timer(34,unused->{
+            assert SwingUtilities.isEventDispatchThread();
+            renderer.update(p.getPoint().x(), p.getPoint().y(), entities, new ArrayList<>());
+            renderer.repaint();
+        }).start();
+
+        //Phase one
+        Controller controller = new Controller(p);
 
     }
 }
