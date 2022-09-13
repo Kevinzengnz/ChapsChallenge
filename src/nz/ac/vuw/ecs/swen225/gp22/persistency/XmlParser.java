@@ -48,7 +48,7 @@ public class XmlParser {
 
     public void write(Document document) throws IOException {
         // write to a file
-        FileWriter out = new FileWriter(new File("src/nz/ac/vuw/ecs/swen225/gp22/persistency/", "gamers.xml"));
+        FileWriter out = new FileWriter(new File("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/", "gamers.xml"));
         document.write(out);
         out.close();
     }
@@ -64,7 +64,7 @@ public class XmlParser {
         }
 
         try {
-            Document document = parser.parse(new File("src/nz/ac/vuw/ecs/swen225/gp22/persistency/gamers.xml"));
+            Document document = parser.parse(new File("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/gamers.xml"));
             System.out.println(document.asXML());
         } catch (DocumentException e) {
             e.printStackTrace();
