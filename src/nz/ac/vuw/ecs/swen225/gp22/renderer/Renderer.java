@@ -1,23 +1,23 @@
 package nz.ac.vuw.ecs.swen225.gp22.renderer;
 
+import nz.ac.vuw.ecs.swen225.gp22.domain.Key;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.*;
 import java.util.List;
 
 public class Renderer extends JPanel {
 
-    protected Camera camera;
+    private final Camera camera;
     // Drawing constants
     private final int tileSize = 64;
 
     private final int inventorySize = 4;
-    List<Key> inventory = new ArrayList<>();
+    Map<Key, Integer> inventory = new HashMap<>();
 
     // Entities currently visible
     private List<Entity> entities = new ArrayList<>();
@@ -31,9 +31,13 @@ public class Renderer extends JPanel {
     /**
      * Updates the renderer with what to draw.
      */
-    public void update(int camX, int camY, List<Entity> allEntities, List<Key> inventory) {
+    public void update(int camX, int camY, List<Entity> allEntities, List<Key> keys) {
         camera.update(camX, camY);
-        this.inventory = inventory;
+        inventory.clear();
+        for (Key key : keys) {
+            if (inventory.containsKey(key)) inventory.put(key, inventory.get(key)+1);
+            else inventory.put(key, 1);
+        }
         animations.forEach(Animation::update);
         endAnimations(animations.stream().filter(Animation::isFinished).toList());
         entities = new ArrayList<>();
@@ -45,14 +49,14 @@ public class Renderer extends JPanel {
 
     }
 
-    public void endAnimations(List<Animation> removeList) {
+    private void endAnimations(List<Animation> removeList) {
         for (Animation animation : removeList) {
             animations.remove(animation);
 
         }
     }
 
-    boolean isEntityVisible(Entity entity) {
+    private boolean isEntityVisible(Entity entity) {
         return entity.getPoint().x() >= camera.getTileX() - 1 - camera.visionDistance
                 && entity.getPoint().x() <= camera.getTileX() + camera.visionDistance + 1
                 && entity.getPoint().y() >= camera.getTileY() - 1 - camera.visionDistance
@@ -72,7 +76,7 @@ public class Renderer extends JPanel {
         drawInventory(g, cellsTop);
     }
 
-    public void drawEntities(Graphics g, int left, int top) {
+    private void drawEntities(Graphics g, int left, int top) {
         g.clipRect(left, top, tileSize * camera.visionSize, tileSize * camera.visionSize);
         for (Entity entity : entities) {
             Sprite sprite = entity.getSprite();
@@ -82,24 +86,24 @@ public class Renderer extends JPanel {
         g.setClip(null);
     }
 
-    public void drawInventory(Graphics g, int cellsTop) {
+    private void drawInventory(Graphics g, int cellsTop) {
         final int left = (getWidth() - inventorySize * tileSize) / 2;
         final int top = (getHeight() + (cellsTop + tileSize * camera.visionSize) - tileSize) / 2;
         for (int i=0;i<inventorySize;i++) {
             g.drawRect(left + i * tileSize, top, tileSize, tileSize);
-            if (i < inventory.size()) {
-                Key key = inventory.get(i);
-                g.drawImage(key.sprite.image, left + i * tileSize, top, null);
-                if (key.amount > 1) {
-                    g.drawImage(Sprite.UI_TWO.image,
-                            left + i * tileSize + tileSize-Sprite.UI_TWO.image.getWidth(),
-                            top, null);
-                }
+        }
+        int i= 0;
+        for (Key key : inventory.keySet()) {
+            g.drawImage(key.getSprite().image, left + i * tileSize, top, null);
+            if (inventory.get(key) > 1) {
+                g.drawImage(Sprite.UI_TWO.image, left + i * tileSize, top, null);
             }
+
+            i++;
         }
     }
 
-    public void drawAnimations(Graphics g, int left, int top) {
+    private void drawAnimations(Graphics g, int left, int top) {
         for (Animation anim : animations) {
             g.drawImage(
                     anim.getSprite().image, left + anim.getX()  - camera.getX() + (camera.visionDistance * tileSize),
@@ -112,7 +116,7 @@ public class Renderer extends JPanel {
      * @param point
      * @return
      */
-    public Point worldToScreen(Point point) {
+    private Point worldToScreen(Point point) {
         return new Point((point.x() + camera.visionDistance) * tileSize - camera.getX(),
                 (point.y() + camera.visionDistance) * tileSize - camera.getY());
     }
@@ -125,10 +129,5 @@ public class Renderer extends JPanel {
         animations = new ArrayList<>(animations);
         animations.add(animation);
     }
-
-    record Key(Sprite sprite, int amount) { }
-
-
-
 }
 

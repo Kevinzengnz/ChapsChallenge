@@ -5,9 +5,9 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 
 public class MoveAnimation extends Animation {
-    Direction direction;
+    protected Direction direction;
 
-    int count;
+    private int count;
 
     public MoveAnimation(Point startTile, Direction direction, int length, Entity entity) {
         super(startTile, length, entity);
