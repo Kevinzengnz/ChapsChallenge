@@ -1,11 +1,12 @@
-package nz.ac.vuw.ecs.swen225.gp22.app;
+package nz.ac.vuw.ecs.swen225.gp22.renderer;
 
+import nz.ac.vuw.ecs.swen225.gp22.app.Direction;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
-import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
+import nz.ac.vuw.ecs.swen225.gp22.renderer.Animation;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 
-public class MoveAnimation implements Animation{
+public class MoveAnimation implements Animation {
     double x, y;
     Point startTile;
     Direction direction;
