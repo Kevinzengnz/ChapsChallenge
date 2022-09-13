@@ -4,11 +4,10 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 
 public class Exit implements Entity{
-    protected Sprite sprite;
+    protected Sprite sprite = Sprite.EXIT;
     protected Point point;
     protected int depth = 1;
-    public Exit(Sprite sprite, Point point) {
-        this.sprite = sprite;
+    public Exit(Point point) {
         this.point = point;
     }
     @Override

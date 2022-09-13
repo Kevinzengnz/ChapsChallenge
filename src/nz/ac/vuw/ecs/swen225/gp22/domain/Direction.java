@@ -5,7 +5,7 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
  * @author Alicia Robinson
  * ID: 300560663
  */
-enum Direction{
+public enum Direction{
     None(0,0){},
     Up(0,-1){
         @Override

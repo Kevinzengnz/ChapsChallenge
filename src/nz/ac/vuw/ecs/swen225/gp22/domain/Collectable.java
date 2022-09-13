@@ -13,6 +13,9 @@ public class Collectable implements Entity{
         this.sprite = sprite;
         this.point = point;
     }
+    public Collectable(Point point) {
+        this.point = point;
+    }
 
     @Override
     public Sprite getSprite() { return this.sprite; }
