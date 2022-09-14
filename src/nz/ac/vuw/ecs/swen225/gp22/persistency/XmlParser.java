@@ -69,6 +69,7 @@ public class XmlParser {
         } catch (DocumentException e) {
             e.printStackTrace();
         }
+
     }
 
 
