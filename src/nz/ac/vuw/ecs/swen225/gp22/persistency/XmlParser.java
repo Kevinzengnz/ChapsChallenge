@@ -4,6 +4,7 @@ import nz.ac.vuw.ecs.swen225.gp22.app.*;
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
+import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -32,13 +33,39 @@ public class XmlParser {
 
     /**
      * This function saves the current game to a xml file
-     * @param entity the list of entities in the current game
+     * @param entities the list of entities in the current game
      */
-    public void saveGame(List<Entity> entity){
+    public void saveGame(List<Entity> entities, String levelName) throws IOException {
         //print the list of entities
-        for (Entity e : entity){
-            System.out.println(e);
+        //add the list of entities to the Tiles element
+        Document document = DocumentHelper.createDocument();
+        Element root = document.addElement("root");
+        Element Tiles = root.addElement("Tiles");
+
+        //iterate and add the entities to the Tiles element
+        for (Entity e : entities){
+            if (e instanceof Player){
+                Tiles.addElement("Player")
+                        .addAttribute("x", String.valueOf(e.getPoint().x()))
+                        .addAttribute("y", String.valueOf(e.getPoint().y()))
+                        .addAttribute("direction", String.valueOf(((Player) e).getDirection()));
+            }
+            if (e instanceof Tile){
+                Tiles.addElement("Tile")
+                        .addAttribute("x", String.valueOf(e.getPoint().x()))
+                        .addAttribute("y", String.valueOf(e.getPoint().y()));
+            }
         }
+
+        //write the document to a file
+        try {
+            FileWriter out = new FileWriter(new File("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/", levelName+ ".xml"));
+            document.write(out);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -59,6 +86,32 @@ public class XmlParser {
             Document document = parse(file);
             System.out.println(document.asXML());
         } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Test saving
+     * @param args
+     */
+    public static void main(String[] args){
+        List<Entity> entities = new ArrayList<>();
+        for (int i=0;i<20;i++) {
+            for (int j=0;j<20;j++) {
+                if (i == 0 || j == 0 || i==19 || j == 19) {
+                    entities.add(new Tile(Sprite.WALL, new Point(i, j)));
+                }
+                else {
+                    entities.add(new Tile(Sprite.FLOOR, new Point(i, j)));
+                }
+            }
+        }
+        XmlParser parser = new XmlParser();
+
+        try {
+            parser.saveGame(entities, "test");
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
