@@ -53,7 +53,8 @@ public class XmlParser {
             if (e instanceof Tile){
                 Tiles.addElement("Tile")
                         .addAttribute("x", String.valueOf(e.getPoint().x()))
-                        .addAttribute("y", String.valueOf(e.getPoint().y()));
+                        .addAttribute("y", String.valueOf(e.getPoint().y()))
+                        .addAttribute("sprite", String.valueOf(e.getSprite()));
             }
         }
 
