@@ -50,8 +50,14 @@ public class XmlParser {
                         .addAttribute("y", String.valueOf(e.getPoint().y()))
                         .addAttribute("direction", String.valueOf(((Player) e).getDirection()));
             }
-            if (e instanceof Tile){
+            else if (e instanceof Tile){
                 Tiles.addElement("Tile")
+                        .addAttribute("x", String.valueOf(e.getPoint().x()))
+                        .addAttribute("y", String.valueOf(e.getPoint().y()))
+                        .addAttribute("sprite", String.valueOf(e.getSprite()));
+            }
+            else {
+                Tiles.addElement("I dont know what this is")
                         .addAttribute("x", String.valueOf(e.getPoint().x()))
                         .addAttribute("y", String.valueOf(e.getPoint().y()))
                         .addAttribute("sprite", String.valueOf(e.getSprite()));
@@ -78,16 +84,35 @@ public class XmlParser {
         //load file from path
         File file = new File(path);
 
-        //entity list /tiles
+        //entity list
         List<Entity> entities = new ArrayList<>();
-
-
-
+        //Iterate through the xml file and add the entities to the list
         try {
             Document document = parse(file);
-            System.out.println(document.asXML());
+            Element root = document.getRootElement();
+            Element Tiles = root.element("Tiles");
+            List<Element> tiles = Tiles.elements();
+            for (Element e : tiles) {
+                if (e.getName().equals("Player")) {
+                    int x = Integer.parseInt(e.attributeValue("x"));
+                    int y = Integer.parseInt(e.attributeValue("y"));
+                    Player player = new Player(new Point(x, y));
+                    entities.add(player);
+                } else if (e.getName().equals("Tile")) {
+                    int x = Integer.parseInt(e.attributeValue("x"));
+                    int y = Integer.parseInt(e.attributeValue("y"));
+                    String sprite = e.attributeValue("sprite");
+                    Tile tile = new Tile(Sprite.valueOf(sprite), new Point(x, y));
+                    entities.add(tile);
+                }
+            }
         } catch (DocumentException e) {
             e.printStackTrace();
+        }
+
+        //print the list to check if it's correct
+        for (Entity e : entities) {
+            System.out.println(e.getSprite() + " " + e.getPoint().x() + " " + e.getPoint().y());
         }
 
     }
@@ -115,6 +140,9 @@ public class XmlParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //load game
+        parser.loadGame("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/test.xml");
 
     }
 }
