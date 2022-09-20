@@ -1,6 +1,9 @@
 package nz.ac.vuw.ecs.swen225.gp22.persistency;
 
-//import dom4j
+import nz.ac.vuw.ecs.swen225.gp22.app.*;
+import nz.ac.vuw.ecs.swen225.gp22.domain.*;
+
+import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -10,12 +13,14 @@ import org.dom4j.io.SAXReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+
+import java.util.*;
 
 public class XmlParser {
+
     /**
      * This method is used to parse the xml file and return the document
+     *
      * @param url the xml file to be parsed
      * @return the document of the xml file
      */
@@ -26,51 +31,36 @@ public class XmlParser {
     }
 
     /**
-     * This function creates a new XML file
-     *
+     * This function saves the current game to a xml file
+     * @param entity the list of entities in the current game
      */
-    public Document createDocument() {
-        Document document = DocumentHelper.createDocument();
-        Element root = document.addElement("root");
-
-        Element gamer1 = root.addElement("Gamer")
-                .addAttribute("name", "James")
-                .addAttribute("location", "NZ")
-                .addText("James gamed");
-
-        Element gamer2 = root.addElement("Gamer")
-                .addAttribute("name", "Sol")
-                .addAttribute("location", "NZ")
-                .addText("Sol Goodguy");
-
-        return document;
-    }
-
-    public void write(Document document) throws IOException {
-        // write to a file
-        FileWriter out = new FileWriter(new File("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/", "gamers.xml"));
-        document.write(out);
-        out.close();
-    }
-
-    public static void main(String[] args){
-        XmlParser parser = new XmlParser();
-
-        try {
-            Document document = parser.createDocument();
-            parser.write(document);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void saveGame(List<Entity> entity){
+        //print the list of entities
+        for (Entity e : entity){
+            System.out.println(e);
         }
+    }
+
+    /**
+     * Load game from xml file
+     *
+     * @param path
+     */
+    public void loadGame(String path) {
+        //load file from path
+        File file = new File(path);
+
+        //entity list /tiles
+        List<Entity> entities = new ArrayList<>();
+
+
 
         try {
-            Document document = parser.parse(new File("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/gamers.xml"));
+            Document document = parse(file);
             System.out.println(document.asXML());
         } catch (DocumentException e) {
             e.printStackTrace();
         }
 
     }
-
-
 }
