@@ -10,6 +10,14 @@ public class WalkAnimation extends MoveAnimation{
     public WalkAnimation(Point startTile, Direction direction, int length, Entity entity) {
         super(startTile, direction, length, entity);
     }
+    public WalkAnimation(Point startTile, Point endTile, int length, Entity entity) {
+        super(startTile, Direction.Up, length, entity);
+        if      (startTile.x() > endTile.x()) direction = Direction.Left;
+        else if (startTile.x() < endTile.x()) direction = Direction.Right;
+        else if (startTile.y() > endTile.y()) direction = Direction.Up;
+        else if (startTile.y() < endTile.y()) direction = Direction.Down;
+    }
+
 
     @Override
     public Sprite getSprite() {

@@ -5,7 +5,7 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 
 public class MoveAnimation extends Animation {
-    protected Direction direction = Direction.Up;
+    protected Direction direction;
 
     private int count;
 
@@ -17,17 +17,7 @@ public class MoveAnimation extends Animation {
         this.count = length;
     }
 
-    public MoveAnimation(Point startTile, Point endTile, int length, Entity entity) {
-        super(startTile, length, entity);
-        this.x = tile.x() * tileSize;
-        this.y = tile.y() * tileSize;
-        this.count = length;
 
-        if (startTile.x() > endTile.x()) direction = Direction.Left;
-        else if (startTile.x() < endTile.x()) direction = Direction.Right;
-        else if (startTile.y() > endTile.y()) direction = Direction.Up;
-        else if (startTile.y() < endTile.y()) direction = Direction.Down;
-    }
 
 
     @Override

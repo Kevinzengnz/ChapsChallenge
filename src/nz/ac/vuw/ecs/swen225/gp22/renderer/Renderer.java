@@ -47,11 +47,11 @@ public class Renderer extends JPanel {
         for(Actor actor : actors.keySet()) {
             for (Entity entity : allEntities) {
                 if (actor.equals(entity) && !actors.get(actor).equals(entity.getPoint())) {
-                    addAnimation(new MoveAnimation(actors.get(actor), entity.getPoint(), 10, entity));
+                    addAnimation(new WalkAnimation(actors.get(actor), entity.getPoint(), 10, entity));
                 }
             }
         }
-        actors = entities.stream()
+        actors = allEntities.stream()
                 .filter(e -> e instanceof Actor)
                 .map(e -> (Actor) e)
                 .collect(Collectors.toMap(a -> a, Actor::getPoint));
@@ -140,7 +140,9 @@ public class Renderer extends JPanel {
 
 
     public void addAnimation(Animation animation) {
+        endAnimations(animations.stream().filter(a -> a.getEntity().equals(animation.getEntity())).toList());
         if (animation.getEntity() instanceof Player) {
+            camera.removeAnimation();
             camera.addAnimation(animation.copy());
         }
         animations = new ArrayList<>(animations);
