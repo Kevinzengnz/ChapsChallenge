@@ -17,6 +17,9 @@ public class MoveAnimation extends Animation {
         this.count = length;
     }
 
+
+
+
     @Override
     public boolean isFinished() {
         return count <= 0;
