@@ -1,14 +1,13 @@
 package nz.ac.vuw.ecs.swen225.gp22.renderer;
 
-import nz.ac.vuw.ecs.swen225.gp22.domain.Key;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
+import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Renderer extends JPanel {
 
@@ -22,6 +21,8 @@ public class Renderer extends JPanel {
     // Entities currently visible
     private List<Entity> entities = new ArrayList<>();
 
+    private Map<Actor, Point> actors = new HashMap<>();
+
     private List<Animation> animations = new ArrayList<>();
 
     public Renderer() {
@@ -33,13 +34,29 @@ public class Renderer extends JPanel {
      */
     public void update(int camX, int camY, List<Entity> allEntities, List<Key> keys) {
         camera.update(camX, camY);
+        // Update inventory
         inventory.clear();
         for (Key key : keys) {
             if (inventory.containsKey(key)) inventory.put(key, inventory.get(key)+1);
             else inventory.put(key, 1);
         }
+        // Update animations
         animations.forEach(Animation::update);
         endAnimations(animations.stream().filter(Animation::isFinished).toList());
+
+        for(Actor actor : actors.keySet()) {
+            for (Entity entity : allEntities) {
+                if (actor.equals(entity) && !actors.get(actor).equals(entity.getPoint())) {
+                    addAnimation(new MoveAnimation(actors.get(actor), entity.getPoint(), 10, entity));
+                }
+            }
+        }
+        actors = entities.stream()
+                .filter(e -> e instanceof Actor)
+                .map(e -> (Actor) e)
+                .collect(Collectors.toMap(a -> a, Actor::getPoint));
+
+        // Update entities
         entities = new ArrayList<>();
         entities = allEntities.stream()
                 .filter(this::isEntityVisible)
