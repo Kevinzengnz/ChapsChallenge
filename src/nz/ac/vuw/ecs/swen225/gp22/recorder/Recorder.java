@@ -3,6 +3,7 @@ package nz.ac.vuw.ecs.swen225.gp22.recorder;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
 import nz.ac.vuw.ecs.swen225.gp22.app.*;
 
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,7 +18,7 @@ import java.util.List;
 public class Recorder {
     private boolean isRecording;
     private String replayFile;
-    private List<Action> actionHistory;
+    private List<Integer> actionHistory;
 
     /**
      * Start recording the current game into the specified save file path.
@@ -43,10 +44,12 @@ public class Recorder {
 
     /**
      * Call this function every time an action takes place in the game. Will save the action to history for recording.
+     * @param action Key code of action.
      */
-    public void onAction(Action action){
+    public void onAction(int action){
         if(this.isRecording){
             this.actionHistory.add(action);
+            System.out.println("[Recorder] Action added: "+action);
         }
     }
 
