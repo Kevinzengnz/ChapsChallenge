@@ -5,6 +5,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+//XML
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 /**
  * Recorder class that will handle recording a game.
@@ -64,12 +70,17 @@ public class Recorder {
      * Saves recording into the replay file.
      */
     private void saveRecording(){
+        Document doc = DocumentHelper.createDocument();
+        Element root = doc.addElement("root");
+        Element player = root.addElement("Player");
+
+        for(int i : actionHistory){
+            player.addElement("action").addAttribute("dir", String.valueOf(i));
+        }
+
         try {
-            FileWriter out = new FileWriter(new File("Replays/", this.replayFile+".txt"));
-            for(int i : actionHistory){
-                out.write(i+"\n");
-            }
-            out.flush();
+            FileWriter out = new FileWriter(new File("Replays/", this.replayFile+".xml"));
+            doc.write(out);
             out.close();
         } catch (IOException e) {
             e.printStackTrace();
