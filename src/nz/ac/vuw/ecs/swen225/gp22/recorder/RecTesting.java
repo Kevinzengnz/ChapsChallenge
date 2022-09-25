@@ -19,6 +19,7 @@ public class RecTesting {
             r.onAction(37+i%3);
         }
         r.endRecording();
+        new Replay().loadReplay("test_replay");
     }
 
     public static void main(String[] a){
