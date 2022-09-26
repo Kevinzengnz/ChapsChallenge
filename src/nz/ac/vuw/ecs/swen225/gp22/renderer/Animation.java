@@ -3,8 +3,12 @@ package nz.ac.vuw.ecs.swen225.gp22.renderer;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 
+/**
+ * Abstract superclass for all Animations
+ * @author Oliver Silk
+ * ID: 300564261
+ */
 abstract public class Animation {
-
     public Animation(Point tile, int length, Entity entity) {
         this.tile = tile;
         this.x = tile.x() * tileSize;
