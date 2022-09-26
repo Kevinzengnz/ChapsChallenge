@@ -139,7 +139,7 @@ public class XmlParser {
         XmlParser parser = new XmlParser();
 
         try {
-            parser.saveGame(entities, "test");
+            parser.saveGame(entities, "test.xml");
         } catch (IOException e) {
             e.printStackTrace();
         }
