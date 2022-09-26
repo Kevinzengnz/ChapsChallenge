@@ -42,4 +42,8 @@ public class Camera {
         this.animation = newAnimation;
     }
 
+    public void removeAnimation() {
+        this.animation = null;
+    }
+
 }
