@@ -25,7 +25,7 @@ public class XmlParser {
      * @param url the xml file to be parsed
      * @return the document of the xml file
      */
-    public Document parse(File url) throws DocumentException {
+    public static Document parse(File url) throws DocumentException {
         SAXReader reader = new SAXReader();
         Document document = reader.read(url);
         return document;
@@ -35,7 +35,7 @@ public class XmlParser {
      * This function saves the current game to a xml file
      * @param entities the list of entities in the current game
      */
-    public void saveGame(List<Entity> entities, String levelName) throws IOException {
+    public static void saveGame(List<Entity> entities, String levelName) throws IOException {
         //print the list of entities
         //add the list of entities to the Tiles element
         Document document = DocumentHelper.createDocument();
@@ -64,15 +64,18 @@ public class XmlParser {
             }
         }
 
-        //write the document to a file
-        try {
-            FileWriter out = new FileWriter(new File("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/", levelName+ ".xml"));
-            document.write(out);
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // write to a file
+        write(document,levelName,"src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/");
+    }
 
+    /**
+     * This function saves the document to a xml file
+     */
+    public static void write(Document document, String fileName, String path) throws IOException {
+        // write to a file
+        FileWriter out = new FileWriter(new File(path, fileName));
+        document.write(out);
+        out.close();
     }
 
     /**
@@ -80,7 +83,7 @@ public class XmlParser {
      *
      * @param path
      */
-    public void loadGame(String path) {
+    public static void loadGame(String path) {
         //load file from path
         File file = new File(path);
 
