@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 /**
  * Chap's Challenge
@@ -14,7 +15,7 @@ import java.awt.event.WindowEvent;
  */
 public class ChapsChallenge extends JFrame{
     Runnable closePhase = ()->System.exit(0);
-    int timeLeft;
+    int pings;
 
     /**
      * Creates a new instance of Chaps Challenge
@@ -49,7 +50,11 @@ public class ChapsChallenge extends JFrame{
         //Creates timer, so it runs in approximately 30 frames per second
         new Timer(34,unused->{
             assert SwingUtilities.isEventDispatchThread();
-            p.model().ping(renderer);
+            renderer.ping(p.model().player().getPoint(), p.model().entities(), new ArrayList<>());
+            pings++;
+            if(pings % 4 == 0) {
+                p.model().ping();
+            }
             renderer.repaint();
         }).start();
 
