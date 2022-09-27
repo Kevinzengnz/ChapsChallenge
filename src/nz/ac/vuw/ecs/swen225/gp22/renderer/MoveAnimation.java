@@ -4,6 +4,11 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 
+/**
+ * Class to represent an animation that performs a move from one tile to another.
+ * @author Oliver Silk
+ * ID: 300564261
+ */
 public class MoveAnimation extends Animation {
     protected Direction direction;
 
@@ -17,16 +22,13 @@ public class MoveAnimation extends Animation {
         this.count = length;
     }
 
-
-
-
     @Override
     public boolean isFinished() {
         return count <= 0;
     }
 
     @Override
-    public void update() {
+    public void ping() {
         if (isFinished()) return;
         double moveAmount = (double)tileSize / length;
 
