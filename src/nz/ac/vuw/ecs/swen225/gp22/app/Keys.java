@@ -13,12 +13,11 @@ import javax.swing.SwingUtilities;
  * ID: 300563468
  */
 public class Keys implements KeyListener {
-    private Map<Integer,Runnable> actionsPressed = new HashMap<>();
-    private Map<Integer,Runnable> actionsReleased = new HashMap<>();
+    private final Map<Integer,Runnable> actionsPressed = new HashMap<>();
+    private final Map<Integer,Runnable> actionsReleased = new HashMap<>();
     public void setAction(int keyCode,Runnable onPressed,Runnable onReleased){
         actionsPressed.put(keyCode,onPressed);
         actionsReleased.put(keyCode,onReleased);
-
     }
     @Override
     public void keyTyped(KeyEvent e){}
@@ -42,8 +41,8 @@ public class Keys implements KeyListener {
 
 
     //functionality for control
-    private Map<Integer,Runnable> ctrlActionsPressed = new HashMap<>();
-    private Map<Integer,Runnable> ctrlActionsReleased = new HashMap<>();
+    private final Map<Integer,Runnable> ctrlActionsPressed = new HashMap<>();
+    private final Map<Integer,Runnable> ctrlActionsReleased = new HashMap<>();
 
     /**
      * Adds actions to run when a key is pressed while ctrl is also being held
@@ -54,5 +53,22 @@ public class Keys implements KeyListener {
     public void setCtrlAction(int keyCode,Runnable onPressed,Runnable onReleased){
         ctrlActionsPressed.put(keyCode,onPressed);
         ctrlActionsReleased.put(keyCode,onReleased);
+    }
+
+    //Getter Methods
+    public Map<Integer, Runnable> getActionsReleased() {
+        return actionsReleased;
+    }
+
+    public Map<Integer, Runnable> getCtrlActionsPressed() {
+        return ctrlActionsPressed;
+    }
+
+    public Map<Integer, Runnable> getCtrlActionsReleased() {
+        return ctrlActionsReleased;
+    }
+
+    public Map<Integer, Runnable> getActionsPressed() {
+        return actionsPressed;
     }
 }
