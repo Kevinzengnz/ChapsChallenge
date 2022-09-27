@@ -8,6 +8,11 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 public class WalkAnimation extends MoveAnimation{
     private int currentFrame = 0;
 
+    private final Sprite[] upFrames = {Sprite.PLAYER_WALK_UP_1, Sprite.PLAYER_UP, Sprite.PLAYER_WALK_UP_2};
+    private final Sprite[] downFrames = {Sprite.PLAYER_WALK_DOWN_1, Sprite.PLAYER_DOWN, Sprite.PLAYER_WALK_DOWN_2};
+    private final Sprite[] leftFrames = {Sprite.PLAYER_WALK_LEFT_1, Sprite.PLAYER_LEFT, Sprite.PLAYER_WALK_LEFT_2};
+    private final Sprite[] rightFrames = {Sprite.PLAYER_WALK_RIGHT_1, Sprite.PLAYER_RIGHT, Sprite.PLAYER_WALK_RIGHT_2};
+
     public WalkAnimation(Point startTile, Direction direction, int length, Entity entity) {
         super(startTile, direction, length, entity);
     }
@@ -25,10 +30,10 @@ public class WalkAnimation extends MoveAnimation{
     public Sprite getSprite() {
         return switch (direction) {
             case None  -> null;
-            case Up    -> currentFrame == 0 ? Sprite.PLAYER_WALK_UP_1 : Sprite.PLAYER_WALK_UP_2;
-            case Right -> currentFrame == 0 ? Sprite.PLAYER_WALK_RIGHT_1 : Sprite.PLAYER_WALK_RIGHT_2;
-            case Down  -> currentFrame == 0 ? Sprite.PLAYER_WALK_DOWN_1 : Sprite.PLAYER_WALK_DOWN_2;
-            case Left  -> currentFrame == 0 ? Sprite.PLAYER_WALK_LEFT_1 : Sprite.PLAYER_WALK_LEFT_2;
+            case Up    -> upFrames[currentFrame];
+            case Right -> rightFrames[currentFrame];
+            case Down  -> downFrames[currentFrame];
+            case Left  -> leftFrames[currentFrame];
         };
     }
 
@@ -37,7 +42,7 @@ public class WalkAnimation extends MoveAnimation{
         super.ping();
         if (count % 2 == 0) {
             currentFrame ++;
-            int frameCount = 2;
+            int frameCount = 3;
             if (currentFrame >= frameCount) currentFrame = 0;
         }
     }
