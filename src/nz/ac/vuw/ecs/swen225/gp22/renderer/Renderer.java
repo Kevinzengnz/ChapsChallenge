@@ -64,10 +64,9 @@ public class Renderer extends JPanel {
         entities = new ArrayList<>();
         entities = allEntities.stream()
                 .filter(this::isEntityVisible)
-                .filter(e -> animations.stream().noneMatch(a -> a.getEntity() == e))
+                .filter(e -> animations.stream().noneMatch(a -> a.getEntity().equals(e)))
                 .sorted(Comparator.comparingInt(Entity::getDepth))
                 .toList();
-
     }
 
 
