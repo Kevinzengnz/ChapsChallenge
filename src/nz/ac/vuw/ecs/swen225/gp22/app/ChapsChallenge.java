@@ -14,8 +14,7 @@ import java.util.ArrayList;
  * ID: 300563468
  */
 public class ChapsChallenge extends JFrame{
-    Runnable closePhase = ()->
-        System.exit(0);
+    Runnable closePhase = ()-> System.exit(0);
 
     int pings;
 
@@ -68,13 +67,15 @@ public class ChapsChallenge extends JFrame{
         var startRecording=new JButton("Start recording");
         var endRecording=new JButton("End recording");
 
-        startRecording.addActionListener(e -> p.model().recorder().startRecording("default.xml","level blank"));
+        startRecording.addActionListener(e -> p.model().recorder().startRecording("default.xml","level 1"));
         endRecording.addActionListener(e -> p.model().recorder().endRecording());
 
         renderer.setFocusable(true);
         setPreferredSize(getSize());//to keep the current size
         renderer.addKeyListener(p.controller());
         add(BorderLayout.CENTER,renderer);
+        add(BorderLayout.WEST,startRecording);
+        add(BorderLayout.EAST,endRecording);
         pack();                     //after pack
         renderer.requestFocus();
     }
