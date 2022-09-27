@@ -25,7 +25,7 @@ public class Player extends Actor{
     @Override
     public void ping(Model m){
         if(getMoving()) {
-            point.add(direction.arrow);
+            point = point.add(direction.arrow);
         }
     }
     @Override
