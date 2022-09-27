@@ -4,7 +4,7 @@ package nz.ac.vuw.ecs.swen225.gp22.recorder;
  * Class containing test utilities for recorder package. Will be deleted after.
  */
 public class RecTesting {
-    private static boolean debug = false; //Set to true to show console debug messages.
+    private static final boolean debug = false; //Set to true to show console debug messages.
 
     public static void log(String cls, String method, String message){
         if(debug){
@@ -15,8 +15,11 @@ public class RecTesting {
     public static void createMockReplay(){
         Recorder r = new GameRecorder();
         r.startRecording("test_replay", "test_level");
-        for(int i=0; i<30; i++){
-            r.onAction(37+i%3);
+        for(int i=0; i<60; i++){
+            if(i%2==0) {
+                r.onAction(i % 3);
+                r.onAction(i % 3);
+            }
         }
         r.endRecording();
         new Replay().loadReplay("test_replay");

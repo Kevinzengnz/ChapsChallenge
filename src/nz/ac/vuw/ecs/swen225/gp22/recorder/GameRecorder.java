@@ -18,7 +18,10 @@ public class GameRecorder implements Recorder{
     private boolean isRecording;
     private String replayFile;
     private List<Integer> actionHistory;
+    private List<Integer> frameHistory;
     private String level;
+    private int frame = 0;
+    private int prev = -1;
 
     /**
      * Start recording the current game into the specified save file path.
@@ -29,6 +32,7 @@ public class GameRecorder implements Recorder{
         if(!this.isRecording) {
             this.level=level;
             this.actionHistory = new ArrayList<>();
+            this.frameHistory = new ArrayList<>();
             this.replayFile = replayFile;
             setRecording(true);
         }
@@ -49,8 +53,11 @@ public class GameRecorder implements Recorder{
      * @param dir Ordinal of direction.
      */
     public void onAction(int dir){
-        if(this.isRecording){
+        this.frame++;
+        if(this.isRecording && this.prev!=dir){
             this.actionHistory.add(dir);
+            this.frameHistory.add(this.frame);
+            this.prev=dir;
             //Remove below for final
             RecTesting.log("Recorder", "onAction", "Added action "+dir);
         }
@@ -73,8 +80,10 @@ public class GameRecorder implements Recorder{
         Element level = root.addElement(this.level);
         Element player = level.addElement("Player");
 
-        for(int i : actionHistory){
-            player.addElement("action").addAttribute("dir", String.valueOf(i));
+        for(int i=0 ; i<actionHistory.size(); i++){
+            player.addElement("action")
+                    .addAttribute("dir", String.valueOf(actionHistory.get(i)))
+                    .addAttribute("frame", String.valueOf(frameHistory.get(i)));
         }
 
         try {
