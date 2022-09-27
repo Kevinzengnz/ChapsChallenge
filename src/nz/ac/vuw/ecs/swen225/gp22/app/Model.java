@@ -2,7 +2,6 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
 
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ public interface Model{
 
     default void ping(Renderer renderer){
         entities().forEach(a -> a.ping(this));
-        renderer.update(player().getPoint().x(), player().getPoint().y(), entities(), new ArrayList<>());
+        renderer.ping(player().getPoint(), entities(), new ArrayList<>());
         var end = false;
         if(end){ onNextLevel(); }
     }
