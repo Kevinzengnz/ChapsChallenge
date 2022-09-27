@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 //XML
 import nz.ac.vuw.ecs.swen225.gp22.persistency.XmlParser;
 import org.dom4j.Document;
@@ -85,11 +86,9 @@ public class GameRecorder implements Recorder{
         Element level = root.addElement(this.level);
         Element player = level.addElement("Player");
 
-        for(int i=0 ; i<actionHistory.size(); i++){
-            player.addElement("action")
-                    .addAttribute("dir", String.valueOf(actionHistory.get(i)))
-                    .addAttribute("frame", String.valueOf(frameHistory.get(i)));
-        }
+        IntStream.range(0, actionHistory.size()).forEach(i->player.addElement("action")
+                .addAttribute("dir", String.valueOf(actionHistory.get(i)))
+                .addAttribute("frame", String.valueOf(frameHistory.get(i))));
 
         try {
             XmlParser.write(doc, this.replayFile, "Replays/");
