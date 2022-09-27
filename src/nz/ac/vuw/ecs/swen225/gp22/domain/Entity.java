@@ -4,9 +4,13 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 
 import java.awt.*;
 import java.util.stream.Stream;
-
+/**
+ * @author Alicia Robinson - 300560663
+ */
 public interface Entity {
-    void ping(Model m);
+    default void ping(Model m){
+
+    }
     Sprite getSprite();
 
     Point getPoint();

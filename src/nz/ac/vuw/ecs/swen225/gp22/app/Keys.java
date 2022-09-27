@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.swing.SwingUtilities;
 
 /**
- *
+ * Keys class, which implements KeyListener,
  * @author Kevin Zeng
  * ID: 300563468
  */
@@ -44,6 +44,13 @@ public class Keys implements KeyListener {
     //functionality for control
     private Map<Integer,Runnable> ctrlActionsPressed = new HashMap<>();
     private Map<Integer,Runnable> ctrlActionsReleased = new HashMap<>();
+
+    /**
+     * Adds actions to run when a key is pressed while ctrl is also being held
+     * @param keyCode the keyCode to add
+     * @param onPressed action to perform when the key is first pressed down
+     * @param onReleased action to perform when the key is released
+     */
     public void setCtrlAction(int keyCode,Runnable onPressed,Runnable onReleased){
         ctrlActionsPressed.put(keyCode,onPressed);
         ctrlActionsReleased.put(keyCode,onReleased);
