@@ -45,13 +45,13 @@ public class Renderer extends JPanel {
             else inventory.put(key, 1);
         }
         // Update animations
-        animations.forEach(Animation::update);
+        animations.forEach(Animation::ping);
         animations.removeAll(animations.stream().filter(Animation::isFinished).toList());
 
         for(Actor actor : actors.keySet()) {
             for (Entity entity : allEntities) {
                 if (actor.equals(entity) && !actors.get(actor).equals(entity.getPoint())) {
-                    addAnimation(new WalkAnimation(actors.get(actor), entity.getPoint(), 10, entity));
+                    addAnimation(new WalkAnimation(actors.get(actor), entity.getPoint(), 4, entity));
                 }
             }
         }

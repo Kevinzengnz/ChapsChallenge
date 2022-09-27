@@ -26,7 +26,7 @@ public class Camera {
     public void update(Point position) {
         tileX = position.x();
         tileY = position.y();
-        if (animation != null) animation.update();
+        if (animation != null) animation.ping();
     }
 
 

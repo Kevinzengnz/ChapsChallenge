@@ -10,6 +10,7 @@ public class WalkAnimation extends MoveAnimation{
     public WalkAnimation(Point startTile, Direction direction, int length, Entity entity) {
         super(startTile, direction, length, entity);
     }
+
     public WalkAnimation(Point startTile, Point endTile, int length, Entity entity) {
         super(startTile, Direction.Up, length, entity);
         if      (startTile.x() > endTile.x()) direction = Direction.Left;
@@ -28,5 +29,10 @@ public class WalkAnimation extends MoveAnimation{
             case Down  -> Sprite.PLAYER_DOWN;
             case Left  -> Sprite.PLAYER_LEFT;
         };
+    }
+
+    @Override
+    public Animation copy() {
+        return new WalkAnimation(tile, direction, length, entity);
     }
 }
