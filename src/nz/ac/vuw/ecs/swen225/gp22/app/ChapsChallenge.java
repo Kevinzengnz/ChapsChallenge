@@ -4,6 +4,8 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Chap's Challenge
@@ -11,6 +13,7 @@ import java.awt.*;
  * ID: 300563468
  */
 public class ChapsChallenge extends JFrame{
+    Runnable closePhase = ()->System.exit(0);
     int timeLeft;
 
     /**
@@ -20,6 +23,10 @@ public class ChapsChallenge extends JFrame{
         assert SwingUtilities.isEventDispatchThread();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1366, 768);
+        addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosed(WindowEvent e){closePhase.run();} });
+
         levelOne();
     }
 
