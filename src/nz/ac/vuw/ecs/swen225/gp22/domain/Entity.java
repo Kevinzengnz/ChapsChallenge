@@ -5,6 +5,7 @@ import java.awt.*;
 import java.util.stream.Stream;
 
 public interface Entity {
+    void ping(Model m);
     Sprite getSprite();
 
     Point getPoint();

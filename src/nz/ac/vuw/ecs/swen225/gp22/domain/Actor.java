@@ -13,6 +13,12 @@ public class Actor implements Entity{
     }
     public void setDirection(Direction direction){ this.direction = direction; }
     public Direction getDirection(){ return direction; }
+
+    @Override
+    public void ping(Model m) {
+
+    }
+
     public Sprite getSprite() { return this.sprite; }
     public Point getPoint() {
         return this.point;
