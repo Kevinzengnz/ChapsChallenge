@@ -25,6 +25,7 @@ public interface Model{
     default void saveGame()   {
         try {
             XmlParser.saveGame(entities(), "levelOne");
+            recorder().endRecording();
         } catch(IOException e) {
             System.out.println("Error saving game");
         }

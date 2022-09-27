@@ -14,7 +14,9 @@ import java.util.ArrayList;
  * ID: 300563468
  */
 public class ChapsChallenge extends JFrame{
-    Runnable closePhase = ()->System.exit(0);
+    Runnable closePhase = ()->{
+        System.exit(0);
+    };
     int pings;
 
     /**
@@ -57,6 +59,11 @@ public class ChapsChallenge extends JFrame{
             }
             renderer.repaint();
         }).start();
+
+        closePhase = ()->{
+            p.model().recorder().endRecording();
+            System.exit(0);
+        };
 
         JPanel viewport = new JPanel();
         viewport.setFocusable(true);
