@@ -21,7 +21,7 @@ public interface Model{
     void onNextLevel();
 
     default void ping(Renderer renderer){
-        entities().forEach(a -> {});
+        entities().forEach(a -> a.ping(this));
         renderer.update(player().getPoint().x(), player().getPoint().y(), entities(), new ArrayList<>());
         var end = false;
         if(end){ onNextLevel(); }
