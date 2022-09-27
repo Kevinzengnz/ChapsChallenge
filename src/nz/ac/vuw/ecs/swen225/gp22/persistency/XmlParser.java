@@ -17,6 +17,10 @@ import java.io.IOException;
 
 import java.util.*;
 
+/**
+ * @author Leon Zhou
+ * 300578231
+ */
 public class XmlParser {
 
     /**
@@ -43,47 +47,91 @@ public class XmlParser {
         Element Tiles = root.addElement("Tiles");
 
         //iterate and add the entities to the Tiles element
-        for (Entity e : entities){
-            if (e instanceof Player){
-                Tiles.addElement("Player")
-                        .addAttribute("x", String.valueOf(e.getPoint().x()))
-                        .addAttribute("y", String.valueOf(e.getPoint().y()))
-                        .addAttribute("direction", String.valueOf(((Player) e).getDirection()));
-            }
-            else if (e instanceof Tile){
-                Tiles.addElement("Tile")
+        for (Entity e : entities) {
+            if (e instanceof WallTile) {
+                Tiles.addElement("WallTile")
                         .addAttribute("x", String.valueOf(e.getPoint().x()))
                         .addAttribute("y", String.valueOf(e.getPoint().y()))
                         .addAttribute("sprite", String.valueOf(e.getSprite()));
-            }
-            else {
-                Tiles.addElement("I dont know what this is")
+            } else if (e instanceof FloorTile) {
+                Tiles.addElement("FloorTile")
                         .addAttribute("x", String.valueOf(e.getPoint().x()))
                         .addAttribute("y", String.valueOf(e.getPoint().y()))
                         .addAttribute("sprite", String.valueOf(e.getSprite()));
+            } else if (e instanceof Key) {
+                Tiles.addElement("Key")
+                        .addAttribute("x", String.valueOf(e.getPoint().x()))
+                        .addAttribute("y", String.valueOf(e.getPoint().y()))
+                        .addAttribute("sprite", String.valueOf(e.getSprite()))
+                        .addAttribute("depth", String.valueOf(e.getDepth()));
+                //.addAttribute("colour")
+            } else if (e instanceof LockedDoor) {
+                Tiles.addElement("LockedDoor")
+                        .addAttribute("x", String.valueOf(e.getPoint().x()))
+                        .addAttribute("y", String.valueOf(e.getPoint().y()))
+                        .addAttribute("sprite", String.valueOf(e.getSprite()));
+                //.addAttribute("colour")
+            } else if (e instanceof InfoTile) {
+                Tiles.addElement("InfoTile")
+                        .addAttribute("x", String.valueOf(e.getPoint().x()))
+                        .addAttribute("y", String.valueOf(e.getPoint().y()))
+                        .addAttribute("sprite", String.valueOf(e.getSprite()));
+            } else if (e instanceof Treasure) {
+                Tiles.addElement("Treasure")
+                        .addAttribute("x", String.valueOf(e.getPoint().x()))
+                        .addAttribute("y", String.valueOf(e.getPoint().y()))
+                        .addAttribute("sprite", String.valueOf(e.getSprite()))
+                        .addAttribute("depth", String.valueOf(e.getDepth()));
+            } else if (e instanceof ExitDoor) {
+                Tiles.addElement("ExitDoor")
+                        .addAttribute("x", String.valueOf(e.getPoint().x()))
+                        .addAttribute("y", String.valueOf(e.getPoint().y()))
+                        .addAttribute("sprite", String.valueOf(e.getSprite()));
+            } else if (e instanceof Exit) {
+                Tiles.addElement("Exit")
+                        .addAttribute("x", String.valueOf(e.getPoint().x()))
+                        .addAttribute("y", String.valueOf(e.getPoint().y()))
+                        .addAttribute("sprite", String.valueOf(e.getSprite()))
+                        .addAttribute("depth", String.valueOf(e.getDepth()));
+            } else if (e instanceof Player) {
+                Element player = Tiles.addElement("Player")
+                        .addAttribute("x", String.valueOf(e.getPoint().x()))
+                        .addAttribute("y", String.valueOf(e.getPoint().y()))
+                        .addAttribute("direction", String.valueOf(((Player) e).getDirection()))
+                        .addAttribute("treasure", String.valueOf(((Player) e).getTreasureCollected()));
+                Element keys = player.addElement("Keys");
+                //write arraylist of keys to extra element
+                for (Key k : ((Player) e).getKeys()) {
+                    keys.addElement("Key")
+                            .addAttribute("sprite", String.valueOf(k.getSprite()));
+                }
             }
-        }
 
-        // write to a file
-        write(document,levelName,"src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/");
+            // write to a file
+            write(document, levelName, "src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/");
+        }
     }
+
 
     /**
      * This function saves the document to a xml file
+     * @param document the document to be saved
+     * @param fileName the name of the file
+     * @param path the path of the file
      */
     public static void write(Document document, String fileName, String path) throws IOException {
         // write to a file
-        FileWriter out = new FileWriter(new File(path, fileName));
+        FileWriter out = new FileWriter(new File(path, fileName + ".xml"));
         document.write(out);
         out.close();
     }
 
     /**
      * Load game from xml file
-     *
      * @param path
+     * @return the list of entities in the xml file
      */
-    public static void loadGame(String path) {
+    public static List<Entity> loadGame(String path) {
         //load file from path
         File file = new File(path);
 
@@ -100,14 +148,68 @@ public class XmlParser {
                     int x = Integer.parseInt(e.attributeValue("x"));
                     int y = Integer.parseInt(e.attributeValue("y"));
                     Player player = new Player(new Point(x, y));
+                    player.setDirection(Direction.valueOf(e.attributeValue("direction")));
+
+                    //key list to player
+                    List<Key> keys = new ArrayList<>();
+                    List<Element> keyElements = e.element("Keys").elements();
+                    for (Element key : keyElements){
+
+                    }
+                    //player.setKeys(keys);
+
                     entities.add(player);
-                } else if (e.getName().equals("Tile")) {
+                } else if (e.getName().equals("WallTile")) {
+                    int x = Integer.parseInt(e.attributeValue("x"));
+                    int y = Integer.parseInt(e.attributeValue("y"));
+                    WallTile wallTile = new WallTile(new Point(x, y));
+                    entities.add(wallTile);
+                } else if (e.getName().equals("FloorTile")){
+                    int x = Integer.parseInt(e.attributeValue("x"));
+                    int y = Integer.parseInt(e.attributeValue("y"));
+                    FloorTile floorTile = new FloorTile(new Point(x, y));
+                    entities.add(floorTile);
+                }
+                else if (e.getName().equals("Key")){
                     int x = Integer.parseInt(e.attributeValue("x"));
                     int y = Integer.parseInt(e.attributeValue("y"));
                     String sprite = e.attributeValue("sprite");
-                    Tile tile = new Tile(Sprite.valueOf(sprite), new Point(x, y));
-                    entities.add(tile);
+                    Key key = new Key(sprite, new Point(x, y));
+                    entities.add(key);
                 }
+                else if (e.getName().equals("LockedDoor")){
+                    int x = Integer.parseInt(e.attributeValue("x"));
+                    int y = Integer.parseInt(e.attributeValue("y"));
+                    String sprite = e.attributeValue("sprite");
+                    LockedDoor lockedDoor = new LockedDoor(sprite, new Point(x, y));
+                    entities.add(lockedDoor);
+                }
+                else if (e.getName().equals("InfoTile")){
+                    int x = Integer.parseInt(e.attributeValue("x"));
+                    int y = Integer.parseInt(e.attributeValue("y"));
+                    InfoTile infoTile = new InfoTile(new Point(x, y));
+                    entities.add(infoTile);
+                }
+                else if (e.getName().equals("Treasure")){
+                    int x = Integer.parseInt(e.attributeValue("x"));
+                    int y = Integer.parseInt(e.attributeValue("y"));
+                    Treasure treasure = new Treasure(new Point(x, y));
+                    entities.add(treasure);
+                }
+                else if (e.getName().equals("ExitDoor")){
+                    int x = Integer.parseInt(e.attributeValue("x"));
+                    int y = Integer.parseInt(e.attributeValue("y"));
+                    ExitDoor exitDoor = new ExitDoor(new Point(x, y));
+                    entities.add(exitDoor);
+                }
+                else if (e.getName().equals("Exit")){
+                    int x = Integer.parseInt(e.attributeValue("x"));
+                    int y = Integer.parseInt(e.attributeValue("y"));
+                    Exit exit = new Exit(new Point(x, y));
+                    entities.add(exit);
+                }
+
+
             }
         } catch (DocumentException e) {
             e.printStackTrace();
@@ -118,6 +220,7 @@ public class XmlParser {
             System.out.println(e.getSprite() + " " + e.getPoint().x() + " " + e.getPoint().y());
         }
 
+        return entities;
     }
 
     /**
@@ -136,16 +239,15 @@ public class XmlParser {
                 }
             }
         }
-        XmlParser parser = new XmlParser();
 
         try {
-            parser.saveGame(entities, "test.xml");
+            saveGame(entities, "test");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         //load game
-        parser.loadGame("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/test.xml");
+        loadGame("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/test.xml");
 
     }
 }
