@@ -69,6 +69,8 @@ public class ChapsChallenge extends JFrame{
 
         startRecording.addActionListener(e -> p.model().recorder().startRecording("default.xml","level 1"));
         endRecording.addActionListener(e -> p.model().recorder().endRecording());
+        startRecording.setFocusable(false);
+        endRecording.setFocusable(false);
 
         renderer.setFocusable(true);
         setPreferredSize(getSize());//to keep the current size
