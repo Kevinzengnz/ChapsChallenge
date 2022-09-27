@@ -14,9 +14,8 @@ import java.util.ArrayList;
  * ID: 300563468
  */
 public class ChapsChallenge extends JFrame{
-    Runnable closePhase = ()->{
-        System.exit(0);
-    };
+    Runnable closePhase = ()-> System.exit(0);
+
     int pings;
 
     /**
@@ -37,7 +36,7 @@ public class ChapsChallenge extends JFrame{
      * Starts up level one
      */
     private void levelOne() {
-        setPhase(Phase.level1(()->levelOne(),()->levelOne()));
+        setPhase(Phase.level1(this::levelOne, this::levelOne));
     }
 
     /**
@@ -57,7 +56,6 @@ public class ChapsChallenge extends JFrame{
                 p.model().ping();
             }
             renderer.ping(p.model().player().getPoint(), p.model().entities(), new ArrayList<>());
-
             renderer.repaint();
         }).start();
 
@@ -66,14 +64,19 @@ public class ChapsChallenge extends JFrame{
             System.exit(0);
         };
 
-        JPanel viewport = new JPanel();
-        viewport.setFocusable(true);
+        var startRecording=new JButton("Start recording");
+        var endRecording=new JButton("End recording");
+
+        startRecording.addActionListener(e -> p.model().recorder().startRecording("default.xml","level 1"));
+        endRecording.addActionListener(e -> p.model().recorder().endRecording());
+
+        renderer.setFocusable(true);
         setPreferredSize(getSize());//to keep the current size
-        viewport.addKeyListener(p.controller());
-
-        add(BorderLayout.CENTER,viewport);
-
+        renderer.addKeyListener(p.controller());
+        add(BorderLayout.CENTER,renderer);
+        add(BorderLayout.WEST,startRecording);
+        add(BorderLayout.EAST,endRecording);
         pack();                     //after pack
-        viewport.requestFocus();
+        renderer.requestFocus();
     }
 }
