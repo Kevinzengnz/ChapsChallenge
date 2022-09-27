@@ -52,11 +52,12 @@ public class ChapsChallenge extends JFrame{
         //Creates timer, so it runs in approximately 30 frames per second
         new Timer(34,unused->{
             assert SwingUtilities.isEventDispatchThread();
-            renderer.ping(p.model().player().getPoint(), p.model().entities(), new ArrayList<>());
             pings++;
             if(pings % 4 == 0) {
                 p.model().ping();
             }
+            renderer.ping(p.model().player().getPoint(), p.model().entities(), new ArrayList<>());
+
             renderer.repaint();
         }).start();
 
