@@ -71,7 +71,7 @@ record Phase(Model model, Controller controller, Renderer renderer) {
                 next.run();
             }
         };
-        return new Phase(m, new Controller(p),renderer);
+        return new Phase(m, new Controller(m),renderer);
     }
 
     static Phase level1(Runnable next, Runnable first) {

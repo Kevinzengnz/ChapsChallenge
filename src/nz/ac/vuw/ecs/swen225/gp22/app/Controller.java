@@ -14,20 +14,22 @@ public class Controller extends Keys{
 
     /**
      * Initialises a new controller
-     * @param c Chap player object
+     * @param m Model for game
      */
-    Controller(Player c){
+    Controller(Model m){
+        Player p = m.player();
+        
         //UP, DOWN, LEFT, RIGHT ARROWS -- move Chap within the maze
-        setAction(KeyEvent.VK_UP,() -> { c.setMoving(true); c.setDirection(Direction.Up);},() -> c.setMoving(false));
-        setAction(KeyEvent.VK_DOWN,() -> { c.setMoving(true); c.setDirection(Direction.Down);},() ->c.setMoving(false));
-        setAction(KeyEvent.VK_LEFT,() -> { c.setMoving(true); c.setDirection(Direction.Left);},() -> c.setMoving(false));
-        setAction(KeyEvent.VK_RIGHT,() -> { c.setMoving(true); c.setDirection(Direction.Right);},() ->c.setMoving(false));
+        setAction(KeyEvent.VK_UP,() -> { p.setMoving(true); p.setDirection(Direction.Up);},() -> p.setMoving(false));
+        setAction(KeyEvent.VK_DOWN,() -> { p.setMoving(true); p.setDirection(Direction.Down);},() ->p.setMoving(false));
+        setAction(KeyEvent.VK_LEFT,() -> { p.setMoving(true); p.setDirection(Direction.Left);},() -> p.setMoving(false));
+        setAction(KeyEvent.VK_RIGHT,() -> { p.setMoving(true); p.setDirection(Direction.Right);},() ->p.setMoving(false));
 
         //WASD also moves Chap within the maze
-        setAction(KeyEvent.VK_W,() -> { c.setMoving(true); c.setDirection(Direction.Up);},() -> c.setMoving(false));
-        setAction(KeyEvent.VK_S,() -> { c.setMoving(true); c.setDirection(Direction.Down);},() -> c.setMoving(false));
-        setAction(KeyEvent.VK_A,() -> { c.setMoving(true); c.setDirection(Direction.Left);},() -> c.setMoving(false));
-        setAction(KeyEvent.VK_D,() -> { c.setMoving(true); c.setDirection(Direction.Right);},() -> c.setMoving(false));
+        setAction(KeyEvent.VK_W,() -> { p.setMoving(true); p.setDirection(Direction.Up);},() -> p.setMoving(false));
+        setAction(KeyEvent.VK_S,() -> { p.setMoving(true); p.setDirection(Direction.Down);},() -> p.setMoving(false));
+        setAction(KeyEvent.VK_A,() -> { p.setMoving(true); p.setDirection(Direction.Left);},() -> p.setMoving(false));
+        setAction(KeyEvent.VK_D,() -> { p.setMoving(true); p.setDirection(Direction.Right);},() -> p.setMoving(false));
 
         //SPACE - pause the game and display a “game is paused” dialog
         setAction(KeyEvent.VK_SPACE,() -> {},/*Pause Game method*/() -> System.out.println("game paused"));
@@ -41,7 +43,7 @@ public class Controller extends Keys{
 
         //CTRL-S - exit the game, saves the game state, game will resume next time the
         //application will be started
-        setCtrlAction(KeyEvent.VK_S,() -> {},() -> {System.out.println("game exit, saved");});
+        setCtrlAction(KeyEvent.VK_S,() -> {},() -> m.saveGame());
 
         //CTRL-R - resume a saved game -- this will pop up a file selector to select a saved game
         //to be loaded
