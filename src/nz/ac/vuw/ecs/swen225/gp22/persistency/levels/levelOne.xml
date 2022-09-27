@@ -75,14 +75,14 @@
         <FloorTile x="3" y="8" sprite="FLOOR"/>
         <FloorTile x="3" y="9" sprite="FLOOR"/>
         <FloorTile x="3" y="10" sprite="FLOOR"/>
-        <FloorTile x="3" y="11" sprite="FLOOR"/>
+        <LockedDoor x="3" y="11" sprite="YELLOW"/>
         <FloorTile x="3" y="12" sprite="FLOOR"/>
         <FloorTile x="3" y="13" sprite="FLOOR"/>
         <FloorTile x="3" y="14" sprite="FLOOR"/>
         <FloorTile x="3" y="15" sprite="FLOOR"/>
         <FloorTile x="3" y="16" sprite="FLOOR"/>
         <FloorTile x="3" y="17" sprite="FLOOR"/>
-        <FloorTile x="3" y="18" sprite="FLOOR"/>
+        <Key x="3" y="18" sprite="YELLOW"/>
         <WallTile x="3" y="19" sprite="WALL"/>
         <WallTile x="4" y="0" sprite="WALL"/>
         <FloorTile x="4" y="1" sprite="FLOOR"/>
@@ -100,7 +100,7 @@
         <FloorTile x="4" y="13" sprite="FLOOR"/>
         <FloorTile x="4" y="14" sprite="FLOOR"/>
         <FloorTile x="4" y="15" sprite="FLOOR"/>
-        <FloorTile x="4" y="16" sprite="FLOOR"/>
+        <InfoTile x="4" y="16" sprite="INFO"/>
         <FloorTile x="4" y="17" sprite="FLOOR"/>
         <FloorTile x="4" y="18" sprite="FLOOR"/>
         <WallTile x="4" y="19" sprite="WALL"/>
