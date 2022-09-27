@@ -7,7 +7,7 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 
 public class WalkAnimation extends MoveAnimation{
     private int currentFrame = 0;
-    private final int frameCount = 2;
+
     public WalkAnimation(Point startTile, Direction direction, int length, Entity entity) {
         super(startTile, direction, length, entity);
     }
@@ -37,6 +37,7 @@ public class WalkAnimation extends MoveAnimation{
         super.ping();
         if (count % 2 == 0) {
             currentFrame ++;
+            int frameCount = 2;
             if (currentFrame >= frameCount) currentFrame = 0;
         }
     }
