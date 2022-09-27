@@ -4,7 +4,7 @@ package nz.ac.vuw.ecs.swen225.gp22.recorder;
  * Class containing test utilities for recorder package. Will be deleted after.
  */
 public class RecTesting {
-    private static boolean debug = true; //Set to true to show console debug messages.
+    private static boolean debug = false; //Set to true to show console debug messages.
 
     public static void log(String cls, String method, String message){
         if(debug){

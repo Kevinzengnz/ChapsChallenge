@@ -21,8 +21,6 @@ public class Recorder {
     private boolean isRecording;
     private String replayFile;
     private List<Integer> actionHistory;
-    //Debug
-    private boolean debug = false;
 
     /**
      * Start recording the current game into the specified save file path.
