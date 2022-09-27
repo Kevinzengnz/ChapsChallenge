@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 //XML
 import nz.ac.vuw.ecs.swen225.gp22.persistency.XmlParser;
@@ -31,11 +32,12 @@ public class GameRecorder implements Recorder{
     @Override
     public void startRecording(String replayFile, String level){
         if(!this.isRecording) {
-            this.level=level;
             this.actionHistory = new ArrayList<>();
             this.frameHistory = new ArrayList<>();
-            this.replayFile = replayFile;
+            this.level = String.join("", level.split(" "));
+            this.replayFile = (replayFile.endsWith(".xml")) ? Arrays.stream(replayFile.split(".xml")).findFirst().orElse("default") : replayFile;
             setRecording(true);
+            RecTesting.log("GameRecorder", "startRecording", "Starting recording for "+this.level+" at Replays/"+this.replayFile);
         }
     }
 
@@ -62,7 +64,7 @@ public class GameRecorder implements Recorder{
             this.frameHistory.add(this.frame);
             this.prevDir=dir;
             //Remove below for final
-            RecTesting.log("Recorder", "onAction", "Added action "+dir);
+            RecTesting.log("GameRecorder", "onAction", "Added action "+dir);
         }
     }
 
@@ -91,8 +93,9 @@ public class GameRecorder implements Recorder{
 
         try {
             XmlParser.write(doc, this.replayFile+".xml", "Replays/");
+            RecTesting.log("GameRecorder", "saveRecording", "Saved replay to Replays/"+this.replayFile);
         } catch (IOException e) {
-            RecTesting.log("Recorder", "saveRecording", "IOException : "+e.getMessage());
+            RecTesting.log("GameRecorder", "saveRecording", "IOException : "+e.getMessage());
         }
     }
 }
