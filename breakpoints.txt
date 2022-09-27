@@ -1,2 +1,2 @@
-nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder.java : Line 49
-nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder.java : Line 79
+nz.ac.vuw.ecs.swen225.gp22.recorder.GameRecorder.java : Line 50
+nz.ac.vuw.ecs.swen225.gp22.recorder.GameRecorder.java : Line 80
