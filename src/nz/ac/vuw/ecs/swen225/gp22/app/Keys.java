@@ -12,7 +12,7 @@ import javax.swing.SwingUtilities;
  * @author Kevin Zeng
  * ID: 300563468
  */
-class Keys implements KeyListener {
+public class Keys implements KeyListener {
     private Map<Integer,Runnable> actionsPressed = new HashMap<>();
     private Map<Integer,Runnable> actionsReleased = new HashMap<>();
     public void setAction(int keyCode,Runnable onPressed,Runnable onReleased){
