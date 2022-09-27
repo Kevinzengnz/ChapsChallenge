@@ -25,7 +25,14 @@ public class Player extends Actor{
     @Override
     public void ping(Model m){
         if(getMoving()) {
-            point = point.add(direction.arrow);
+            Point newPoint = point.add(direction.arrow);
+            for (Entity entity : m.entities()) {
+                if (entity.getPoint().equals(newPoint) && !entity.equals(this)) {
+                    if (!(entity instanceof WallTile)) {
+                        point = newPoint;
+                    }
+                }
+            }
         }
     }
     @Override
