@@ -2,7 +2,6 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
-import nz.ac.vuw.ecs.swen225.gp22.renderer.MoveAnimation;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 
@@ -10,15 +9,28 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Chap's Challenge
  * @author Kevin Zeng
  * ID: 300563468
  */
 public class ChapsChallenge extends JFrame{
+    int timeLeft;
+
+    /**
+     * Creates a new instance of Chaps Challenge
+     */
     ChapsChallenge() {
         assert SwingUtilities.isEventDispatchThread();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        levelOne();
+    }
+
+    /**
+     * Starts up level one
+     */
+    private void levelOne() {
         Renderer renderer = new Renderer();
         List<Entity> entities = new ArrayList<>();
         for (int i=0;i<20;i++) {
@@ -31,7 +43,6 @@ public class ChapsChallenge extends JFrame{
                 }
             }
         }
-
         Player p = new Player(new Point(3, 4));
         entities.add(p);
         renderer.update(p.getPoint().x(), p.getPoint().y(), entities, new ArrayList<>());
@@ -46,7 +57,6 @@ public class ChapsChallenge extends JFrame{
             renderer.repaint();
         }).start();
 
-        //Phase one
         Controller controller = new Controller(p);
         JPanel viewport = new JPanel();
         viewport.setFocusable(true);
