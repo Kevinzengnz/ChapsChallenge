@@ -1,11 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
-
 import java.util.Random;
-
 /**
- * Point class for representing points in the game board
- * @author Alicia Robinson
- * ID: 300560663
+ * @author Alicia Robinson - 300560663
  */
 public record Point(int x, int y){
     //Note: x==width, y==height
