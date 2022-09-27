@@ -4,6 +4,7 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
+import nz.ac.vuw.ecs.swen225.gp22.recorder.GameRecorder;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 
@@ -19,6 +20,7 @@ record Phase(Model model, Controller controller, Renderer renderer) {
 
     static Phase newLevel(Runnable next, Runnable first, List<Entity> levelEntities) {
         Renderer renderer = new Renderer();
+        GameRecorder recorder = new GameRecorder();
         Player p = new Player(new Point(3, 4)); //default location of player
         levelEntities.add(p);
 
@@ -45,6 +47,11 @@ record Phase(Model model, Controller controller, Renderer renderer) {
             @Override
             public List<Entity> entities() {
                 return entities;
+            }
+
+            @Override
+            public GameRecorder recorder() {
+                return recorder;
             }
 
             @Override
