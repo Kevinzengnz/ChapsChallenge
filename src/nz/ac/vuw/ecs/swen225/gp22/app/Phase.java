@@ -9,7 +9,6 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 /**
  * Phase of Chaps Challenge
@@ -34,7 +33,7 @@ record Phase(Model model, Controller controller, Renderer renderer) {
                 }
             }
         }
-        renderer.update(p.getPoint().x(), p.getPoint().y(), levelEntities, new ArrayList<>());
+        renderer.ping(p.getPoint(), levelEntities, new ArrayList<>());
         var m = new Model() {
             List<Entity> entities = levelEntities;
 
