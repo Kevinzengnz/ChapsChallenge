@@ -1,0 +1,76 @@
+package nz.ac.vuw.ecs.swen225.gp22.app;
+
+import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
+import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
+
+/**
+ * Phase of Chaps Challenge
+ * @author Kevin Zeng
+ * ID: 300563468
+ */
+record Phase(Model model, Controller controller) {
+
+    static Phase newLevel(Runnable next, Runnable first, List<Entity> levelEntities) {
+        Player p = new Player(new Point(3, 4)); //default location of player
+        levelEntities.add(p);
+        Tile[][] tiles = new Tile[20][20]; //default square of tiles
+        for (int i=0;i<20;i++) {
+            for (int j=0;j<20;j++) {
+                if (i == 0 || j == 0 || i==19 || j == 19) {
+                    tiles[i][j] = new Tile(Sprite.WALL, new Point(i, j));
+                }
+                else {
+                    tiles[i][j] = new Tile(Sprite.FLOOR, new Point(i, j));
+                }
+            }
+        }
+
+        var m = new Model() {
+            List<Entity> entities = levelEntities;
+
+            @Override
+            public Player player() {
+                return p;
+            }
+
+            @Override
+            public List<Entity> entities() {
+                return entities;
+            }
+
+            @Override
+            public void remove(Entity e) {
+                entities = entities.stream()
+                        .filter(ei -> !ei.equals(e))
+                        .toList();
+            }
+
+            @Override
+            public Tile[][] tiles() {
+                return tiles;
+            }
+
+            @Override
+            public void onGameOver() {
+                first.run();
+            }
+
+            @Override
+            public void onNextLevel() {
+                next.run();
+            }
+        };
+        return new Phase(m, new Controller(p));
+    }
+
+    static Phase level1(Runnable next, Runnable first) {
+        return newLevel(next, first, new ArrayList<>(List.of()));
+    }
+}
