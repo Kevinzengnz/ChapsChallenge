@@ -17,8 +17,8 @@ public class RecTesting {
         r.startRecording("test_replay", "test_level");
         for(int i=0; i<60; i++){
             if(i%2==0) {
-                r.onAction(i % 3);
-                r.onAction(i % 3);
+                r.ping(i % 3);
+                r.ping(i % 3);
             }
         }
         r.endRecording();

@@ -21,13 +21,14 @@ public class GameRecorder implements Recorder{
     private List<Integer> frameHistory;
     private String level;
     private int frame = 0;
-    private int prev = -1;
+    private int prevDir = -1;
 
     /**
      * Start recording the current game into the specified save file path.
      * @param replayFile File to save recording into.
      * @param level Name of current level to be recorded.
      */
+    @Override
     public void startRecording(String replayFile, String level){
         if(!this.isRecording) {
             this.level=level;
@@ -41,6 +42,7 @@ public class GameRecorder implements Recorder{
     /**
      * Ends the recording of the game and saves the replay file.
      */
+    @Override
     public void endRecording(){
         if(this.isRecording) {
             saveRecording();
@@ -52,12 +54,13 @@ public class GameRecorder implements Recorder{
      * Call this function every time an action takes place in the game. Will save the action to history for recording.
      * @param dir Ordinal of direction.
      */
-    public void onAction(int dir){
+    @Override
+    public void ping(int dir){
         this.frame++;
-        if(this.isRecording && this.prev!=dir){
+        if(this.isRecording && this.prevDir !=dir){
             this.actionHistory.add(dir);
             this.frameHistory.add(this.frame);
-            this.prev=dir;
+            this.prevDir=dir;
             //Remove below for final
             RecTesting.log("Recorder", "onAction", "Added action "+dir);
         }
