@@ -92,7 +92,7 @@ public class GameRecorder implements Recorder{
         }
 
         try {
-            XmlParser.write(doc, this.replayFile+".xml", "Replays/");
+            XmlParser.write(doc, this.replayFile, "Replays/");
             RecTesting.log("GameRecorder", "saveRecording", "Saved replay to Replays/"+this.replayFile);
         } catch (IOException e) {
             RecTesting.log("GameRecorder", "saveRecording", "IOException : "+e.getMessage());
