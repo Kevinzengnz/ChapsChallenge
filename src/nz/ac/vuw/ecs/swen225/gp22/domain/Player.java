@@ -1,6 +1,7 @@
 //Alicia Robinson 300560663
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import nz.ac.vuw.ecs.swen225.gp22.app.Model;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 
 import java.util.ArrayList;
@@ -22,8 +23,28 @@ public class Player extends Actor{
     public List<Key> getKeys(){
         return keys;
     }
-    public void move(){
-        point = point.add(direction.arrow);
+    @Override
+    public void ping(Model m){
+        Point oldPoint = this.getPoint();
+        point.add(direction.arrow);
+        Point newPoint = this.getPoint();
+        if(!oldPoint.equals(newPoint)){
+            for (Entity entity : m.entities()) {
+                if (entity.getPoint().equals(this.getPoint()) && !entity.equals(this)) {
+                    if (entity instanceof WallTile) {
+                        throw new IllegalArgumentException("player cannot be moved into a wall");
+                    }
+                    else if (entity instanceof Key) {
+                        this.addKey((Key) entity);
+                        m.remove(entity);
+                    }
+                    else if (entity instanceof Treasure) {
+                        m.remove(entity);
+                        this.addTreasure();
+                    }
+                }
+            }
+        }
     }
     @Override
     public Sprite getSprite() {
