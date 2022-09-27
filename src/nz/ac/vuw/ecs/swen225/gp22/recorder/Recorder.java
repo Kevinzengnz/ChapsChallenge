@@ -1,13 +1,16 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
-import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
-import nz.ac.vuw.ecs.swen225.gp22.app.*;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+//XML
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 /**
  * Recorder class that will handle recording a game.
@@ -17,7 +20,7 @@ import java.util.List;
 public class Recorder {
     private boolean isRecording;
     private String replayFile;
-    private List<Action> actionHistory;
+    private List<Integer> actionHistory;
 
     /**
      * Start recording the current game into the specified save file path.
@@ -43,10 +46,13 @@ public class Recorder {
 
     /**
      * Call this function every time an action takes place in the game. Will save the action to history for recording.
+     * @param action Key code of action.
      */
-    public void onAction(Action action){
+    public void onAction(int action){
         if(this.isRecording){
             this.actionHistory.add(action);
+            //Remove below for final
+            RecTesting.log("Recorder", "onAction", "Added action "+action);
         }
     }
 
@@ -62,6 +68,20 @@ public class Recorder {
      * Saves recording into the replay file.
      */
     private void saveRecording(){
+        Document doc = DocumentHelper.createDocument();
+        Element root = doc.addElement("root");
+        Element player = root.addElement("Player");
 
+        for(int i : actionHistory){
+            player.addElement("action").addAttribute("dir", String.valueOf(i));
+        }
+
+        try {
+            FileWriter out = new FileWriter(new File("Replays/", this.replayFile+".xml"));
+            doc.write(out);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
