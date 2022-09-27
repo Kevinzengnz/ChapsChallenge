@@ -1,12 +1,11 @@
-//Alicia Robinson 300560663
 package nz.ac.vuw.ecs.swen225.gp22.domain;
-
 import nz.ac.vuw.ecs.swen225.gp22.app.Model;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
-
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Alicia Robinson - 300560663
+ */
 public class Player extends Actor{
     int treasureCollected = 0;
     List<Key> keys = new ArrayList<>();
@@ -49,11 +48,11 @@ public class Player extends Actor{
     @Override
     public Sprite getSprite() {
         return switch (getDirection()) {
-            case None  -> null;
-            case Up    -> Sprite.PLAYER_UP;
-            case Right -> Sprite.PLAYER_RIGHT;
-            case Down  -> Sprite.PLAYER_DOWN;
-            case Left  -> Sprite.PLAYER_LEFT;
+            case None  -> this.sprite;
+            case Up    -> this.sprite = Sprite.PLAYER_UP;
+            case Right -> this.sprite = Sprite.PLAYER_RIGHT;
+            case Down  -> this.sprite = Sprite.PLAYER_DOWN;
+            case Left  -> this.sprite = Sprite.PLAYER_LEFT;
         };
     }
 }
