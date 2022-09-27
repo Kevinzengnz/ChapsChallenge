@@ -29,6 +29,7 @@ class FuzzTest {
 		}
 		return es;
 	}
+	
 	/**
 	 * @author Hayden Curtis
 	 * test1() : fuzz tests for level 1
@@ -36,7 +37,6 @@ class FuzzTest {
 	@Test
 	public void test1() {
 		//Player Movements
-		Random r = new Random();
 		Player p = new Player(new Point(3, 4));
 		var m = new Model() {
 			@Override
@@ -52,9 +52,8 @@ class FuzzTest {
 			@Override
 			public void onNextLevel() {}
 		};
-		List<Integer> events = List.of(KeyEvent.VK_UP);
-//		checkMovement(events, p, new Point(3, 3), m);
-		System.out.println(genEvents(5) + " Helloooo");
+		List<Integer> events = genEvents(10);
+		checkMovement(events, p, new Point(3, 4), m);
 	}
 	
 	void checkMovement(List<Integer> events, Player p, Point point, Model m) {
