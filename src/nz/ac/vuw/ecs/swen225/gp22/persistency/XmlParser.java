@@ -214,12 +214,6 @@ public class XmlParser {
         } catch (DocumentException e) {
             e.printStackTrace();
         }
-
-        //print the list to check if it's correct
-        for (Entity e : entities) {
-            System.out.println(e.getSprite() + " " + e.getPoint().x() + " " + e.getPoint().y());
-        }
-
         return entities;
     }
 
