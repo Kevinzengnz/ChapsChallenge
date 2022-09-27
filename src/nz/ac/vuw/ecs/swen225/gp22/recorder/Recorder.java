@@ -13,7 +13,7 @@ public interface Recorder {
     void endRecording();
     /**
      * Call this function every time an action takes place in the game.
-     * @param keyCode Key code of action.
+     * @param dir Ordinal of Direction.
      */
-    void onAction(int keyCode);
+    void onAction(int dir);
 }

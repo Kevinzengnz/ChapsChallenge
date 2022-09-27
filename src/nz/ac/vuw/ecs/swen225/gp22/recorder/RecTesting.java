@@ -13,7 +13,7 @@ public class RecTesting {
     }
 
     public static void createMockReplay(){
-        GameRecorder r = new GameRecorder();
+        Recorder r = new GameRecorder();
         r.startRecording("test_replay", "test_level");
         for(int i=0; i<30; i++){
             r.onAction(37+i%3);

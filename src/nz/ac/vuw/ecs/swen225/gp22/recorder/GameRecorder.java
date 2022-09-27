@@ -46,13 +46,13 @@ public class GameRecorder implements Recorder{
 
     /**
      * Call this function every time an action takes place in the game. Will save the action to history for recording.
-     * @param action Key code of action.
+     * @param dir Ordinal of direction.
      */
-    public void onAction(int action){
+    public void onAction(int dir){
         if(this.isRecording){
-            this.actionHistory.add(action);
+            this.actionHistory.add(dir);
             //Remove below for final
-            RecTesting.log("Recorder", "onAction", "Added action "+action);
+            RecTesting.log("Recorder", "onAction", "Added action "+dir);
         }
     }
 
