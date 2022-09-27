@@ -1,14 +1,9 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
-import nz.ac.vuw.ecs.swen225.gp22.domain.*;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
-import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Chap's Challenge
@@ -25,7 +20,6 @@ public class ChapsChallenge extends JFrame{
         assert SwingUtilities.isEventDispatchThread();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1366, 768);
-        setVisible(true);
         levelOne();
     }
 
@@ -43,6 +37,7 @@ public class ChapsChallenge extends JFrame{
     void setPhase(Phase p){
         Renderer renderer = p.renderer();
         add(renderer);
+        setVisible(true);
 
         //Creates timer, so it runs in approximately 30 frames per second
         new Timer(34,unused->{
