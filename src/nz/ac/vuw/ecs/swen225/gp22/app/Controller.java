@@ -6,12 +6,16 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
 import java.awt.event.KeyEvent;
 
 /**
- *
+ * Controller class
  * @author Kevin Zeng
  * ID: 300563468
  */
 public class Controller extends Keys{
 
+    /**
+     * Initialises a new controller
+     * @param c Chap player object
+     */
     Controller(Player c){
         //UP, DOWN, LEFT, RIGHT ARROWS -- move Chap within the maze
         setAction(KeyEvent.VK_UP,() -> { c.setMoving(true); c.setDirection(Direction.Up);},() -> c.setMoving(false));
