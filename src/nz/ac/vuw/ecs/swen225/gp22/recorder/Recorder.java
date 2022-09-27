@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 //XML
+import nz.ac.vuw.ecs.swen225.gp22.persistency.XmlParser;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -77,11 +78,9 @@ public class Recorder {
         }
 
         try {
-            FileWriter out = new FileWriter(new File("Replays/", this.replayFile+".xml"));
-            doc.write(out);
-            out.close();
+            XmlParser.write(doc, this.replayFile+".xml", "Replays/");
         } catch (IOException e) {
-            e.printStackTrace();
+            RecTesting.log("Recorder", "saveRecording", "IOException : "+e.getMessage());
         }
     }
 }
