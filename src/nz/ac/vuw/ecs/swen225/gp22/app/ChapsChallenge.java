@@ -14,7 +14,9 @@ import java.util.ArrayList;
  * ID: 300563468
  */
 public class ChapsChallenge extends JFrame{
-    Runnable closePhase = ()->System.exit(0);
+    Runnable closePhase = ()->{
+        System.exit(0);
+    };
     int pings;
 
     /**
@@ -50,13 +52,19 @@ public class ChapsChallenge extends JFrame{
         //Creates timer, so it runs in approximately 30 frames per second
         new Timer(34,unused->{
             assert SwingUtilities.isEventDispatchThread();
-            renderer.ping(p.model().player().getPoint(), p.model().entities(), new ArrayList<>());
             pings++;
             if(pings % 4 == 0) {
                 p.model().ping();
             }
+            renderer.ping(p.model().player().getPoint(), p.model().entities(), new ArrayList<>());
+
             renderer.repaint();
         }).start();
+
+        closePhase = ()->{
+            p.model().recorder().endRecording();
+            System.exit(0);
+        };
 
         JPanel viewport = new JPanel();
         viewport.setFocusable(true);
