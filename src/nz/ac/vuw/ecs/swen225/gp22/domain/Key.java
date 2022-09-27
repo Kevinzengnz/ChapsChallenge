@@ -1,8 +1,8 @@
-//Alicia Robinson 300560663
 package nz.ac.vuw.ecs.swen225.gp22.domain;
-
 import java.util.Objects;
-
+/**
+ * @author Alicia Robinson - 300560663
+ */
 public class Key extends Collectable{
     Colours colour;
     public Key(String colourString, Point point) {
