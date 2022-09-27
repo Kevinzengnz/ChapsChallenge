@@ -36,7 +36,7 @@ public class Renderer extends JPanel {
      * @param allEntities list of all entities in the game requiring rendering
      * @param keys list of keys in the players inventory
      */
-    public void update(Point cameraPosition, List<Entity> allEntities, List<Key> keys) {
+    public void ping(Point cameraPosition, List<Entity> allEntities, List<Key> keys) {
         camera.update(cameraPosition);
         // Update inventory
         inventory.clear();
