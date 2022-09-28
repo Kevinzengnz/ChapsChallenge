@@ -1,3 +1,7 @@
 nz.ac.vuw.ecs.swen225.gp22.recorder.GameRecorder.java : Line 61
 nz.ac.vuw.ecs.swen225.gp22.recorder.GameRecorder.java : Line 94
 nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer.java     : Line 40
+nz.ac.vuw.ecs.swen225.gp22.domain.Player              : Line 27
+nz.ac.vuw.ecs.swen225.gp22.persistency.XmlParser      : Line 50
+nz.ac.vuw.ecs.swen225.gp22.app.ChapsChallenge         : Line 68
+test.nz.ac.vuw.ecs.swen225.gp22.fuzz.FuzzTest         : Line 81
