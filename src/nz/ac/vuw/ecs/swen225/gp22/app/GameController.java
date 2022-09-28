@@ -31,7 +31,7 @@ public class GameController extends Keys {
 
         //CTRL-R - resume a saved game -- this will pop up a file selector to select a saved game
         //to be loaded
-        setCtrlAction(KeyEvent.VK_R,() -> {},() -> System.out.println("resume saved game"));
+        setCtrlAction(KeyEvent.VK_R,() -> {},c::loadGame);
 
         //CTRL-1 - start a new game at level 1
         setCtrlAction(KeyEvent.VK_1,() -> {}, c::levelOne);

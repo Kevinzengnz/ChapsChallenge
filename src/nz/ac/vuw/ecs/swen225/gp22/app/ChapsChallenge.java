@@ -99,6 +99,15 @@ public class ChapsChallenge extends JFrame{
         renderer.requestFocus();
     }
 
+    public void loadGame() {
+        JFileChooser fileChooser = new JFileChooser("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/");
+        if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            String fileName = fileChooser.getSelectedFile().getPath();
+            setPhase(Phase.loadLevel(fileName));
+        }; //select file to open
+
+    }
+
     public void pauseGame() {
         timer.stop();
     }
