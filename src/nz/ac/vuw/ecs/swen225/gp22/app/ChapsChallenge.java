@@ -14,9 +14,10 @@ import java.util.ArrayList;
  * ID: 300563468
  */
 public class ChapsChallenge extends JFrame{
-    Runnable closePhase = ()-> System.exit(0);
-
-    int pings;
+    private Runnable closePhase = ()-> System.exit(0);
+    private int pings; //number of frames ran from start of game
+    private Phase currentPhase;
+    private GameController gameController;
 
     /**
      * Creates a new instance of Chaps Challenge
@@ -28,22 +29,33 @@ public class ChapsChallenge extends JFrame{
         addWindowListener(new WindowAdapter(){
             @Override
             public void windowClosed(WindowEvent e){closePhase.run();} });
+        gameController = new GameController(this);
+
 
         levelOne();
     }
 
+
     /**
      * Starts up level one
      */
-    private void levelOne() {
+    public void levelOne() {
         setPhase(Phase.level1(this::levelOne, this::levelOne));
+    }
+
+    /**
+     * Starts up level two
+     */
+    public void levelTwo() {
+        setPhase(Phase.level2(this::levelTwo, this::levelTwo));
     }
 
     /**
      * Sets up the timer and the viewport
      * @param p Phase
      */
-    void setPhase(Phase p){
+    private void setPhase(Phase p){
+        currentPhase = p;
         Renderer renderer = p.renderer();
         add(renderer);
         setVisible(true);
@@ -74,11 +86,28 @@ public class ChapsChallenge extends JFrame{
 
         renderer.setFocusable(true);
         setPreferredSize(getSize());//to keep the current size
+
         renderer.addKeyListener(p.controller());
+        renderer.addKeyListener(gameController);
+
         add(BorderLayout.CENTER,renderer);
         add(BorderLayout.WEST,startRecording);
         add(BorderLayout.EAST,endRecording);
         pack();                     //after pack
         renderer.requestFocus();
     }
+
+    public void saveAndExit() {
+        saveGame();
+        exitGame();
+    }
+
+    public void saveGame() {
+        currentPhase.model().saveGame();
+    }
+
+    public void exitGame() {
+        closePhase.run();
+    }
+
 }

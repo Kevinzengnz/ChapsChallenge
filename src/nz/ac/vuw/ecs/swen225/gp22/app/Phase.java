@@ -17,7 +17,7 @@ import java.util.List;
  * @author Kevin Zeng
  * ID: 300563468
  */
-record Phase(Model model, Controller controller, Renderer renderer) {
+record Phase(Model model, PlayerController controller, Renderer renderer) {
 
     static Phase newLevel(Runnable next, Runnable first, List<Entity> levelEntities) {
         Renderer renderer = new Renderer();
@@ -60,7 +60,7 @@ record Phase(Model model, Controller controller, Renderer renderer) {
                 next.run();
             }
         };
-        return new Phase(m, new Controller(m),renderer);
+        return new Phase(m, new PlayerController(p),renderer);
     }
 
     /**
@@ -71,7 +71,23 @@ record Phase(Model model, Controller controller, Renderer renderer) {
      */
     static Phase level1(Runnable next, Runnable first) {
         List<Entity> levelEntities = XmlParser.loadGame("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/levelOne.xml");
-
         return newLevel(next, first, levelEntities);
+    }
+
+    /**
+     * Loads the second level from the levelTwo.xml file
+     * @param next runnable to perform after finishing this level
+     * @param first runnable to perform after failing this level
+     * @return new phase created from entities in levelTwo file
+     */
+    static Phase level2(Runnable next, Runnable first) {
+        List<Entity> levelEntities = XmlParser.loadGame("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/levelTwo.xml");
+        return newLevel(next, first, levelEntities);
+    }
+
+    static Phase loadLevel() {
+        List<Entity> levelEntities = XmlParser.loadGame("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/levelOne.xml");
+
+        return newLevel(()->{}, ()->{}, levelEntities);
     }
 }
