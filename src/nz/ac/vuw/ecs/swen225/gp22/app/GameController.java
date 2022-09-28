@@ -4,7 +4,9 @@ import java.awt.event.KeyEvent;
 
 /**
  * GameController class
- *
+ * GameController has access to chaps challenge, and so has commands which
+ * can interact with the state of the game, such as saving, loading,
+ * pausing/unpausing and exiting the game
  * @author Kevin Zeng
  * ID: 300563468
  */

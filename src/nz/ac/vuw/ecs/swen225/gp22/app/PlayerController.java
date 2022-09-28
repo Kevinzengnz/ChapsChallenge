@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 
 /**
  * PlayerController class
- *
+ * PlayerController only has keys for controlling/moving the player
  * @author Kevin Zeng
  * ID: 300563468
  */
