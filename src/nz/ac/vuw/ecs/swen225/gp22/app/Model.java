@@ -10,7 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
- * Model
+ * Model class
+ * Stores information on the game state
  * @author Kevin Zeng
  * ID: 300563468
  */
@@ -22,7 +23,10 @@ public interface Model{
     void onGameOver();
     void onNextLevel();
 
-
+    /**
+     * Saves the current game to an xml file in the format
+     * "saveGame" + timeStamp
+     */
     default void saveGame()   {
         try {
             String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
@@ -33,6 +37,11 @@ public interface Model{
         }
     }
 
+    /**
+     * One step of the game.
+     * "Pings" each entity in the model, ie each entity performs
+     * whatever their designated action is for each step of the game.
+     */
     default void ping(){
         entities().forEach(a -> a.ping(this));
         recorder().ping(player().getDirection().ordinal());
