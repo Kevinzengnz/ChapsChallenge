@@ -18,6 +18,7 @@ public class ChapsChallenge extends JFrame{
     private int pings; //number of frames ran from start of game
     private Phase currentPhase;
     private GameController gameController;
+    private Timer timer;
 
     /**
      * Creates a new instance of Chaps Challenge
@@ -61,7 +62,7 @@ public class ChapsChallenge extends JFrame{
         setVisible(true);
 
         //Creates timer, so it runs in approximately 30 frames per second
-        new Timer(34,unused->{
+        timer = new Timer(34,unused->{
             assert SwingUtilities.isEventDispatchThread();
             pings++;
             if(pings % 4 == 0) {
@@ -69,7 +70,8 @@ public class ChapsChallenge extends JFrame{
             }
             renderer.ping(p.model().player().getPoint(), p.model().entities(), new ArrayList<>());
             renderer.repaint();
-        }).start();
+        });
+        timer.start();
 
         closePhase = ()->{
             p.model().recorder().endRecording();
@@ -95,6 +97,23 @@ public class ChapsChallenge extends JFrame{
         add(BorderLayout.EAST,endRecording);
         pack();                     //after pack
         renderer.requestFocus();
+    }
+
+    public void loadGame() {
+        JFileChooser fileChooser = new JFileChooser("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/");
+        if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            String fileName = fileChooser.getSelectedFile().getPath();
+            setPhase(Phase.loadLevel(fileName));
+        }; //select file to open
+
+    }
+
+    public void pauseGame() {
+        timer.stop();
+    }
+
+    public void unPauseGame() {
+        timer.start();
     }
 
     public void saveAndExit() {

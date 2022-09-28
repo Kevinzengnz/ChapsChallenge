@@ -2,12 +2,9 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Tile;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.XmlParser;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.GameRecorder;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
-import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,9 +82,8 @@ record Phase(Model model, PlayerController controller, Renderer renderer) {
         return newLevel(next, first, levelEntities);
     }
 
-    static Phase loadLevel() {
-        List<Entity> levelEntities = XmlParser.loadGame("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/levelOne.xml");
-
+    static Phase loadLevel(String fileName) {
+        List<Entity> levelEntities = XmlParser.loadGame(fileName);
         return newLevel(()->{}, ()->{}, levelEntities);
     }
 }
