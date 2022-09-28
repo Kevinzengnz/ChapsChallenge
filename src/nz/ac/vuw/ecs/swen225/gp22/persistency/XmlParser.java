@@ -187,7 +187,7 @@ public class XmlParser {
                 else if (e.getName().equals("InfoTile")){
                     int x = Integer.parseInt(e.attributeValue("x"));
                     int y = Integer.parseInt(e.attributeValue("y"));
-                    InfoTile infoTile = new InfoTile(new Point(x, y));
+                    InfoTile infoTile = new InfoTile(new Point(x, y), "");
                     entities.add(infoTile);
                 }
                 else if (e.getName().equals("Treasure")){
