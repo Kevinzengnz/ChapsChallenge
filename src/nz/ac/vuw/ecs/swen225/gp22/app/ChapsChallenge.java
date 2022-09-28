@@ -35,7 +35,6 @@ public class ChapsChallenge extends JFrame{
         levelOne();
     }
 
-
     /**
      * Starts up level one
      */
@@ -61,6 +60,7 @@ public class ChapsChallenge extends JFrame{
         setVisible(true);
 
         if(timer != null) timer.stop();
+        pings = 0;
 
         //Creates timer, so it runs in approximately 30 frames per second
         timer = new Timer(34,unused->{
