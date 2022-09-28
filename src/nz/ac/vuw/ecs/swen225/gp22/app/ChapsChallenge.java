@@ -17,7 +17,7 @@ public class ChapsChallenge extends JFrame{
     private Runnable closePhase = ()-> System.exit(0);
     private int pings; //number of frames ran from start of game
     private Phase currentPhase;
-    private GameController gameController;
+    private final GameController gameController;
     private Timer timer;
 
     /**
@@ -31,7 +31,6 @@ public class ChapsChallenge extends JFrame{
             @Override
             public void windowClosed(WindowEvent e){closePhase.run();} });
         gameController = new GameController(this);
-
 
         levelOne();
     }
@@ -99,32 +98,50 @@ public class ChapsChallenge extends JFrame{
         renderer.requestFocus();
     }
 
+    /**
+     * Loads a game from a file, which user chooses from file chooser
+     */
     public void loadGame() {
         JFileChooser fileChooser = new JFileChooser("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/");
         if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             String fileName = fileChooser.getSelectedFile().getPath();
             setPhase(Phase.loadLevel(fileName));
-        }; //select file to open
+        }
 
     }
 
+    /**
+     * Pauses the game
+     */
     public void pauseGame() {
         timer.stop();
     }
 
+    /**
+     * If the game is paused, unpauses it
+     */
     public void unPauseGame() {
         timer.start();
     }
 
+    /**
+     * Saves the current state of the game, and exits
+     */
     public void saveAndExit() {
         saveGame();
         exitGame();
     }
 
+    /**
+     * Saves the current phase of the game to an xml file
+     */
     public void saveGame() {
         currentPhase.model().saveGame();
     }
 
+    /**
+     * Exits the game
+     */
     public void exitGame() {
         closePhase.run();
     }
