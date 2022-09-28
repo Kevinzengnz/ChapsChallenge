@@ -60,6 +60,8 @@ public class ChapsChallenge extends JFrame{
         add(renderer);
         setVisible(true);
 
+        if(timer != null) timer.stop();
+
         //Creates timer, so it runs in approximately 30 frames per second
         timer = new Timer(34,unused->{
             assert SwingUtilities.isEventDispatchThread();
@@ -107,7 +109,6 @@ public class ChapsChallenge extends JFrame{
             String fileName = fileChooser.getSelectedFile().getPath();
             setPhase(Phase.loadLevel(fileName));
         }
-
     }
 
     /**
