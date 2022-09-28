@@ -1,67 +1,19 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
-import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
-import nz.ac.vuw.ecs.swen225.gp22.app.*;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Recorder class that will handle recording a game.
- * @author Sankeerth Alookaran
- * ID: 300565439
- */
-public class Recorder {
-    private boolean isRecording;
-    private String replayFile;
-    private List<Action> actionHistory;
-
+public interface Recorder {
     /**
      * Start recording the current game into the specified save file path.
      * @param replayFile File to save recording into.
+     * @param level Name of current level to be recorded.
      */
-    public void startRecording(String replayFile){
-        if(!this.isRecording) {
-            this.actionHistory = new ArrayList<>();
-            this.replayFile = replayFile;
-            setRecording(true);
-        }
-    }
-
+    void startRecording(String replayFile, String level);
     /**
-     * Ends the recording of the game and saves the replay file.
+     * Ends the recording of the game.
      */
-    public void endRecording(){
-        if(this.isRecording) {
-            saveRecording();
-            setRecording(false);
-        }
-    }
-
+    void endRecording();
     /**
-     * Call this function every time an action takes place in the game. Will save the action to history for recording.
+     * Call this function every time an action takes place in the game.
+     * @param dir Ordinal of Direction.
      */
-    public void onAction(Action action){
-        if(this.isRecording){
-            this.actionHistory.add(action);
-        }
-    }
-
-    /**
-     * Sets recording state true or false.
-     * @param isRecording true if game should be recorded.
-     */
-    private void setRecording(boolean isRecording){
-        this.isRecording=isRecording;
-    }
-
-    /**
-     * Saves recording into the replay file.
-     */
-    private void saveRecording(){
-
-    }
+    void ping(int dir);
 }

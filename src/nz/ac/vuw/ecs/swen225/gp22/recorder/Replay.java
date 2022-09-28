@@ -1,5 +1,12 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
+import nz.ac.vuw.ecs.swen225.gp22.persistency.XmlParser;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+
+import javax.print.Doc;
+import java.io.File;
+
 /**
  * Replay class that will handle replaying a saved game.
  * @author Sankeerth Alookaran
@@ -13,7 +20,14 @@ public class Replay {
      * @param replayName File name of recording.
      */
     public void loadReplay(String replayName){
+        Document replay = null;
+        try {
+            replay = new XmlParser().parse(new File("Replays/" + replayName + ".xml"));
+        } catch (DocumentException de) {
+            RecTesting.log("Replay", "loadReplay", "Error loading replay file");
+        }
 
+        RecTesting.log("Replay", "loadReplay", replay.asXML());
     }
 
     /**

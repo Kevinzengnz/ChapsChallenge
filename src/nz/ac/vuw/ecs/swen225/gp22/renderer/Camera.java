@@ -1,5 +1,12 @@
 package nz.ac.vuw.ecs.swen225.gp22.renderer;
 
+import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
+
+/**
+ * Class to represent the camera. Has support for animation.
+ * @author Oliver Silk
+ * ID: 300564261
+ */
 public class Camera {
     protected final int visionSize = 9;
     protected final int visionDistance = (visionSize-1)/2;
@@ -16,10 +23,10 @@ public class Camera {
         this.tileY = tileY;
     }
 
-    public void update(int newX, int newY) {
-        tileX = newX;
-        tileY = newY;
-        if (animation != null) animation.update();
+    public void update(Point position) {
+        tileX = position.x();
+        tileY = position.y();
+        if (animation != null) animation.ping();
     }
 
 
@@ -40,6 +47,10 @@ public class Camera {
 
     public void addAnimation(Animation newAnimation) {
         this.animation = newAnimation;
+    }
+
+    public void removeAnimation() {
+        this.animation = null;
     }
 
 }
