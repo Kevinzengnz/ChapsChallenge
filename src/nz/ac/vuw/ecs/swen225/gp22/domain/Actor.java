@@ -10,7 +10,7 @@ public class Actor implements Entity{
     protected Direction direction = Direction.Down;
     protected int depth = 2;
     public void setMoving(boolean moving){ this.moving = moving; }
-    public boolean getMoving(){ return this.moving; }
+    public boolean isMoving(){ return this.moving; }
     public Actor(Sprite sprite, Point point) {
         this.sprite = sprite;
         this.point = point;
