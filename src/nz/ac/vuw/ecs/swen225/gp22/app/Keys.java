@@ -24,8 +24,9 @@ public class Keys implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e){
         assert SwingUtilities.isEventDispatchThread();
-        actionsPressed.getOrDefault(e.getKeyCode(),()->{}).run();
-        if(e.isControlDown()) {
+        if(!e.isControlDown()) {
+            actionsPressed.getOrDefault(e.getKeyCode(), () -> {}).run();
+        } else {
             ctrlActionsPressed.getOrDefault(e.getKeyCode(), () -> {}).run();
         }
     }
@@ -33,8 +34,9 @@ public class Keys implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e){
         assert SwingUtilities.isEventDispatchThread();
-        actionsReleased.getOrDefault(e.getKeyCode(),()->{}).run();
-        if(e.isControlDown()) {
+        if(!e.isControlDown()) {
+            actionsReleased.getOrDefault(e.getKeyCode(), () -> {}).run();
+        } else {
             ctrlActionsReleased.getOrDefault(e.getKeyCode(), () -> {}).run();
         }
     }

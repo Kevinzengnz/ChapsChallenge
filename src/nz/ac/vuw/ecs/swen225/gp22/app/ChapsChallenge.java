@@ -14,10 +14,11 @@ import java.util.ArrayList;
  * ID: 300563468
  */
 public class ChapsChallenge extends JFrame{
-    Runnable closePhase = ()->{
-        System.exit(0);
-    };
-    int pings;
+    private Runnable closePhase = ()-> System.exit(0);
+    private int pings; //number of frames ran from start of game
+    private Phase currentPhase;
+    private GameController gameController;
+    private Timer timer;
 
     /**
      * Creates a new instance of Chaps Challenge
@@ -29,51 +30,103 @@ public class ChapsChallenge extends JFrame{
         addWindowListener(new WindowAdapter(){
             @Override
             public void windowClosed(WindowEvent e){closePhase.run();} });
+        gameController = new GameController(this);
+
 
         levelOne();
     }
 
+
     /**
      * Starts up level one
      */
-    private void levelOne() {
-        setPhase(Phase.level1(()->levelOne(),()->levelOne()));
+    public void levelOne() {
+        setPhase(Phase.level1(this::levelOne, this::levelOne));
+    }
+
+    /**
+     * Starts up level two
+     */
+    public void levelTwo() {
+        setPhase(Phase.level2(this::levelTwo, this::levelTwo));
     }
 
     /**
      * Sets up the timer and the viewport
      * @param p Phase
      */
-    void setPhase(Phase p){
+    private void setPhase(Phase p){
+        currentPhase = p;
         Renderer renderer = p.renderer();
         add(renderer);
         setVisible(true);
 
         //Creates timer, so it runs in approximately 30 frames per second
-        new Timer(34,unused->{
+        timer = new Timer(34,unused->{
             assert SwingUtilities.isEventDispatchThread();
             pings++;
             if(pings % 4 == 0) {
                 p.model().ping();
             }
             renderer.ping(p.model().player().getPoint(), p.model().entities(), new ArrayList<>());
-
             renderer.repaint();
-        }).start();
+        });
+        timer.start();
 
         closePhase = ()->{
             p.model().recorder().endRecording();
             System.exit(0);
         };
 
-        JPanel viewport = new JPanel();
-        viewport.setFocusable(true);
+        var startRecording=new JButton("Start recording");
+        var endRecording=new JButton("End recording");
+
+        startRecording.addActionListener(e -> p.model().recorder().startRecording("default.xml","level 1"));
+        endRecording.addActionListener(e -> p.model().recorder().endRecording());
+        startRecording.setFocusable(false);
+        endRecording.setFocusable(false);
+
+        renderer.setFocusable(true);
         setPreferredSize(getSize());//to keep the current size
-        viewport.addKeyListener(p.controller());
 
-        add(BorderLayout.CENTER,viewport);
+        renderer.addKeyListener(p.controller());
+        renderer.addKeyListener(gameController);
 
+        add(BorderLayout.CENTER,renderer);
+        add(BorderLayout.WEST,startRecording);
+        add(BorderLayout.EAST,endRecording);
         pack();                     //after pack
-        viewport.requestFocus();
+        renderer.requestFocus();
     }
+
+    public void loadGame() {
+        JFileChooser fileChooser = new JFileChooser("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/");
+        if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            String fileName = fileChooser.getSelectedFile().getPath();
+            setPhase(Phase.loadLevel(fileName));
+        }; //select file to open
+
+    }
+
+    public void pauseGame() {
+        timer.stop();
+    }
+
+    public void unPauseGame() {
+        timer.start();
+    }
+
+    public void saveAndExit() {
+        saveGame();
+        exitGame();
+    }
+
+    public void saveGame() {
+        currentPhase.model().saveGame();
+    }
+
+    public void exitGame() {
+        closePhase.run();
+    }
+
 }

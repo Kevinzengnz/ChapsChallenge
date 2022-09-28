@@ -6,6 +6,7 @@ import nz.ac.vuw.ecs.swen225.gp22.persistency.XmlParser;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.GameRecorder;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -24,7 +25,8 @@ public interface Model{
 
     default void saveGame()   {
         try {
-            XmlParser.saveGame(entities(), "levelOne");
+            String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+            XmlParser.saveGame(entities(), "saveGame" +timeStamp);
             recorder().endRecording();
         } catch(IOException e) {
             System.out.println("Error saving game");
