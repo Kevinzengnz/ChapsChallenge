@@ -35,7 +35,6 @@ public class ChapsChallenge extends JFrame{
         levelOne();
     }
 
-
     /**
      * Starts up level one
      */
@@ -59,6 +58,9 @@ public class ChapsChallenge extends JFrame{
         Renderer renderer = p.renderer();
         add(renderer);
         setVisible(true);
+
+        if(timer != null) timer.stop();
+        pings = 0;
 
         //Creates timer, so it runs in approximately 30 frames per second
         timer = new Timer(34,unused->{
@@ -107,7 +109,6 @@ public class ChapsChallenge extends JFrame{
             String fileName = fileChooser.getSelectedFile().getPath();
             setPhase(Phase.loadLevel(fileName));
         }
-
     }
 
     /**
