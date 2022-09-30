@@ -59,18 +59,18 @@ public class Keys implements KeyListener {
 
     //Getter Methods
     public Map<Integer, Runnable> getActionsReleased() {
-        return actionsReleased;
+        return new HashMap<>(actionsReleased);
     }
 
     public Map<Integer, Runnable> getCtrlActionsPressed() {
-        return ctrlActionsPressed;
+        return new HashMap<>(ctrlActionsPressed);
     }
 
     public Map<Integer, Runnable> getCtrlActionsReleased() {
-        return ctrlActionsReleased;
+        return new HashMap<>(ctrlActionsReleased);
     }
 
     public Map<Integer, Runnable> getActionsPressed() {
-        return actionsPressed;
+        return new HashMap<>(actionsPressed);
     }
 }
