@@ -18,7 +18,7 @@ public class Renderer extends JPanel {
 
     private final Camera camera = new Camera(5, 5);;
     // Drawing constants
-    private final int tileSize = 64;
+    private final static int tileSize = 64;
 
     Map<Key, Integer> inventory = new HashMap<>();
 
@@ -48,10 +48,12 @@ public class Renderer extends JPanel {
         animations.forEach(Animation::ping);
         animations.removeAll(animations.stream().filter(Animation::isFinished).toList());
 
-        for(Actor actor : actors.keySet()) {
+        for(Map.Entry<Actor, Point> actorEntry : actors.entrySet()) {
+            Actor actor = actorEntry.getKey();
+            Point point = actorEntry.getValue();
             for (Entity entity : allEntities) {
-                if (actor.equals(entity) && !actors.get(actor).equals(entity.getPoint())) {
-                    addAnimation(new WalkAnimation(actors.get(actor), entity.getPoint(), 4, entity));
+                if (actor.equals(entity) && !point.equals(entity.getPoint())) {
+                    addAnimation(new WalkAnimation(point, entity.getPoint(), 4, entity));
                 }
             }
         }
@@ -128,9 +130,9 @@ public class Renderer extends JPanel {
             g.drawRect(left + i * tileSize, top, tileSize, tileSize);
         }
         int i= 0;
-        for (Key key : inventory.keySet()) {
-            g.drawImage(key.getSprite().image, left + i * tileSize, top, null);
-            if (inventory.get(key) > 1) {
+        for (Map.Entry<Key, Integer> keyEntry : inventory.entrySet()) {
+            g.drawImage(keyEntry.getKey().getSprite().image, left + i * tileSize, top, null);
+            if (keyEntry.getValue() > 1) {
                 g.drawImage(Sprite.UI_TWO.image, left + i * tileSize, top, null);
             }
 

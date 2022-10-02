@@ -8,10 +8,10 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
  * ID: 300564261
  */
 public class Camera {
-    protected final int visionSize = 9;
-    protected final int visionDistance = (visionSize-1)/2;
+    protected final static int visionSize = 9;
+    protected final static int visionDistance = (visionSize-1)/2;
 
-    private final int tileSize = 64;
+    private final static int tileSize = 64;
 
     private int tileX;
     private int tileY;
