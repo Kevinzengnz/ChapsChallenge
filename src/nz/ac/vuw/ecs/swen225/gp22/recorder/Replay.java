@@ -34,21 +34,12 @@ public class Replay {
         Element player = replay.getRootElement().element("test_level").element("Player");
         List<Element> actions = player.elements("action");
         for(Element action : actions){
-            this.actionList.add(new Action() {
-                @Override
-                public int frame() {
-                    return Integer.parseInt(action.attribute("frame").getValue());
-                }
-                @Override
-                public int dir() {
-                    return Integer.parseInt(action.attribute("dir").getValue());
-                }
-            });
+            this.actionList.add(new Action(Integer.parseInt(action.attribute("dir").getValue()), Integer.parseInt(action.attribute("frame").getValue())));
         }
         for(Action a : this.actionList){
             RecTesting.log("Replay", "loadReplay", a.dir()+" at frame : "+a.frame());
         }
-        //RecTesting.log("Replay", "loadReplay", replay.asXML());
+        RecTesting.log("Replay", "loadReplay", "Replay loaded");
     }
 
     /**
