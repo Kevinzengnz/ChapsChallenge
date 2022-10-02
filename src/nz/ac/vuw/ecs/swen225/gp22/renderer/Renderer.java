@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  */
 public class Renderer extends JPanel {
 
-    private final Camera camera = new Camera(5, 5);;
+    private final Camera camera = new Camera(new Point(5,5));;
     // Drawing constants
     private final static int tileSize = 64;
 
@@ -78,10 +78,10 @@ public class Renderer extends JPanel {
      * @return true if entity is visible, false if not
      */
     private boolean isEntityVisible(Entity entity) {
-        return entity.getPoint().x() >= camera.getTileX() - 1 - camera.visionDistance
-                && entity.getPoint().x() <= camera.getTileX() + camera.visionDistance + 1
-                && entity.getPoint().y() >= camera.getTileY() - 1 - camera.visionDistance
-                && entity.getPoint().y() <= camera.getTileY() + camera.visionDistance + 1;
+        return entity.getPoint().x() >= camera.getTileX() - 1 - camera.getVisionDistance()
+                && entity.getPoint().x() <= camera.getTileX() + camera.getVisionDistance() + 1
+                && entity.getPoint().y() >= camera.getTileY() - 1 - camera.getVisionDistance()
+                && entity.getPoint().y() <= camera.getTileY() + camera.getVisionDistance() + 1;
     }
 
     /**
@@ -92,10 +92,11 @@ public class Renderer extends JPanel {
     public void paintComponent(Graphics g) {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());
-        final int cellsLeft = (getWidth() - camera.visionSize * tileSize) / 2;
-        final int cellsTop = Math.min((getHeight() - camera.visionSize * tileSize) / 2, 25);
+        final int cellsLeft = (getWidth() - camera.getVisionSize() * tileSize) / 2;
+        final int cellsTop = Math.min((getHeight() - camera.getVisionSize() * tileSize) / 2, 25);
         g.setColor(Color.WHITE);
-        g.drawRect(cellsLeft-1, cellsTop-1, camera.visionSize * tileSize+1, camera.visionSize * tileSize+1);
+        g.drawRect(cellsLeft-1, cellsTop-1, camera.getVisionSize() * tileSize+1,
+                camera.getVisionSize() * tileSize+1);
         drawEntities(g, cellsLeft, cellsTop);
         drawAnimations(g, cellsLeft, cellsTop);
         drawInventory(g, cellsTop);
@@ -108,7 +109,7 @@ public class Renderer extends JPanel {
      * @param top the top of the game board
      */
     private void drawEntities(Graphics g, int left, int top) {
-        g.clipRect(left, top, tileSize * camera.visionSize, tileSize * camera.visionSize);
+        g.clipRect(left, top, tileSize * camera.getVisionSize(), tileSize * camera.getVisionSize());
         for (Entity entity : entities) {
             Sprite sprite = entity.getSprite();
             Point screenPos = worldToScreen(entity.getPoint());
@@ -125,7 +126,7 @@ public class Renderer extends JPanel {
     private void drawInventory(Graphics g, int cellsTop) {
         final int inventorySize = 4;
         final int left = (getWidth() - inventorySize * tileSize) / 2;
-        final int top = (getHeight() + (cellsTop + tileSize * camera.visionSize) - tileSize) / 2;
+        final int top = (getHeight() + (cellsTop + tileSize * camera.getVisionSize()) - tileSize) / 2;
         for (int i = 0; i< inventorySize; i++) {
             g.drawRect(left + i * tileSize, top, tileSize, tileSize);
         }
@@ -149,8 +150,8 @@ public class Renderer extends JPanel {
     private void drawAnimations(Graphics g, int left, int top) {
         for (Animation anim : animations) {
             g.drawImage(
-                    anim.getSprite().image, left + anim.getX()  - camera.getX() + (camera.visionDistance * tileSize),
-                    top + anim.getY() - camera.getY() + (camera.visionDistance * tileSize), null);
+                    anim.getSprite().image, left + anim.getX()  - camera.getX() + (camera.getVisionDistance() * tileSize),
+                    top + anim.getY() - camera.getY() + (camera.getVisionDistance() * tileSize), null);
         }
     }
 
@@ -160,8 +161,8 @@ public class Renderer extends JPanel {
      * @return the point in screen coordinates for rendering
      */
     private Point worldToScreen(Point point) {
-        return new Point((point.x() + camera.visionDistance) * tileSize - camera.getX(),
-                (point.y() + camera.visionDistance) * tileSize - camera.getY());
+        return new Point((point.x() + camera.getVisionDistance()) * tileSize - camera.getX(),
+                (point.y() + camera.getVisionDistance()) * tileSize - camera.getY());
     }
 
 
