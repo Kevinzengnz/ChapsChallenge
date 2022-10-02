@@ -75,6 +75,7 @@
         <FloorTile x="3" y="8" sprite="FLOOR"/>
         <FloorTile x="3" y="9" sprite="FLOOR"/>
         <FloorTile x="3" y="10" sprite="FLOOR"/>
+        <Door x="3" y="11" colour="YELLOW"/>
         <LockedDoor x="3" y="11" colour="YELLOW"/>
         <FloorTile x="3" y="12" sprite="FLOOR"/>
         <FloorTile x="3" y="13" sprite="FLOOR"/>
@@ -82,6 +83,7 @@
         <FloorTile x="3" y="15" sprite="FLOOR"/>
         <FloorTile x="3" y="16" sprite="FLOOR"/>
         <FloorTile x="3" y="17" sprite="FLOOR"/>
+        <FloorTile x="3" y="18" sprite="FLOOR"/>
         <Key x="3" y="18" colour="YELLOW"/>
         <WallTile x="3" y="19" sprite="WALL"/>
         <WallTile x="4" y="0" sprite="WALL"/>
