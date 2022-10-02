@@ -3,9 +3,12 @@ package nz.ac.vuw.ecs.swen225.gp22.recorder;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.XmlParser;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.Element;
 
 import javax.print.Doc;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Replay class that will handle replaying a saved game.
@@ -14,20 +17,38 @@ import java.io.File;
  */
 public class Replay {
     private int tps;
+    private List<Action> actionList;
 
     /**
      * Loads a recording into the replay from specified file name.
      * @param replayName File name of recording.
      */
     public void loadReplay(String replayName){
+        this.actionList = new ArrayList<>();
         Document replay = null;
         try {
-            replay = new XmlParser().parse(new File("Replays/" + replayName + ".xml"));
+            replay = XmlParser.parse(new File("Replays/" + replayName + ".xml"));
         } catch (DocumentException de) {
             RecTesting.log("Replay", "loadReplay", "Error loading replay file");
         }
-
-        RecTesting.log("Replay", "loadReplay", replay.asXML());
+        Element player = replay.getRootElement().element("test_level").element("Player");
+        List<Element> actions = player.elements("action");
+        for(Element action : actions){
+            this.actionList.add(new Action() {
+                @Override
+                public int frame() {
+                    return Integer.parseInt(action.attribute("frame").getValue());
+                }
+                @Override
+                public int dir() {
+                    return Integer.parseInt(action.attribute("dir").getValue());
+                }
+            });
+        }
+        for(Action a : this.actionList){
+            RecTesting.log("Replay", "loadReplay", a.dir()+" at frame : "+a.frame());
+        }
+        //RecTesting.log("Replay", "loadReplay", replay.asXML());
     }
 
     /**
