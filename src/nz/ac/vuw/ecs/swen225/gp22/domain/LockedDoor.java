@@ -9,5 +9,9 @@ public class LockedDoor extends Door{
         colour = getColour(colourString.toUpperCase());
         this.sprite = colour.door;
     }
+
+    public String getColour(){
+        return this.colour.getName();
+    }
 }
 

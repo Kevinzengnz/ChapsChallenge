@@ -23,4 +23,8 @@ public class Key extends Collectable{
     public int hashCode() {
         return Objects.hash(colour);
     }
+
+    public String getColour(){
+        return this.colour.getName();
+    }
 }

@@ -24,8 +24,9 @@ public class Keys implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e){
         assert SwingUtilities.isEventDispatchThread();
-        actionsPressed.getOrDefault(e.getKeyCode(),()->{}).run();
-        if(e.isControlDown()) {
+        if(!e.isControlDown()) {
+            actionsPressed.getOrDefault(e.getKeyCode(), () -> {}).run();
+        } else {
             ctrlActionsPressed.getOrDefault(e.getKeyCode(), () -> {}).run();
         }
     }
@@ -33,8 +34,9 @@ public class Keys implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e){
         assert SwingUtilities.isEventDispatchThread();
-        actionsReleased.getOrDefault(e.getKeyCode(),()->{}).run();
-        if(e.isControlDown()) {
+        if(!e.isControlDown()) {
+            actionsReleased.getOrDefault(e.getKeyCode(), () -> {}).run();
+        } else {
             ctrlActionsReleased.getOrDefault(e.getKeyCode(), () -> {}).run();
         }
     }
@@ -57,18 +59,18 @@ public class Keys implements KeyListener {
 
     //Getter Methods
     public Map<Integer, Runnable> getActionsReleased() {
-        return actionsReleased;
+        return new HashMap<>(actionsReleased);
     }
 
     public Map<Integer, Runnable> getCtrlActionsPressed() {
-        return ctrlActionsPressed;
+        return new HashMap<>(ctrlActionsPressed);
     }
 
     public Map<Integer, Runnable> getCtrlActionsReleased() {
-        return ctrlActionsReleased;
+        return new HashMap<>(ctrlActionsReleased);
     }
 
     public Map<Integer, Runnable> getActionsPressed() {
-        return actionsPressed;
+        return new HashMap<>(actionsPressed);
     }
 }

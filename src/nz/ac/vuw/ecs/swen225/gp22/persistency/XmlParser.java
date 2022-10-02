@@ -62,15 +62,13 @@ public class XmlParser {
                 Tiles.addElement("Key")
                         .addAttribute("x", String.valueOf(e.getPoint().x()))
                         .addAttribute("y", String.valueOf(e.getPoint().y()))
-                        .addAttribute("sprite", String.valueOf(e.getSprite()))
-                        .addAttribute("depth", String.valueOf(e.getDepth()));
-                //.addAttribute("colour")
+                        .addAttribute("colour", String.valueOf(((Key) e).getColour()));
+                       // .addAttribute("depth", String.valueOf(e.getDepth()));
             } else if (e instanceof LockedDoor) {
                 Tiles.addElement("LockedDoor")
                         .addAttribute("x", String.valueOf(e.getPoint().x()))
                         .addAttribute("y", String.valueOf(e.getPoint().y()))
-                        .addAttribute("sprite", String.valueOf(e.getSprite()));
-                //.addAttribute("colour")
+                        .addAttribute("colour", String.valueOf(((LockedDoor) e).getColour()));
             } else if (e instanceof InfoTile) {
                 Tiles.addElement("InfoTile")
                         .addAttribute("x", String.valueOf(e.getPoint().x()))
@@ -173,15 +171,15 @@ public class XmlParser {
                 else if (e.getName().equals("Key")){
                     int x = Integer.parseInt(e.attributeValue("x"));
                     int y = Integer.parseInt(e.attributeValue("y"));
-                    String sprite = e.attributeValue("sprite");
-                    Key key = new Key(sprite, new Point(x, y));
+                    String colour = e.attributeValue("colour");
+                    Key key = new Key(colour, new Point(x, y));
                     entities.add(key);
                 }
                 else if (e.getName().equals("LockedDoor")){
                     int x = Integer.parseInt(e.attributeValue("x"));
                     int y = Integer.parseInt(e.attributeValue("y"));
-                    String sprite = e.attributeValue("sprite");
-                    LockedDoor lockedDoor = new LockedDoor(sprite, new Point(x, y));
+                    String colour = e.attributeValue("colour");
+                    LockedDoor lockedDoor = new LockedDoor(colour, new Point(x, y));
                     entities.add(lockedDoor);
                 }
                 else if (e.getName().equals("InfoTile")){

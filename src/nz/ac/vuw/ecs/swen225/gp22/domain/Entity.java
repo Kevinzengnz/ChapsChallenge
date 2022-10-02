@@ -26,17 +26,22 @@ public interface Entity {
     }
 
     enum Colours{
-        YELLOW(Sprite.DOOR_YELLOW, Sprite.KEY_YELLOW),
-        GREEN(Sprite.DOOR_GREEN, Sprite.KEY_GREEN),
-        BLUE(Sprite.KEY_BLUE, Sprite.KEY_BLUE),
-        RED(Sprite.DOOR_RED, Sprite.KEY_RED);
+        YELLOW(Sprite.DOOR_YELLOW, Sprite.KEY_YELLOW, "yellow"),
+        GREEN(Sprite.DOOR_GREEN, Sprite.KEY_GREEN, "green"),
+        BLUE(Sprite.KEY_BLUE, Sprite.KEY_BLUE, "blue"),
+        RED(Sprite.DOOR_RED, Sprite.KEY_RED, "red");
 
         final Sprite key;
         final Sprite door;
+        final String name;
 
-        Colours(Sprite door, Sprite key){
+        Colours(Sprite door, Sprite key, String name){
             this.key = key;
             this.door = door;
+            this.name = name;
+        }
+        String getName(){
+            return this.name;
         }
     }
 }
