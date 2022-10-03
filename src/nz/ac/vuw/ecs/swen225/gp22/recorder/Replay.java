@@ -21,7 +21,7 @@ public class Replay {
     private int tps=1;
     Timer timer=null;
     private boolean isRunning=false;
-    private int endPing=0;
+    private int endPing=1;
 
     /**
      * Loads a recording into the replay from specified file name.
@@ -50,6 +50,10 @@ public class Replay {
      */
     public void autoPlay(){
         if(this.isRunning){return;}
+        if(this.actionList==null||this.actionList.isEmpty()){
+            RecTesting.log("Replay", "autoPlay", "No actions to replay");
+            return;
+        }
         this.isRunning=true;
         RecTesting.log("Replay", "autoPlay", "Auto play started");
         if(this.timer!=null){this.timer.restart();return;}
