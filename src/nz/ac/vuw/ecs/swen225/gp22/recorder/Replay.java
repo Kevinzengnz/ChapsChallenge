@@ -5,7 +5,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
-import javax.print.Doc;
+import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,28 +16,28 @@ import java.util.List;
  * ID: 300565439
  */
 public class Replay {
-    private int tps;
     private List<Action> actionList;
+    private int pings=0;
+    private int tps=1;
+    Timer timer=null;
+    private boolean isRunning=false;
 
     /**
      * Loads a recording into the replay from specified file name.
      * @param replayName File name of recording.
      */
     public void loadReplay(String replayName){
-        this.actionList = new ArrayList<>();
+        this.cleanReplay();
         Document replay = null;
         try {
             replay = XmlParser.parse(new File("Replays/" + replayName + ".xml"));
         } catch (DocumentException de) {
             RecTesting.log("Replay", "loadReplay", "Error loading replay file");
         }
-        Element player = replay.getRootElement().element("test_level").element("Player");
+        Element player = replay.getRootElement().element("level1").element("Player");
         List<Element> actions = player.elements("action");
         for(Element action : actions){
             this.actionList.add(new Action(Integer.parseInt(action.attribute("dir").getValue()), Integer.parseInt(action.attribute("frame").getValue())));
-        }
-        for(Action a : this.actionList){
-            RecTesting.log("Replay", "loadReplay", a.dir()+" at frame : "+a.frame());
         }
         RecTesting.log("Replay", "loadReplay", "Replay loaded");
     }
@@ -46,14 +46,28 @@ public class Replay {
      * Plays replay automatically.
      */
     public void autoPlay(){
-
+        if(this.isRunning){return;}
+        this.isRunning=true;
+        RecTesting.log("Replay", "autoPlay", "Auto play started");
+        if(this.timer!=null){this.timer.restart();return;}
+        this.timer = new Timer(136, x->{
+            assert SwingUtilities.isEventDispatchThread();
+            pings++;
+            actionList.stream().filter(a->a.frame()==pings).findFirst().ifPresentOrElse(
+                    a->RecTesting.log("Replay", "autoPlay", "Direction changed to: "+a.dir()+" at ping "+a.frame()),
+                    ()->{}
+            );
+        });
+        this.timer.start();
     }
 
     /**
      * Pauses automatic replay.
      */
     public void autoPause(){
-
+        if(!this.isRunning){return;}
+        this.isRunning=false;
+        this.timer.stop();
     }
 
     /**
@@ -74,5 +88,15 @@ public class Replay {
      */
     public void prevTick(){
         autoPause();
+    }
+
+    /**
+     * Resets all fields back to default
+     */
+    private void cleanReplay(){
+        this.isRunning=false;
+        this.actionList = new ArrayList<>();
+        this.pings=0;
+        if(this.timer!=null){this.timer.stop();this.timer=null;}
     }
 }
