@@ -16,6 +16,8 @@ import java.util.List;
  * ID: 300563468
  */
 public interface Model{
+    int timeLeft();
+    void decrementTime();
     Player player();
     List<Entity> entities();
     GameRecorder recorder();
