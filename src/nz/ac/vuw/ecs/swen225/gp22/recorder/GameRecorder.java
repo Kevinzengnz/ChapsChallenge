@@ -24,6 +24,8 @@ public class GameRecorder implements Recorder{
     private String level;
     private int frame = 0;
     private int prevDir = -1;
+    private int startFrame = 0;
+    private int endFrame = 0;
 
     /**
      * Start recording the current game into the specified save file path.
@@ -33,6 +35,7 @@ public class GameRecorder implements Recorder{
     @Override
     public void startRecording(String replayFile, String level){
         if(!this.isRecording) {
+            this.startFrame=this.frame;
             this.actionHistory = new ArrayList<>();
             this.frameHistory = new ArrayList<>();
             this.level = String.join("", level.split(" "));
@@ -48,6 +51,7 @@ public class GameRecorder implements Recorder{
     @Override
     public void endRecording(){
         if(this.isRecording) {
+            this.endFrame=this.frame;
             saveRecording();
             setRecording(false);
         }
@@ -83,8 +87,9 @@ public class GameRecorder implements Recorder{
     private void saveRecording(){
         Document doc = DocumentHelper.createDocument();
         Element root = doc.addElement("root");
-        Element level = root.addElement(this.level);
-        Element player = level.addElement("Player");
+        root.addElement("Level").addAttribute("name",this.level);
+        Element replay = root.addElement("Replay").addAttribute("start",String.valueOf(this.startFrame)).addAttribute("end",String.valueOf(this.endFrame));
+        Element player = replay.addElement("Player");
 
         IntStream.range(0, actionHistory.size()).forEach(i->player.addElement("action")
                 .addAttribute("dir", String.valueOf(actionHistory.get(i)))
