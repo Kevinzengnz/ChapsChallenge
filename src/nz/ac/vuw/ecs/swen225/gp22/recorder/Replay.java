@@ -21,6 +21,7 @@ public class Replay {
     private int tps=1;
     Timer timer=null;
     private boolean isRunning=false;
+    private int endPing=0;
 
     /**
      * Loads a recording into the replay from specified file name.
@@ -34,7 +35,9 @@ public class Replay {
         } catch (DocumentException de) {
             RecTesting.log("Replay", "loadReplay", "Error loading replay file");
         }
-        Element player = replay.getRootElement().element("level1").element("Player");
+        Element replayElem = replay.getRootElement().element("Replay");
+        Element player = replayElem.element("Player");
+        this.endPing = Integer.parseInt(replayElem.attribute("end").getValue());
         List<Element> actions = player.elements("action");
         for(Element action : actions){
             this.actionList.add(new Action(Integer.parseInt(action.attribute("dir").getValue()), Integer.parseInt(action.attribute("frame").getValue())));
@@ -53,6 +56,11 @@ public class Replay {
         this.timer = new Timer(136, x->{
             assert SwingUtilities.isEventDispatchThread();
             pings++;
+            if(pings==endPing){
+                timer.stop();
+                RecTesting.log("Replay","autoPlay","Replay stopped at frame "+pings);
+                cleanReplay();
+            }
             actionList.stream().filter(a->a.frame()==pings).findFirst().ifPresentOrElse(
                     a->RecTesting.log("Replay", "autoPlay", "Direction changed to: "+a.dir()+" at ping "+a.frame()),
                     ()->{}
@@ -97,6 +105,7 @@ public class Replay {
         this.isRunning=false;
         this.actionList = new ArrayList<>();
         this.pings=0;
+        this.endPing=1;
         if(this.timer!=null){this.timer.stop();this.timer=null;}
     }
 }
