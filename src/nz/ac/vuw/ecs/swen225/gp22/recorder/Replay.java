@@ -18,13 +18,13 @@ import java.util.List;
 public class Replay {
     private List<Action> actionList;
     private int pings=0;
-    private int tps=1;
-    Timer timer=null;
+    private double speed=1;
+    private Timer timer=null;
     private boolean isRunning=false;
     private int endPing=1;
 
     /**
-     * Loads a recording into the replay from specified file name.
+     * Loads replay file data into this replay instance.
      * @param replayName File name of recording.
      */
     public void loadReplay(String replayName){
@@ -46,7 +46,7 @@ public class Replay {
     }
 
     /**
-     * Plays replay automatically.
+     * Plays through replay until the end automatically.
      */
     public void autoPlay(){
         if(this.isRunning){return;}
@@ -74,7 +74,7 @@ public class Replay {
     }
 
     /**
-     * Pauses automatic replay.
+     * Pauses automatic playback of the replay. Can be resumed later using autoPlay().
      */
     public void autoPause(){
         if(!this.isRunning){return;}
@@ -83,10 +83,10 @@ public class Replay {
     }
 
     /**
-     * Sets speed of automatic replay in game ticks per second.
-     * @param tps Number of game ticks per second. Must be above 0.
+     * Sets playback speed multiplier for automatic playback of the replay.
+     * @param speed Speed multiplier for automatic playback of replay. Must be greater than 0.
      */
-    public void setReplaySpeed(int tps){this.tps=(tps>0)?tps:this.tps;}
+    public void setReplaySpeed(double speed){this.speed=(speed>0)?speed:this.speed;}
 
     /**
      * Move to next game tick in replay. Pauses autoplay.
@@ -98,7 +98,7 @@ public class Replay {
     /**
      * Move to previous game tick in replay. Pauses autoplay.
      */
-    public void prevTick(){
+    private void prevTick(){
         autoPause();
     }
 
