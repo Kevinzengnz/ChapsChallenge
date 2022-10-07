@@ -14,7 +14,7 @@ import java.util.List;
  * @author Kevin Zeng
  * ID: 300563468
  */
-record Phase(Model model, PlayerController controller, Renderer renderer) {
+public record Phase(Model model, PlayerController controller, Renderer renderer) {
 
     /**
      * Returns a new level with the given list of entities

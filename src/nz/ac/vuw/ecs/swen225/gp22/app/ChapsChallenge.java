@@ -24,7 +24,7 @@ public class ChapsChallenge extends JFrame{
     /**
      * Creates a new instance of Chaps Challenge
      */
-    ChapsChallenge() {
+    public ChapsChallenge() {
         assert SwingUtilities.isEventDispatchThread();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1366, 768);
@@ -178,6 +178,10 @@ public class ChapsChallenge extends JFrame{
      */
     public void exitGame() {
         closePhase.run();
+    }
+    
+    public Phase getPhase() {
+    	return currentPhase;
     }
 
 }
