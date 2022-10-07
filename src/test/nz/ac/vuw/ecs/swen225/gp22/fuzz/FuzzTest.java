@@ -36,7 +36,7 @@ class FuzzTest {
 	@Test
 	public void test1() {
 		
-		ChapsChallenge cc = new ChapsChallenge();
+		ChapsChallenge cc = new ChapsChallenge(1);
 		Phase phase = cc.getPhase();
 		Model m = phase.model();
 		PlayerController controller = phase.controller();
