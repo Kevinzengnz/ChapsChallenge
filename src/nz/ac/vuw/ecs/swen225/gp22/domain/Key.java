@@ -1,4 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
+import nz.ac.vuw.ecs.swen225.gp22.app.Model;
+
 import java.util.Objects;
 /**
  * @author Alicia Robinson - 300560663
@@ -9,6 +11,14 @@ public class Key extends Collectable{
         super(point);
         colour = getColour(colourString.toUpperCase());
         this.sprite = colour.key;
+    }
+
+    @Override
+    public void doAction(Model model, Player player, Point point) {
+        player.addKey(this);
+        model.remove(this);
+        assert player.keys.contains(this);
+        assert !model.entities().contains(this);
     }
 
     @Override

@@ -16,6 +16,7 @@ public interface Entity {
     Point getPoint();
 
     int getDepth();
+    default void doAction(Model model, Player player, Point point){}
 
     default Colours getColour(String colourString){
         return Stream.of(Colours.values())

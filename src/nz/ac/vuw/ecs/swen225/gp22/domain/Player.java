@@ -9,6 +9,7 @@ import java.util.List;
 public class Player extends Actor{
     int treasureCollected = 0;
     List<Key> keys = new ArrayList<>();
+    protected boolean moveValid = true;
     public Player(Point point) {
         super(Sprite.PLAYER_DOWN, point);
     }
@@ -23,20 +24,18 @@ public class Player extends Actor{
         return keys;
     }
     @Override
-    public void ping(Model m){
-        if(isMoving()) {
+    public void ping(Model m) {
+        if (isMoving()) {
             Point newPoint = point.add(direction.arrow);
-            for (Entity entity : m.entities()) {
-                if (entity.getPoint().equals(newPoint) && !entity.equals(this)) {
-                    if (!(entity instanceof WallTile || entity instanceof LockedDoor)) {
-                        point = newPoint;
-                    }
-                    if(entity instanceof Key){
-                        this.addKey((Key) entity);
-                        m.remove(entity);
-                    }
-                }
+            moveValid = true;
+            m.entities().stream()
+                    .filter(entity -> (!(entity instanceof FloorTile || entity instanceof Player)
+                            && entity.getPoint().equals(newPoint)))
+                    .forEach(entity -> entity.doAction(m, this, newPoint));
+            if (moveValid) {
+                this.point = newPoint;
             }
+
         }
     }
     @Override
