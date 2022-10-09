@@ -115,7 +115,7 @@ public class ChapsChallenge extends JFrame{
             if(pings % 4 == 0) {
                 p.model().ping();
             }
-            renderer.ping(p.model().player().getPoint(), p.model().entities(), new ArrayList<>());
+            renderer.ping(p.model().player().getPoint(), p.model().entities(), p.model().player().getKeys());
             renderer.repaint();
 
             p.model().decrementTime();
