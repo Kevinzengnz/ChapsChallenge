@@ -38,7 +38,7 @@ public class GameRecorder implements Recorder{
             this.startFrame=this.frame;
             this.actionHistory = new ArrayList<>();
             this.frameHistory = new ArrayList<>();
-            this.level = String.join("", level.split(" "));
+            this.level = String.join("_", level.split(" "));
             this.replayFile = (replayFile.endsWith(".xml")) ? Arrays.stream(replayFile.split(".xml")).findFirst().orElse("default") : replayFile;
             setRecording(true);
             RecTesting.log("GameRecorder", "startRecording", "Starting recording for "+this.level+" at Replays/"+this.replayFile);
@@ -46,7 +46,7 @@ public class GameRecorder implements Recorder{
     }
 
     /**
-     * Ends the recording of the game and saves the replay file.
+     * Ends the recording and saves the replay into the file specified when recording was started.
      */
     @Override
     public void endRecording(){
@@ -58,7 +58,8 @@ public class GameRecorder implements Recorder{
     }
 
     /**
-     * Call this function every time an action takes place in the game. Will save the action to history for recording.
+     * This function should be called on every step of the game clock. Will record changes in player direction
+     * and the step it occurs at to the replay file.
      * @param dir Ordinal of direction.
      */
     @Override
@@ -87,14 +88,16 @@ public class GameRecorder implements Recorder{
     private void saveRecording(){
         Document doc = DocumentHelper.createDocument();
         Element root = doc.addElement("root");
+        //Level data element.
         root.addElement("Level").addAttribute("name",this.level);
+        //Replay element.
         Element replay = root.addElement("Replay").addAttribute("start",String.valueOf(this.startFrame)).addAttribute("end",String.valueOf(this.endFrame));
         Element player = replay.addElement("Player");
-
+        //Store each action from action history into the player element.
         IntStream.range(0, actionHistory.size()).forEach(i->player.addElement("action")
                 .addAttribute("dir", String.valueOf(actionHistory.get(i)))
                 .addAttribute("frame", String.valueOf(frameHistory.get(i))));
-
+        //Write to replay file
         try {
             XmlParser.write(doc, this.replayFile, "Replays/");
             RecTesting.log("GameRecorder", "saveRecording", "Saved replay to Replays/"+this.replayFile);

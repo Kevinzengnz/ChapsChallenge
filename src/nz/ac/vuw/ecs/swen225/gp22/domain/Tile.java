@@ -5,15 +5,16 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
  */
 public class Tile implements Entity{
     protected Sprite sprite;
-    protected Point point;
-    protected int depth = 0;
+    private final Point point;
 
     public Tile(Sprite sprite, Point point) {
+        //TODO check for null sprite and point
         this.sprite = sprite;
         this.point = point;
     }
 
     public Tile(Point point) {
+        //TODO check for null point
         this.point = point;
     }
 
@@ -27,7 +28,7 @@ public class Tile implements Entity{
 
     @Override
     public int getDepth() {
-        return this.depth;
+        return 0;
     }
 }
 
