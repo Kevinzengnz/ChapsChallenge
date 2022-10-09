@@ -62,18 +62,6 @@ public class ChapsChallenge extends JFrame{
         if(timer != null) timer.stop();
         pings = 0;
 
-        //Creates timer, so it runs in approximately 30 frames per second
-        timer = new Timer(34, unused -> {
-            assert SwingUtilities.isEventDispatchThread();
-            pings++;
-            if(pings % 4 == 0) {
-                p.model().ping();
-            }
-            renderer.ping(p.model().player().getPoint(), p.model().entities(), new ArrayList<>());
-            renderer.repaint();
-        });
-        timer.start();
-
         closePhase = () -> {
             p.model().recorder().endRecording();
             System.exit(0);
@@ -112,21 +100,48 @@ public class ChapsChallenge extends JFrame{
         loadBtn.addActionListener(e -> loadGame());
         loadBtn.setFocusable(false);
 
-        renderer.setFocusable(true);
-        setPreferredSize(getSize()); //to keep the current size
-
         renderer.addKeyListener(p.controller());
         renderer.addKeyListener(gameController);
 
+
+        JLabel timeLeft = new JLabel("Time Left: " + p.model().timeLeft());
+        timeLeft.setFont(new Font("Verdana",1,20));
+        timeLeft.setFocusable(false);
+        renderer.add(timeLeft);
+        //Creates timer, so it runs in approximately 30 frames per second
+        timer = new Timer(34, unused -> {
+            assert SwingUtilities.isEventDispatchThread();
+            pings++;
+            if(pings % 4 == 0) {
+                p.model().ping();
+            }
+            renderer.ping(p.model().player().getPoint(), p.model().entities(), p.model().player().getKeys());
+            renderer.repaint();
+
+            p.model().decrementTime();
+            timeLeft.setText("Time Left: " + p.model().timeLeft());
+        });
+        timer.start();
+
+        renderer.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 10;
+        c.weightx = 0.5;
+        c.anchor = GridBagConstraints.LAST_LINE_END;
+        //c.gridy =0;
+
         //adds buttons to renderer
-        renderer.add(startRecording);
-        renderer.add(endRecording);
-        renderer.add(pauseBtn);
-        renderer.add(exitBtn);
-        renderer.add(saveBtn);
-        renderer.add(loadBtn);
+        renderer.add(startRecording,c);
+        renderer.add(endRecording,c);
+        renderer.add(pauseBtn,c);
+        renderer.add(exitBtn,c);
+        renderer.add(saveBtn,c);
+        //c.anchor = GridBagConstraints.PAGE_END; //bottom of space
+        renderer.add(loadBtn,c);
 
         add(BorderLayout.CENTER, renderer);
+        renderer.setFocusable(true);
+        setPreferredSize(getSize()); //to keep the current size
         pack();                     //after pack
         renderer.requestFocus();
     }
