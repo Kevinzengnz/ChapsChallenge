@@ -7,9 +7,9 @@ import java.util.NoSuchElementException;
 /**
  * @author Alicia Robinson - 300560663
  */
-public class LockedDoor extends Door{
+public class LockedDoor extends Door {
     Colours colour;
-    public LockedDoor(Point point, String colourString) {
+    protected LockedDoor(Point point, String colourString) {
         super(point);
         colour = getColour(colourString);
         //TODO check for null colour

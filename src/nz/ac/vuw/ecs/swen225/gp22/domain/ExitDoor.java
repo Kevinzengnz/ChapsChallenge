@@ -4,7 +4,7 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 /**
  * @author Alicia Robinson - 300560663
  */
-public class ExitDoor extends Door{
+public class ExitDoor extends Door {
     protected ExitDoor(Point point) {
         super(point);
         this.sprite = Sprite.DOOR_EXIT;
