@@ -7,7 +7,7 @@ import java.util.Objects;
  */
 public class Key extends Collectable{
     Colours colour;
-    public Key(Point point, String colourString) {
+    protected Key(Point point, String colourString) {
         super(point);
         //TODO check for null colour
         colour = getColour(colourString);

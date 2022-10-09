@@ -6,5 +6,10 @@ public class Door extends Tile{
     protected Door(Point point) {
         super(point);
     }
+
+    @Override
+    public int getDepth() {
+        return 1;
+    }
 }
 
