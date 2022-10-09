@@ -7,14 +7,16 @@ import java.util.Objects;
  */
 public class Key extends Collectable{
     Colours colour;
-    public Key(String colourString, Point point) {
+    public Key(Point point, String colourString) {
         super(point);
-        colour = getColour(colourString.toUpperCase());
+        //TODO check for null colour
+        colour = getColour(colourString);
         this.sprite = colour.key;
     }
 
     @Override
     public void doAction(Model model, Player player, Point point) {
+        //TODO check that key point and player point are equal
         player.addKey(this);
         model.remove(this);
         assert player.keys.contains(this);
@@ -37,4 +39,5 @@ public class Key extends Collectable{
     public String getColour(){
         return this.colour.getName();
     }
+    public String toString() {return "Key_"+getColour();}
 }

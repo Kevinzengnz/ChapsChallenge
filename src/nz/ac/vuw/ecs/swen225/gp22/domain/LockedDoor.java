@@ -9,20 +9,22 @@ import java.util.NoSuchElementException;
  */
 public class LockedDoor extends Door{
     Colours colour;
-    public LockedDoor(String colourString, Point point) {
+    public LockedDoor(Point point, String colourString) {
         super(point);
-        colour = getColour(colourString.toUpperCase());
+        colour = getColour(colourString);
+        //TODO check for null colour
         this.sprite = colour.door;
     }
+
     @Override
     public void doAction(Model model, Player player, Point point) {
+        //TODO check that door point and player point are equal
         try {
             Key key = player.keys.stream()
                     .filter(k -> k.getColour().equals(this.colour.getName()))
                     .findFirst()
                     .get();
             model.remove(this);
-            //model.add(new FloorTile(point));
             player.keys.remove(key);
         } catch(NoSuchElementException e){
             player.moveValid = false;
@@ -32,5 +34,6 @@ public class LockedDoor extends Door{
     public String getColour(){
         return this.colour.getName();
     }
+    public String toString() {return "Door_"+getColour();}
 }
 

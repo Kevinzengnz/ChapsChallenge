@@ -11,7 +11,10 @@ public class Treasure extends Collectable{
 
     @Override
     public void doAction(Model model, Player player, Point point) {
-        player.treasureCollected += 1;
+        //TODO Check that player and treasure point are equal
+        //TODO Check number of treasures collected and to be collected is correct
+        player.addTreasure();
         model.remove(this);
     }
+    public String toString() {return "Treasure";}
 }

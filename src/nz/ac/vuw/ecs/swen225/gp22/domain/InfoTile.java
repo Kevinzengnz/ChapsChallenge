@@ -5,13 +5,21 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
  * @author Alicia Robinson - 300560663
  */
 public class InfoTile extends Tile{
-    public String infoText;
-    public InfoTile(Point point, String infoText) {
+    private String infoText;
+    protected InfoTile(Point point) {
         super(Sprite.INFO, point);
+    }
+    public void setText(String infoText){
+        //TODO check for blank text
         this.infoText = infoText;
+    }
+    public String getText(){
+        return infoText;
     }
     @Override
     public void doAction(Model model, Player player, Point point) {
-        //call to show info tile here? or set info tile talk to Oliver
+        //TODO InfoTile doAction
     }
+
+    public String toString() {return "InfoTile";}
 }

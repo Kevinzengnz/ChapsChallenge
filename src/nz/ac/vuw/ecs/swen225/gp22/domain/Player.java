@@ -7,22 +7,23 @@ import java.util.List;
  * @author Alicia Robinson - 300560663
  */
 public class Player extends Actor{
-    int treasureCollected = 0;
+    private int treasureCollected = 0;
     List<Key> keys = new ArrayList<>();
     protected boolean moveValid = true;
-    public Player(Point point) {
+    protected Player(Point point) {
         super(Sprite.PLAYER_DOWN, point);
     }
-    public void addKey(Key key){
+    protected void addKey(Key key){
         keys.add(key);
     }
-    public void addTreasure(){ treasureCollected += 1; }
+    protected void addTreasure(){ treasureCollected += 1; }
     public int getTreasureCollected() {
         return treasureCollected;
     }
     public List<Key> getKeys(){
         return keys;
     }
+    //TODO Add remove method for keys list
     @Override
     public void ping(Model m) {
         if (isMoving()) {
@@ -48,4 +49,5 @@ public class Player extends Actor{
             case Left  -> this.sprite = Sprite.PLAYER_LEFT;
         };
     }
+    public String toString() {return "Player";}
 }

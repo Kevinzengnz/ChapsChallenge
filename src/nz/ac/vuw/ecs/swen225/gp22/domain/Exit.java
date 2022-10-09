@@ -5,10 +5,10 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
  * @author Alicia Robinson - 300560663
  */
 public class Exit implements Entity{
-    protected Sprite sprite = Sprite.EXIT;
-    protected Point point;
-    protected int depth = 1;
-    public Exit(Point point) {
+    private final Sprite sprite = Sprite.EXIT;
+    private final Point point;
+    protected Exit(Point point) {
+        //TODO check for null point
         this.point = point;
     }
 
@@ -22,15 +22,17 @@ public class Exit implements Entity{
 
     @Override
     public int getDepth() {
-        return this.depth;
+        return 1;
     }
 
     @Override
     public void doAction(Model model, Player player, Point point) {
-        if(player.treasureCollected != 5){
+        if(player.getTreasureCollected() != 5){
+            player.moveValid = false;
             throw new IllegalStateException("All treasures have not been collected, Exit should not be accessible");
         }
-        //game over call here
+        model.onGameOver();
     }
+    public String toString() {return "Exit";}
 }
 
