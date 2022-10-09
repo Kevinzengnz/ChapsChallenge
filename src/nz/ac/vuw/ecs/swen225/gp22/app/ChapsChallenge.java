@@ -35,11 +35,6 @@ public class ChapsChallenge extends JFrame{
 
         levelOne();
     }
-
-    public ChapsChallenge(int i) {
-    	gameController = new GameController(this);
-        levelOne();
-    }
     
     /**
      * Starts up level one
