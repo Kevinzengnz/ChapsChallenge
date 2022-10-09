@@ -1,16 +1,24 @@
 package test.nz.ac.vuw.ecs.swen225.gp22.fuzz;
 
-import java.awt.event.KeyEvent;  
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.SwingUtilities;
+
 import org.junit.jupiter.api.Test;
 
-import nz.ac.vuw.ecs.swen225.gp22.app.*;
-import nz.ac.vuw.ecs.swen225.gp22.domain.*;
-import nz.ac.vuw.ecs.swen225.gp22.domain.*;
-import nz.ac.vuw.ecs.swen225.gp22.recorder.*;
+import nz.ac.vuw.ecs.swen225.gp22.app.ChapsChallenge;
+import nz.ac.vuw.ecs.swen225.gp22.app.Keys;
+import nz.ac.vuw.ecs.swen225.gp22.app.Model;
+import nz.ac.vuw.ecs.swen225.gp22.app.Phase;
+import nz.ac.vuw.ecs.swen225.gp22.app.PlayerController;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
 
 /**
  * 
@@ -18,6 +26,13 @@ import nz.ac.vuw.ecs.swen225.gp22.recorder.*;
  * ID:300586379
  */
 class FuzzTest {
+	private static Robot robot = null;
+	/**
+	 * Generates a list of random integers
+	 * @param size
+	 * 		Size of the list
+	 * @return
+	 */
 	private List<Integer> genEvents(int size){
 		List<Integer> es = new ArrayList<Integer>();
 		Random r = new Random();
@@ -36,13 +51,15 @@ class FuzzTest {
 	@Test
 	public void test1() {
 		
-		ChapsChallenge cc = new ChapsChallenge(1);
-		Phase phase = cc.getPhase();
-		Model m = phase.model();
-		PlayerController controller = phase.controller();
+		SwingUtilities.invokeLater(()->new ChapsChallenge());
+		try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
 		
 		//Random Key presses
-		List<Integer> events = genEvents(100);
+		var events = genEvents(100);
 	}
 	
 	/**
@@ -51,13 +68,20 @@ class FuzzTest {
 	 * @param p
 	 * @param k
 	 * @param m
+	 * @throws Exception 
 	 */
-	void checkMovement(List<Integer> events, Player p, Keys k, Model m) {
+	void checkMovement(List<Integer> events, Player p, Keys k, Model m) throws Exception {
 		for(Integer e : events) {
 			try{
 				k.getActionsPressed().getOrDefault(e,()->{}).run();
-			} catch(Exception exc) {}
+			} catch(Exception exc) {throw new Exception();}
 		}
 	}
 	
+	private void mouseClicks(int x, int y) {
+		robot.mouseMove(x, y);
+		robot.delay(5);
+		robot.mousePress(MouseEvent.BUTTON1_DOWN_MASK);
+		robot.mouseRelease(MouseEvent.BUTTON1_DOWN_MASK);
+	}
 }
