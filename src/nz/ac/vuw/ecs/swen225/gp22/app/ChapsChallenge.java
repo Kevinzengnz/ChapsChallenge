@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * ID: 300563468
  */
 public class ChapsChallenge extends JFrame{
+    private static final int FRAME_RATE = 30;
     private Runnable closePhase = () -> System.exit(0);
     private int pings; //number of frames ran from start of game
     private Phase currentPhase;
@@ -109,7 +110,7 @@ public class ChapsChallenge extends JFrame{
         timeLeft.setFocusable(false);
         renderer.add(timeLeft);
         //Creates timer, so it runs in approximately 30 frames per second
-        timer = new Timer(34, unused -> {
+        timer = new Timer(1000 / FRAME_RATE, unused -> {
             assert SwingUtilities.isEventDispatchThread();
             pings++;
             if(pings % 4 == 0) {
@@ -117,9 +118,10 @@ public class ChapsChallenge extends JFrame{
             }
             renderer.ping(p.model().player().getPoint(), p.model().entities(), p.model().player().getKeys());
             renderer.repaint();
-
-            p.model().decrementTime();
-            timeLeft.setText("Time Left: " + p.model().timeLeft());
+            if(pings % FRAME_RATE == 0) {
+                p.model().decrementTime();
+                timeLeft.setText("Time Left: " + p.model().timeLeft());
+            }
         });
         timer.start();
 
