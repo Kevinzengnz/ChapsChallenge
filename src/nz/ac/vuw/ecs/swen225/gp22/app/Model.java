@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Treasure;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.XmlParser;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.GameRecorder;
 
@@ -24,6 +25,15 @@ public interface Model{
     void remove(Entity e);
     void onGameOver();
     void onNextLevel();
+
+    /**
+     * Returns the number of Treasures left in the level
+     * This number will change as the player collects treasures in the level
+     * @return number of treasures in the entities list
+     */
+    default long treasuresLeft() {
+        return entities().stream().filter(e -> e instanceof Treasure).count();
+    }
 
     /**
      * Saves the current game to an xml file in the format
