@@ -1,20 +1,19 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
-import nz.ac.vuw.ecs.swen225.gp22.app.Model;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 
-import java.awt.*;
 /**
  * @author Alicia Robinson - 300560663
  */
 public class Collectable implements Entity{
     protected Sprite sprite;
-    protected Point point;
-    protected int depth = 1;
-    public Collectable(Sprite sprite, Point point) {
+    private final Point point;
+
+    protected Collectable(Sprite sprite, Point point) {
+        //TODO check for null sprite and point
         this.sprite = sprite;
         this.point = point;
     }
-    public Collectable(Point point) {
+    protected Collectable(Point point) {
         this.point = point;
     }
 
@@ -28,7 +27,7 @@ public class Collectable implements Entity{
 
     @Override
     public int getDepth() {
-        return this.depth;
+        return 1;
     }
 }
 

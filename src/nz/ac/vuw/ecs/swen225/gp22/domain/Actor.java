@@ -4,14 +4,15 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
  * @author Alicia Robinson - 300560663
  */
 public class Actor implements Entity{
-    boolean moving = false;
+    protected boolean moving = false;
     protected Sprite sprite;
     protected Point point;
     protected Direction direction = Direction.Down;
     protected int depth = 2;
     public void setMoving(boolean moving){ this.moving = moving; }
-    public boolean isMoving(){ return this.moving; }
-    public Actor(Sprite sprite, Point point) {
+    protected boolean isMoving(){ return this.moving; }
+    protected Actor(Sprite sprite, Point point) {
+        //TODO check for null sprite and point
         this.sprite = sprite;
         this.point = point;
     }

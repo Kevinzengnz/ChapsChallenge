@@ -30,8 +30,16 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
                 a).findFirst().orElseThrow();
         renderer.ping(p.getPoint(), levelEntities, new ArrayList<>());
         var m = new Model() {
+            int timeLeft;
             List<Entity> entities = levelEntities;
-
+            @Override
+            public int timeLeft() {
+                return timeLeft;
+            }
+            @Override
+            public void decrementTime() {
+                timeLeft -= 1;
+            }
             @Override
             public Player player() {
                 return p;

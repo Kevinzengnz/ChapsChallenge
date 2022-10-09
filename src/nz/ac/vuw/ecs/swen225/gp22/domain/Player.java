@@ -7,36 +7,36 @@ import java.util.List;
  * @author Alicia Robinson - 300560663
  */
 public class Player extends Actor{
-    int treasureCollected = 0;
+    private int treasureCollected = 0;
     List<Key> keys = new ArrayList<>();
-    public Player(Point point) {
+    protected boolean moveValid = true;
+    protected Player(Point point) {
         super(Sprite.PLAYER_DOWN, point);
     }
-    public void addKey(Key key){
+    protected void addKey(Key key){
         keys.add(key);
     }
-    public void addTreasure(){ treasureCollected += 1; }
+    protected void addTreasure(){ treasureCollected += 1; }
     public int getTreasureCollected() {
         return treasureCollected;
     }
     public List<Key> getKeys(){
         return keys;
     }
+    //TODO Add remove method for keys list
     @Override
-    public void ping(Model m){
-        if(isMoving()) {
+    public void ping(Model m) {
+        if (isMoving()) {
             Point newPoint = point.add(direction.arrow);
-            for (Entity entity : m.entities()) {
-                if (entity.getPoint().equals(newPoint) && !entity.equals(this)) {
-                    if (!(entity instanceof WallTile || entity instanceof LockedDoor)) {
-                        point = newPoint;
-                    }
-                    if(entity instanceof Key){
-                        this.addKey((Key) entity);
-                        m.remove(entity);
-                    }
-                }
+            moveValid = true;
+            m.entities().stream()
+                    .filter(entity -> (!(entity instanceof FloorTile || entity instanceof Player)
+                            && entity.getPoint().equals(newPoint)))
+                    .forEach(entity -> entity.doAction(m, this, newPoint));
+            if (moveValid) {
+                this.point = newPoint;
             }
+
         }
     }
     @Override
@@ -49,4 +49,5 @@ public class Player extends Actor{
             case Left  -> this.sprite = Sprite.PLAYER_LEFT;
         };
     }
+    public String toString() {return "Player";}
 }
