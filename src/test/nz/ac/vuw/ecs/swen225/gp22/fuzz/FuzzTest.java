@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import nz.ac.vuw.ecs.swen225.gp22.app.ChapsChallenge;
 import nz.ac.vuw.ecs.swen225.gp22.app.Keys;
+import nz.ac.vuw.ecs.swen225.gp22.app.Main;
 import nz.ac.vuw.ecs.swen225.gp22.app.Model;
 import nz.ac.vuw.ecs.swen225.gp22.app.Phase;
 import nz.ac.vuw.ecs.swen225.gp22.app.PlayerController;
@@ -27,6 +28,12 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
  */
 class FuzzTest {
 	private static Robot robot = null;
+	
+	private List<Integer> keyList = List.of(KeyEvent.VK_UP, KeyEvent.VK_W,
+			KeyEvent.VK_DOWN, KeyEvent.VK_S, 
+			KeyEvent.VK_LEFT, KeyEvent.VK_A,
+			KeyEvent.VK_RIGHT, KeyEvent.VK_D);
+	
 	/**
 	 * Generates a list of random integers
 	 * @param size
@@ -37,9 +44,8 @@ class FuzzTest {
 		List<Integer> es = new ArrayList<Integer>();
 		Random r = new Random();
 		for(int i = 0; i<size; i++) {
-			int next = r.nextInt(50);
-//			if(!listOfKeys.contains(next)) {continue;}
-			es.add(next);
+			int next = r.nextInt(8);
+			es.add(keyList.get(next));
 		}
 		return es;
 	}
@@ -50,8 +56,10 @@ class FuzzTest {
 	 */
 	@Test
 	public void test1() {
+		//Call the creation of the level
+		Main.main(null);
 		
-		SwingUtilities.invokeLater(()->new ChapsChallenge());
+		//Create Robot to apply clicks and key presses
 		try {
 			robot = new Robot();
 		} catch (AWTException e) {
@@ -60,6 +68,7 @@ class FuzzTest {
 		
 		//Random Key presses
 		var events = genEvents(100);
+		checkMovement(events);
 	}
 	
 	/**
@@ -70,14 +79,22 @@ class FuzzTest {
 	 * @param m
 	 * @throws Exception 
 	 */
-	void checkMovement(List<Integer> events, Player p, Keys k, Model m) throws Exception {
+	void checkMovement(List<Integer> events) {
 		for(Integer e : events) {
-			try{
-				k.getActionsPressed().getOrDefault(e,()->{}).run();
-			} catch(Exception exc) {throw new Exception();}
+			try {
+				robot.keyPress(e);
+				System.out.println("Pressed: " + e);
+			} catch(Exception exc) {
+				System.out.println("Error on " + e + ": " + exc);
+			}
 		}
 	}
 	
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	private void mouseClicks(int x, int y) {
 		robot.mouseMove(x, y);
 		robot.delay(5);
