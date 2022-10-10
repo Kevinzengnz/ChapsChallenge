@@ -43,7 +43,12 @@ public enum Sprite {
     PLAYER_WALK_LEFT_1("Assets/Actors/player_left1.png"),
     PLAYER_WALK_LEFT_2("Assets/Actors/player_left2.png"),
     PLAYER_WALK_RIGHT_1("Assets/Actors/player_right1.png"),
-    PLAYER_WALK_RIGHT_2("Assets/Actors/player_right2.png");
+    PLAYER_WALK_RIGHT_2("Assets/Actors/player_right2.png"),
+
+    ROBOT_LEFT("Assets/Actors/robot_left.png"),
+    ROBOT_RIGHT("Assets/Actors/robot_right.png"),
+    ROBOT_UP("Assets/Actors/robot_up.png"),
+    ROBOT_DOWN("Assets/Actors/robot_down.png");
 
 
 
