@@ -36,7 +36,7 @@ public class ChapsChallenge extends JFrame{
 
         levelOne();
     }
-
+    
     /**
      * Starts up level one
      */
@@ -195,6 +195,10 @@ public class ChapsChallenge extends JFrame{
      */
     public void exitGame() {
         closePhase.run();
+    }
+    
+    public Phase getPhase() {
+    	return currentPhase;
     }
 
 }
