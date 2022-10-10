@@ -53,7 +53,8 @@ public class Renderer extends JPanel {
             Point point = actorEntry.getValue();
             for (Entity entity : allEntities) {
                 if (actor.equals(entity) && !point.equals(entity.getPoint())) {
-                    addAnimation(new WalkAnimation(point, entity.getPoint(), 4, entity));
+                    if (actor instanceof Player) addAnimation(new WalkAnimation(point, entity.getPoint(), 4, entity));
+                    else addAnimation(new MoveAnimation(point, entity.getPoint(), 4, entity));
                 }
             }
         }

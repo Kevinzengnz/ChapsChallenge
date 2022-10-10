@@ -30,6 +30,21 @@ public class MoveAnimation extends Animation {
     }
 
     /**
+     * Alternative constructor that has start and end tiles rather than a direction
+     * @param startTile the tile to start the animation in
+     * @param endTile the tile to end the animation in
+     * @param length the length of the animation in ticks
+     * @param entity the entity to animate
+     */
+    public MoveAnimation(Point startTile, Point endTile, int length, Entity entity) {
+        super(startTile, length, entity);
+        if      (startTile.x() > endTile.x()) direction = Direction.Left;
+        else if (startTile.x() < endTile.x()) direction = Direction.Right;
+        else if (startTile.y() > endTile.y()) direction = Direction.Up;
+        else if (startTile.y() < endTile.y()) direction = Direction.Down;
+    }
+
+    /**
      * @return whether the animation has finished
      */
     @Override
