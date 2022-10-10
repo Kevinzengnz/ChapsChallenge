@@ -8,49 +8,102 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
  * ID: 300564261
  */
 public class Camera {
-    protected final int visionSize = 9;
-    protected final int visionDistance = (visionSize-1)/2;
+    private final static int visionSize = 9;
+    private final static int visionDistance = (visionSize-1)/2;
 
-    private final int tileSize = 64;
+    private final static int tileSize = 64;
 
-    private int tileX;
-    private int tileY;
+    private Point position;
 
     private Animation animation;
 
-    protected Camera(int tileX, int tileY) {
-        this.tileX = tileX;
-        this.tileY = tileY;
+    /**
+     * Creates a Camera at the location provided
+     * @param position the position of the Camera
+     */
+    protected Camera(Point position) {
+        this.position = position;
     }
 
+    /**
+     * Updates the camera to the position provided
+     * @param position the new location of the Camera
+     */
     public void update(Point position) {
-        tileX = position.x();
-        tileY = position.y();
+        this.position = position;
         if (animation != null) animation.ping();
     }
 
 
+    /**
+     * Gets the x coordinate of the Camera in screen space. If the Camera has a valid animation it returns
+     * the x coordinate from the Animation.
+     * @return integer x coordinate of the Camera
+     */
     public int getX() {
         if (animation != null && !animation.isFinished()) return animation.getX();
-        return tileX  * tileSize;
+        return position.x()  * tileSize;
     }
+    /**
+     * Gets the y coordinate of the Camera in screen space. If the Camera has a valid animation it returns
+     * the y coordinate from the Animation.
+     * @return integer y coordinate of the Camera
+     */
     public int getY() {
         if (animation != null && !animation.isFinished()) return animation.getY();
-        return tileY * tileSize;
-    }
-    public int getTileX() {
-        return tileX;
-    }
-    public int getTileY() {
-        return tileY;
+        return position.y() * tileSize;
     }
 
+    /**
+     * Gets the x coordinate of the Tile the camera is on (in world space)
+     * @return integer of the x coordinate of the camera's tile
+     */
+    public int getTileX() {
+        return position.x();
+    }
+    /**
+     * Gets the y coordinate of the Tile the camera is on (in world space)
+     * @return integer of the y coordinate of the camera's tile
+     */
+    public int getTileY() {
+        return position.y();
+    }
+
+    /**
+     * Adds an animation to the Camera. Replaces the existing animation if there is one present.
+     * Used to smoothly animate the camera's position between tiles.
+     * @param newAnimation the new animation to add to the camera
+     */
     public void addAnimation(Animation newAnimation) {
         this.animation = newAnimation;
     }
 
+    /**
+     * Removes the camera's animation if one is present.
+     */
     public void removeAnimation() {
         this.animation = null;
+    }
+
+    /**
+     * @return the distance in tiles the camera can see (from camera location)
+     */
+    public int getVisionDistance() {
+        return visionDistance;
+    }
+
+    /**
+     * @return the dimensions of the total size of the square vision area (width and height)
+     */
+    public int getVisionSize() {
+        return visionSize;
+    }
+
+    /**
+     * @return the size of the tiles
+     */
+    public int getTileSize() {
+        return tileSize;
     }
 
 }
