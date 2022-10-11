@@ -7,6 +7,11 @@ import javax.sound.sampled.FloatControl;
 import java.io.File;
 
 
+/**
+ * Enum to store and load all the SoundEffects needed by the game.
+ * @author Oliver Silk
+ * ID: 300564261
+ */
 public enum SoundEffect {
     TREASURE("coin"),
     DOOR("unlock"),
@@ -16,6 +21,11 @@ public enum SoundEffect {
     INFO("info");
 
     final Clip clip;
+
+    /**
+     * Loads the sound effect from the file system and create the SoundEffect object
+     * @param name name of the SoundEffect to load
+     */
     SoundEffect(String name) {
         String fileName = "Assets/Audio/" + name + ".wav";
         try {

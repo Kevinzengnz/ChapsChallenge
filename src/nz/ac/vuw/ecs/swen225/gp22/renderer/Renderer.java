@@ -21,7 +21,8 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 /**
  * Main class for the renderer. Handles drawing of game board and inventory.
 
- * @author Oliver Silk 300564261
+ * @author Oliver Silk
+ * ID: 300564261
  */
 public class Renderer extends JPanel {
 
