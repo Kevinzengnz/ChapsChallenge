@@ -1,12 +1,12 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
+import nz.ac.vuw.ecs.swen225.gp22.renderer.Audio;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 
 /**
  * Chap's Challenge
@@ -109,6 +109,7 @@ public class ChapsChallenge extends JFrame{
         timeLeft.setFont(new Font("Verdana",1,20));
         timeLeft.setFocusable(false);
         renderer.add(timeLeft);
+        p.model().entities().forEach(e -> e.setSoundEffect(Audio.getSoundPlayer(e.getSprite())));
         //Creates timer, so it runs in approximately 30 frames per second
         timer = new Timer(1000 / FRAME_RATE, unused -> {
             assert SwingUtilities.isEventDispatchThread();
@@ -127,10 +128,9 @@ public class ChapsChallenge extends JFrame{
 
         renderer.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.gridx = 10;
+        c.gridx = 5;
         c.weightx = 0.5;
         c.anchor = GridBagConstraints.LAST_LINE_END;
-        //c.gridy =0;
 
         //adds buttons to renderer
         renderer.add(startRecording,c);
@@ -138,7 +138,6 @@ public class ChapsChallenge extends JFrame{
         renderer.add(pauseBtn,c);
         renderer.add(exitBtn,c);
         renderer.add(saveBtn,c);
-        //c.anchor = GridBagConstraints.PAGE_END; //bottom of space
         renderer.add(loadBtn,c);
 
         add(BorderLayout.CENTER, renderer);
