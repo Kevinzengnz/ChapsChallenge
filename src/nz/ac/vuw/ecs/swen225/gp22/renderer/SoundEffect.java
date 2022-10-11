@@ -3,6 +3,7 @@ package nz.ac.vuw.ecs.swen225.gp22.renderer;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import java.io.File;
 
 
@@ -21,6 +22,10 @@ public enum SoundEffect {
             Clip clip = AudioSystem.getClip();
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(fileName));
             clip.open(inputStream);
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            if (name.equals("info")) gainControl.setValue(-10);
+            else if (name.equals("key")) gainControl.setValue(gainControl.getMaximum());
+
             this.clip = clip;
         } catch (Exception e) {
             throw new RuntimeException(e);
