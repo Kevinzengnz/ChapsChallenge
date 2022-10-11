@@ -4,6 +4,7 @@ import javax.sound.sampled.Clip;
 
 public class Audio {
     public static void playSoundEffect(String name) {
+        if (name == null) return;
         Clip clip = getSoundEffect(name).clip;
         clip.setFramePosition(0);
         clip.start();
@@ -12,12 +13,8 @@ public class Audio {
         return SoundEffect.valueOf(name.toUpperCase());
     }
 
-    public static SoundPlayer getSoundPlayer(String soundName) {
+    public static Runnable getSoundPlayer(String soundName) {
         return () -> playSoundEffect(soundName);
     }
 
-}
-
-interface SoundPlayer {
-    void playSound();
 }
