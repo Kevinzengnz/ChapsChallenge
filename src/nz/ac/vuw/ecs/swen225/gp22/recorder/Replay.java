@@ -1,11 +1,14 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
+import nz.ac.vuw.ecs.swen225.gp22.app.ChapsChallenge;
+import nz.ac.vuw.ecs.swen225.gp22.app.PlayerController;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.XmlParser;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 import javax.swing.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +25,15 @@ public class Replay {
     private Timer timer=null;
     private boolean isRunning=false;
     private int endPing=1;
+    private PlayerController pc;
 
     /**
      * Loads replay file data into this replay instance.
      * @param replayName File name of recording.
      */
-    public void loadReplay(String replayName){
+    public void loadReplay(String replayName, ChapsChallenge game){
         this.cleanReplay();
+        this.pc = game.getPhase().controller();
         Document replay = null;
         try {
             replay = XmlParser.parse(new File("Replays/" + replayName + ".xml"));
@@ -42,6 +47,7 @@ public class Replay {
         for(Element action : actions){
             this.actionList.add(new Action(Integer.parseInt(action.attribute("dir").getValue()), Integer.parseInt(action.attribute("frame").getValue())));
         }
+        this.actionList.remove(0);
         RecTesting.log("Replay", "loadReplay", "Replay loaded");
     }
 
@@ -60,7 +66,7 @@ public class Replay {
         //Restart timer if it already exists and is paused.
         if(this.timer!=null){this.timer.restart();return;}
         //Otherwise create a new timer and start it.
-        this.timer = new Timer(136, x->{
+        this.timer = new Timer((int)(136/this.speed), x->{
             assert SwingUtilities.isEventDispatchThread();
             step();
         });
@@ -113,7 +119,17 @@ public class Replay {
             cleanReplay();
         }
         this.actionList.stream().filter(a->a.frame()==this.pings).findFirst().ifPresentOrElse(
-                a->RecTesting.log("Replay", "autoPlay", "Direction changed to: "+a.dir()+" at ping "+a.frame()),
+                (a)->{
+                    RecTesting.log("Replay", "autoPlay", "Direction changed to: "+a.dir()+" at ping "+a.frame());
+                    switch(a.dir()){
+                        case 0 : this.pc.getActionsReleased().getOrDefault(KeyEvent.VK_W, ()->{}).run();break;
+                        case 1 : this.pc.getActionsPressed().getOrDefault(KeyEvent.VK_W, ()->{}).run();break;
+                        case 2 : this.pc.getActionsPressed().getOrDefault(KeyEvent.VK_D, ()->{}).run();break;
+                        case 3 : this.pc.getActionsPressed().getOrDefault(KeyEvent.VK_S, ()->{}).run();break;
+                        case 4 : this.pc.getActionsPressed().getOrDefault(KeyEvent.VK_A, ()->{}).run();break;
+                    }
+
+                },
                 ()->{}
         );
     }
