@@ -20,6 +20,9 @@ public enum SoundEffect {
     WALL("wall"),
     INFO("info");
 
+    /**
+     * The Clip of the SoundEffect. The actual object that plays the audio.
+     */
     final Clip clip;
 
     /**
