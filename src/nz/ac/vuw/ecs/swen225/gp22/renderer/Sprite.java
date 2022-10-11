@@ -26,7 +26,7 @@ public enum Sprite {
     KEY_RED("Assets/Items/red_key.png"),
     KEY_YELLOW("Assets/Items/yellow_key.png"),
     KEY_GREEN("Assets/Items/green_key.png"),
-    COIN("Assets/Items/coin.png"),
+    TREASURE("Assets/Items/coin.png"),
 
     // UI
     UI_TWO("Assets/UI/2.png"),
@@ -65,4 +65,6 @@ public enum Sprite {
         try{image = ImageIO.read(new File(filename));}
         catch(IOException e) { throw new Error(e); }
     }
+
+
 }
