@@ -7,7 +7,7 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 public class InfoTile extends Tile{
     private String infoText;
     protected InfoTile(Point point) {
-        super(Sprite.INFO, point);
+        super("INFO", point);
     }
     public void setText(String infoText){
         if(infoText.isEmpty()){

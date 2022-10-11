@@ -6,7 +6,7 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
  */
 public class Treasure extends Collectable{
     protected Treasure(Point point) {
-        super(Sprite.COIN, point);
+        super("TREASURE", point);
     }
 
     @Override
@@ -19,5 +19,5 @@ public class Treasure extends Collectable{
         model.remove(this);
     }
     @Override
-    public String toString() {return "Treasure";}
+    public String toString() {return this.getSprite();}
 }

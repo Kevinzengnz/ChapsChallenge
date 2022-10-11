@@ -6,7 +6,7 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
  */
 public class WallTile extends Tile{
     protected WallTile(Point point) {
-        super(Sprite.WALL, point);
+        super("WALL", point);
     }
     @Override
     public void doAction(Model model, Player player, Point point) {
@@ -16,5 +16,5 @@ public class WallTile extends Tile{
         player.moveValid = false;
     }
     @Override
-    public String toString() {return "WallTile";}
+    public String toString() {return this.getSprite();}
 }

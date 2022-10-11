@@ -7,7 +7,7 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 public class ExitDoor extends Door {
     protected ExitDoor(Point point) {
         super(point);
-        this.setSprite(Sprite.DOOR_EXIT);
+        this.setSprite("DOOR_EXIT");
     }
     @Override
     public void doAction(Model model, Player player, Point point) {
@@ -22,6 +22,6 @@ public class ExitDoor extends Door {
         }
     }
     @Override
-    public String toString() {return "ExitDoor";}
+    public String toString() {return this.getSprite();}
 
 }
