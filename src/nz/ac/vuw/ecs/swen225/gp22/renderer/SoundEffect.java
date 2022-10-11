@@ -7,15 +7,13 @@ import java.io.File;
 
 
 public enum SoundEffect {
-    COIN("coin"),
-    UNLOCK("unlock"),
-    PORTAL("portal"),
+    TREASURE("coin"),
+    DOOR("unlock"),
+    EXIT("portal"),
     KEY("key");
 
     final Clip clip;
-    final String name;
     SoundEffect(String name) {
-        this.name = name;
         String fileName = "Assets/Audio/" + name + ".wav";
         try {
             Clip clip = AudioSystem.getClip();
