@@ -7,7 +7,6 @@ import java.util.Objects;
  */
 public class Key extends Collectable{
     private final Colours colour;
-    protected Runnable soundEffect;
     protected Key(Point point, String colourString) {
         super(point);
         if(colourString.isEmpty()){
@@ -16,17 +15,11 @@ public class Key extends Collectable{
         colour = getColour(colourString);
         this.setSprite(colour.key);
     }
-    public void setSoundEffect(Runnable soundEffect){
-        this.soundEffect = soundEffect;
-    }
 
     @Override
     public void doAction(Model model, Player player, Point point) {
         if(!this.getPoint().equals(point)){
             throw new IllegalArgumentException("Player point does not equal Key Point");
-        }
-        if(soundEffect == null){
-            throw new IllegalArgumentException("Sound Effect is Null");
         }
         soundEffect.run();
         player.addKey(this);
@@ -51,6 +44,4 @@ public class Key extends Collectable{
     public String getColour(){
         return this.colour.getName();
     }
-    @Override
-    public String toString() {return "Key_"+getColour();}
 }
