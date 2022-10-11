@@ -130,7 +130,7 @@ public class Renderer extends JPanel {
     private void drawEntities(Graphics g, int left, int top) {
         g.clipRect(left, top, tileSize * camera.getVisionSize(), tileSize * camera.getVisionSize());
         for (Entity entity : entities) {
-            Sprite sprite = entity.getSprite();
+            Sprite sprite = Sprite.valueOf(entity.getSprite());
             Point screenPos = worldToScreen(entity.getPoint());
             g.drawImage(sprite.image, left + screenPos.x(), top + screenPos.y(), null);
         }
@@ -151,7 +151,8 @@ public class Renderer extends JPanel {
         }
         int i= 0;
         for (Map.Entry<Key, Integer> keyEntry : inventory.entrySet()) {
-            g.drawImage(keyEntry.getKey().getSprite().image, left + i * tileSize, top, null);
+            Image img = Sprite.valueOf(keyEntry.getKey().getSprite()).image;
+            g.drawImage(img, left + i * tileSize, top, null);
             if (keyEntry.getValue() > 1) {
                 g.drawImage(Sprite.UI_TWO.image, left + i * tileSize, top, null);
             }

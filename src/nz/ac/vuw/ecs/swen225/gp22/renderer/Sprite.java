@@ -65,4 +65,6 @@ public enum Sprite {
         try{image = ImageIO.read(new File(filename));}
         catch(IOException e) { throw new Error(e); }
     }
+
+
 }

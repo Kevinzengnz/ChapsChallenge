@@ -43,7 +43,7 @@ abstract public class Animation {
      * @return the Sprite
      */
     Sprite getSprite() {
-        return entity.getSprite();
+        return Sprite.valueOf(entity.getSprite());
     }
 
     /**
