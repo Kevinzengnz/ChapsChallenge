@@ -39,7 +39,7 @@ abstract public class Animation {
     }
 
     /**
-     * Gets the sprite of the animation. By default returns the sprite of the entity animated.
+     * Gets the sprite of the animation. By default, returns the sprite of the entity animated.
      * @return the Sprite
      */
     Sprite getSprite() {

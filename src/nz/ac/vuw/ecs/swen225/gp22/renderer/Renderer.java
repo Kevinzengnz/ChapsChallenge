@@ -1,22 +1,31 @@
 package nz.ac.vuw.ecs.swen225.gp22.renderer;
 
-import nz.ac.vuw.ecs.swen225.gp22.domain.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import javax.swing.JPanel;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Actor;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
+import nz.ac.vuw.ecs.swen225.gp22.domain.InfoTile;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Key;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.*;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Main class for the renderer. Handles drawing of game board and inventory.
- * @author Oliver Silk
- * ID: 300564261
+
+ * @author Oliver Silk 300564261
  */
 public class Renderer extends JPanel {
 
-    private final Camera camera = new Camera(new Point(5,5));;
+    private final Camera camera = new Camera(new Point(5,5));
     // Drawing constants
     private final static int tileSize = 64;
 
