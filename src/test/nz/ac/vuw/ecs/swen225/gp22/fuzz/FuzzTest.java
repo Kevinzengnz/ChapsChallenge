@@ -1,6 +1,6 @@
 package test.nz.ac.vuw.ecs.swen225.gp22.fuzz;
 
-import java.awt.AWTException;
+import java.awt.AWTException; 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -10,16 +10,9 @@ import java.util.List;
 import java.util.Random;
 
 import javax.swing.SwingUtilities;
-
 import org.junit.jupiter.api.Test;
-
 import nz.ac.vuw.ecs.swen225.gp22.app.ChapsChallenge;
-import nz.ac.vuw.ecs.swen225.gp22.app.Keys;
 import nz.ac.vuw.ecs.swen225.gp22.app.Main;
-import nz.ac.vuw.ecs.swen225.gp22.app.Model;
-import nz.ac.vuw.ecs.swen225.gp22.app.Phase;
-import nz.ac.vuw.ecs.swen225.gp22.app.PlayerController;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
 
 /**
  * 
@@ -29,13 +22,16 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
 class FuzzTest {
 	private static Robot robot = null;
 	
+	/**
+	 * Returns a list of possible key inputs.
+	 */
 	private List<Integer> keyList = List.of(KeyEvent.VK_UP, KeyEvent.VK_W,
 			KeyEvent.VK_DOWN, KeyEvent.VK_S, 
 			KeyEvent.VK_LEFT, KeyEvent.VK_A,
 			KeyEvent.VK_RIGHT, KeyEvent.VK_D);
 	
 	/**
-	 * Generates a list of random integers
+	 * Generates a list of random integers each corresponding to key inputs
 	 * @param size
 	 * 		Size of the list
 	 * @return
@@ -58,6 +54,21 @@ class FuzzTest {
 	public void test1() {
 		//Call the creation of the level
 		Main.main(null);
+		//Create Robot to apply clicks and key presses
+		try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
+		//Random Key presses
+		var events = genEvents(100);
+		checkMovement(events);
+	}
+	
+	@Test
+	public void test2() {
+		//Call the creation of the level
+		Main.main(null);		
 		
 		//Create Robot to apply clicks and key presses
 		try {
@@ -65,7 +76,6 @@ class FuzzTest {
 		} catch (AWTException e) {
 			e.printStackTrace();
 		}
-		
 		//Random Key presses
 		var events = genEvents(100);
 		checkMovement(events);
@@ -73,21 +83,19 @@ class FuzzTest {
 	
 	/**
 	 * Method used to ensure all Key inputs are working
-	 * @param events
-	 * @param p
-	 * @param k
-	 * @param m
-	 * @throws Exception 
+	 * @param events 
 	 */
 	void checkMovement(List<Integer> events) {
-		for(Integer e : events) {
-			try {
-				robot.keyPress(e);
-				System.out.println("Pressed: " + e);
-			} catch(Exception exc) {
-				System.out.println("Error on " + e + ": " + exc);
-			}
-		}
+		events.stream()
+			.forEach(e -> {
+				try {
+					robot.keyPress(e);
+					robot.keyRelease(e);
+					System.out.println("Pressed: " + e);
+				} catch (Exception exc) {
+					System.out.println(exc);
+				}
+			});
 	}
 	
 	/**
