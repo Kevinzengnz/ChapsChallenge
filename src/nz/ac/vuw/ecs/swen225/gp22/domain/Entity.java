@@ -8,7 +8,7 @@ import java.util.stream.Stream;
  */
 public interface Entity {
     default void ping(Model m){}
-    Sprite getSprite();
+    String getSprite();
 
     Point getPoint();
 
@@ -24,16 +24,16 @@ public interface Entity {
     }
 
     enum Colours{
-        YELLOW(Sprite.DOOR_YELLOW, Sprite.KEY_YELLOW, "YELLOW"),
-        GREEN(Sprite.DOOR_GREEN, Sprite.KEY_GREEN, "GREEN"),
-        BLUE(Sprite.KEY_BLUE, Sprite.KEY_BLUE, "BLUE"),
-        RED(Sprite.DOOR_RED, Sprite.KEY_RED, "RED");
+        YELLOW("DOOR_YELLOW", "KEY_YELLOW", "YELLOW"),
+        GREEN("DOOR_GREEN", "KEY_GREEN", "GREEN"),
+        BLUE("KEY_BLUE", "KEY_BLUE", "BLUE"),
+        RED("DOOR_RED", "KEY_RED", "RED");
 
-        final Sprite key;
-        final Sprite door;
+        final String key;
+        final String door;
         final String name;
 
-        Colours(Sprite door, Sprite key, String name){
+        Colours(String door, String key, String name){
             this.key = key;
             this.door = door;
             this.name = name;

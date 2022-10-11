@@ -5,8 +5,8 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
  */
 public class FloorTile extends Tile{
     protected FloorTile(Point point) {
-        super(Sprite.FLOOR, point);
+        super("FLOOR", point);
     }
     @Override
-    public String toString() {return "FloorTile";}
+    public String toString() {return this.getSprite();}
 }

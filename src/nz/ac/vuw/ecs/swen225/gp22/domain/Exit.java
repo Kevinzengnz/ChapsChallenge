@@ -5,7 +5,7 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
  * @author Alicia Robinson - 300560663
  */
 public class Exit implements Entity{
-    private final Sprite sprite = Sprite.EXIT;
+    private final String sprite = "EXIT";
     private final Point point;
     protected Exit(Point point) {
         if(point == null){
@@ -15,7 +15,7 @@ public class Exit implements Entity{
     }
 
     @Override
-    public Sprite getSprite() { return this.sprite; }
+    public String getSprite() { return this.sprite; }
 
     @Override
     public Point getPoint() {
@@ -39,6 +39,6 @@ public class Exit implements Entity{
         model.onGameOver();
     }
     @Override
-    public String toString() {return "Exit";}
+    public String toString() {return sprite;}
 }
 

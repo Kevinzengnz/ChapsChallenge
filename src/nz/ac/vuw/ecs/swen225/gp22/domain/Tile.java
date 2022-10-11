@@ -4,10 +4,10 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
  * @author Alicia Robinson - 300560663
  */
 public class Tile implements Entity{
-    private final Sprite sprite;
+    private final String sprite;
     private final Point point;
 
-    public Tile(Sprite sprite, Point point) {
+    public Tile(String sprite, Point point) {
         if(point == null || sprite == null){
             throw new IllegalArgumentException("Tile Sprite or Point is null");
         }
@@ -16,7 +16,7 @@ public class Tile implements Entity{
     }
 
     @Override
-    public Sprite getSprite() {
+    public String getSprite() {
         return this.sprite;
     }
 
