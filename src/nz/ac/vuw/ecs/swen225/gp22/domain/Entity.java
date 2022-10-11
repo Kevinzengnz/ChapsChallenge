@@ -14,6 +14,7 @@ public interface Entity {
 
     int getDepth();
     default void doAction(Model model, Player player, Point point){}
+    default void setSoundEffect(Runnable soundEffect){}
 
     default Colours getColour(String colourString){
         return Stream.of(Colours.values())
