@@ -10,6 +10,7 @@ public class Audio {
         clip.start();
     }
     public static SoundEffect getSoundEffect(String name) {
+        if (name.startsWith("DOOR")) name = "DOOR";
         return SoundEffect.valueOf(name.toUpperCase());
     }
 
