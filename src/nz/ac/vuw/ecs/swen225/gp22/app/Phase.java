@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Treasure;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.XmlParser;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.GameRecorder;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
@@ -29,9 +30,18 @@ record Phase(Model model, PlayerController controller, Renderer renderer) {
         Player p = levelEntities.stream().filter(a -> a instanceof Player).map(a -> (Player)
                 a).findFirst().orElseThrow();
         renderer.ping(p.getPoint(), levelEntities, new ArrayList<>());
+        long totalTreasures = levelEntities.stream().filter(e -> e instanceof Treasure).count();
         var m = new Model() {
+            int timeLeft;
             List<Entity> entities = levelEntities;
-
+            @Override
+            public int timeLeft() {
+                return timeLeft;
+            }
+            @Override
+            public void decrementTime() {
+                timeLeft -= 1;
+            }
             @Override
             public Player player() {
                 return p;
@@ -62,6 +72,11 @@ record Phase(Model model, PlayerController controller, Renderer renderer) {
             @Override
             public void onNextLevel() {
                 next.run();
+            }
+
+            @Override
+            public long totalTreasures() {
+                return totalTreasures;
             }
         };
         return new Phase(m, new PlayerController(p),renderer);

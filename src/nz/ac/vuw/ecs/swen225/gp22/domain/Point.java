@@ -1,4 +1,5 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
+import java.util.Objects;
 import java.util.Random;
 /**
  * @author Alicia Robinson - 300560663
@@ -39,4 +40,18 @@ public record Point(int x, int y){
         Random random = new Random();
         return new Point(random.nextInt(maxX - minX) + minX,random.nextInt(maxY - minY) + minY);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point point = (Point) o;
+        return x == point.x && y == point.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
+
 }

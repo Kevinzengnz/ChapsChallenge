@@ -1,24 +1,33 @@
 package nz.ac.vuw.ecs.swen225.gp22.renderer;
 
-import nz.ac.vuw.ecs.swen225.gp22.domain.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import javax.swing.JPanel;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Actor;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
+import nz.ac.vuw.ecs.swen225.gp22.domain.InfoTile;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Key;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.*;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Main class for the renderer. Handles drawing of game board and inventory.
- * @author Oliver Silk
- * ID: 300564261
+
+ * @author Oliver Silk 300564261
  */
 public class Renderer extends JPanel {
 
-    private final Camera camera = new Camera(5, 5);;
+    private final Camera camera = new Camera(new Point(5,5));
     // Drawing constants
-    private final int tileSize = 64;
+    private final static int tileSize = 64;
 
     Map<Key, Integer> inventory = new HashMap<>();
 
@@ -48,10 +57,13 @@ public class Renderer extends JPanel {
         animations.forEach(Animation::ping);
         animations.removeAll(animations.stream().filter(Animation::isFinished).toList());
 
-        for(Actor actor : actors.keySet()) {
+        for(Map.Entry<Actor, Point> actorEntry : actors.entrySet()) {
+            Actor actor = actorEntry.getKey();
+            Point point = actorEntry.getValue();
             for (Entity entity : allEntities) {
-                if (actor.equals(entity) && !actors.get(actor).equals(entity.getPoint())) {
-                    addAnimation(new WalkAnimation(actors.get(actor), entity.getPoint(), 4, entity));
+                if (actor.equals(entity) && !point.equals(entity.getPoint())) {
+                    if (actor instanceof Player) addAnimation(new WalkAnimation(point, entity.getPoint(), 4, entity));
+                    else addAnimation(new MoveAnimation(point, entity.getPoint(), 4, entity));
                 }
             }
         }
@@ -76,10 +88,10 @@ public class Renderer extends JPanel {
      * @return true if entity is visible, false if not
      */
     private boolean isEntityVisible(Entity entity) {
-        return entity.getPoint().x() >= camera.getTileX() - 1 - camera.visionDistance
-                && entity.getPoint().x() <= camera.getTileX() + camera.visionDistance + 1
-                && entity.getPoint().y() >= camera.getTileY() - 1 - camera.visionDistance
-                && entity.getPoint().y() <= camera.getTileY() + camera.visionDistance + 1;
+        return entity.getPoint().x() >= camera.getTileX() - 1 - camera.getVisionDistance()
+                && entity.getPoint().x() <= camera.getTileX() + camera.getVisionDistance() + 1
+                && entity.getPoint().y() >= camera.getTileY() - 1 - camera.getVisionDistance()
+                && entity.getPoint().y() <= camera.getTileY() + camera.getVisionDistance() + 1;
     }
 
     /**
@@ -90,13 +102,23 @@ public class Renderer extends JPanel {
     public void paintComponent(Graphics g) {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());
-        final int cellsLeft = (getWidth() - camera.visionSize * tileSize) / 2;
-        final int cellsTop = Math.min((getHeight() - camera.visionSize * tileSize) / 2, 25);
+        final int cellsLeft = (getWidth() - camera.getVisionSize() * tileSize) / 2;
+        final int cellsTop = Math.min((getHeight() - camera.getVisionSize() * tileSize) / 2, 25);
         g.setColor(Color.WHITE);
-        g.drawRect(cellsLeft-1, cellsTop-1, camera.visionSize * tileSize+1, camera.visionSize * tileSize+1);
+        g.drawRect(cellsLeft-1, cellsTop-1, camera.getVisionSize() * tileSize+1,
+                camera.getVisionSize() * tileSize+1);
         drawEntities(g, cellsLeft, cellsTop);
         drawAnimations(g, cellsLeft, cellsTop);
         drawInventory(g, cellsTop);
+
+        List<InfoTile> infoTiles =entities.stream()
+                .filter(e -> e.getPoint().equals(camera.getTilePoint()) && e instanceof InfoTile)
+                .map(e -> (InfoTile)e)
+                .toList();
+        if (infoTiles.size() != 0) {
+            drawPopup(g, cellsLeft, cellsTop, infoTiles.get(0).getText());
+        }
+
     }
 
     /**
@@ -106,9 +128,9 @@ public class Renderer extends JPanel {
      * @param top the top of the game board
      */
     private void drawEntities(Graphics g, int left, int top) {
-        g.clipRect(left, top, tileSize * camera.visionSize, tileSize * camera.visionSize);
+        g.clipRect(left, top, tileSize * camera.getVisionSize(), tileSize * camera.getVisionSize());
         for (Entity entity : entities) {
-            Sprite sprite = entity.getSprite();
+            Sprite sprite = Sprite.valueOf(entity.getSprite());
             Point screenPos = worldToScreen(entity.getPoint());
             g.drawImage(sprite.image, left + screenPos.x(), top + screenPos.y(), null);
         }
@@ -123,19 +145,41 @@ public class Renderer extends JPanel {
     private void drawInventory(Graphics g, int cellsTop) {
         final int inventorySize = 4;
         final int left = (getWidth() - inventorySize * tileSize) / 2;
-        final int top = (getHeight() + (cellsTop + tileSize * camera.visionSize) - tileSize) / 2;
+        final int top = (getHeight() + (cellsTop + tileSize * camera.getVisionSize()) - tileSize) / 2;
         for (int i = 0; i< inventorySize; i++) {
             g.drawRect(left + i * tileSize, top, tileSize, tileSize);
         }
         int i= 0;
-        for (Key key : inventory.keySet()) {
-            g.drawImage(key.getSprite().image, left + i * tileSize, top, null);
-            if (inventory.get(key) > 1) {
+        for (Map.Entry<Key, Integer> keyEntry : inventory.entrySet()) {
+            Image img = Sprite.valueOf(keyEntry.getKey().getSprite()).image;
+            g.drawImage(img, left + i * tileSize, top, null);
+            if (keyEntry.getValue() > 1) {
                 g.drawImage(Sprite.UI_TWO.image, left + i * tileSize, top, null);
             }
 
             i++;
         }
+    }
+
+
+    /**
+     * Draws text popups to display InfoTiles
+     * @param g the graphics object to draw on
+     * @param left the left side of the game board
+     * @param top the top of the game board
+     * @param message the message to draw
+     */
+    private void drawPopup(Graphics g, int left, int top, String message) {
+        if (message == null) return;
+        String[] split = message.split("(?<=\\G.{" + 70 + "})");
+        Image bg = Sprite.TEXT_POPUP.image;
+        int drawLeft = left + (camera.getVisionSize() * tileSize - bg.getWidth(null)) / 2;
+        int drawTop = top + 20;
+        g.drawImage(bg, drawLeft, drawTop, null);
+        for (int i=0;i< split.length;i++) {
+            g.drawString(split[i], drawLeft + 10, drawTop + 20 * (i+1));
+        }
+
     }
 
     /**
@@ -147,8 +191,8 @@ public class Renderer extends JPanel {
     private void drawAnimations(Graphics g, int left, int top) {
         for (Animation anim : animations) {
             g.drawImage(
-                    anim.getSprite().image, left + anim.getX()  - camera.getX() + (camera.visionDistance * tileSize),
-                    top + anim.getY() - camera.getY() + (camera.visionDistance * tileSize), null);
+                    anim.getSprite().image, left + anim.getX()  - camera.getX() + (camera.getVisionDistance() * tileSize),
+                    top + anim.getY() - camera.getY() + (camera.getVisionDistance() * tileSize), null);
         }
     }
 
@@ -158,8 +202,8 @@ public class Renderer extends JPanel {
      * @return the point in screen coordinates for rendering
      */
     private Point worldToScreen(Point point) {
-        return new Point((point.x() + camera.visionDistance) * tileSize - camera.getX(),
-                (point.y() + camera.visionDistance) * tileSize - camera.getY());
+        return new Point((point.x() + camera.getVisionDistance()) * tileSize - camera.getX(),
+                (point.y() + camera.getVisionDistance()) * tileSize - camera.getY());
     }
 
 

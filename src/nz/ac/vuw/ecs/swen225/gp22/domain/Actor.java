@@ -4,25 +4,27 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
  * @author Alicia Robinson - 300560663
  */
 public class Actor implements Entity{
-    boolean moving = false;
-    protected Sprite sprite;
+    private boolean moving = false;
+    protected String sprite;
     protected Point point;
     protected Direction direction = Direction.Down;
-    protected int depth = 2;
     public void setMoving(boolean moving){ this.moving = moving; }
-    public boolean isMoving(){ return this.moving; }
-    public Actor(Sprite sprite, Point point) {
+    protected boolean isMoving(){ return this.moving; }
+    protected Actor(String sprite, Point point) {
+        if(point == null || sprite == null){
+            throw new IllegalArgumentException("Actor Sprite or Point is null");
+        }
         this.sprite = sprite;
         this.point = point;
     }
+    protected void setSprite(String sprite){ this.sprite = sprite; }
     public void setDirection(Direction direction){ this.direction = direction; }
     public Direction getDirection(){ return direction; }
-    public Sprite getSprite() { return this.sprite; }
-    public Point getPoint() {
-        return this.point;
-    }
-    public int getDepth() {
-        return this.depth;
-    }
+    @Override
+    public String getSprite() { return this.sprite; }
+    @Override
+    public Point getPoint() { return this.point; }
+    @Override
+    public int getDepth() { return 2; }
 }
 

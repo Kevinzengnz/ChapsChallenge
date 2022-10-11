@@ -1,12 +1,12 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
+import nz.ac.vuw.ecs.swen225.gp22.renderer.Audio;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 
 /**
  * Chap's Challenge
@@ -14,11 +14,13 @@ import java.util.ArrayList;
  * ID: 300563468
  */
 public class ChapsChallenge extends JFrame{
-    private Runnable closePhase = ()-> System.exit(0);
+    private static final int FRAME_RATE = 30;
+    private Runnable closePhase = () -> System.exit(0);
     private int pings; //number of frames ran from start of game
     private Phase currentPhase;
     private final GameController gameController;
     private Timer timer;
+    private boolean paused = false;
 
     /**
      * Creates a new instance of Chaps Challenge
@@ -27,14 +29,14 @@ public class ChapsChallenge extends JFrame{
         assert SwingUtilities.isEventDispatchThread();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1366, 768);
-        addWindowListener(new WindowAdapter(){
+        addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e){closePhase.run();} });
         gameController = new GameController(this);
 
         levelOne();
     }
-
+    
     /**
      * Starts up level one
      */
@@ -56,46 +58,91 @@ public class ChapsChallenge extends JFrame{
     private void setPhase(Phase p){
         currentPhase = p;
         Renderer renderer = p.renderer();
-        add(renderer);
         setVisible(true);
 
         if(timer != null) timer.stop();
         pings = 0;
 
+        closePhase = () -> {
+            p.model().recorder().endRecording();
+            System.exit(0);
+        };
+
+        //Initialises buttons
+        var startRecording = new JButton("Start recording");
+        var endRecording = new JButton("End recording");
+        startRecording.addActionListener(e -> p.model().recorder().startRecording("default.xml", "level 1"));
+        endRecording.addActionListener(e -> p.model().recorder().endRecording());
+        startRecording.setFocusable(false);
+        endRecording.setFocusable(false);
+
+        var pauseBtn = new JButton("Pause");
+
+        pauseBtn.addActionListener(e -> {
+            if(!paused) {
+                pauseGame();
+                pauseBtn.setText("Resume");
+            } else {
+                unPauseGame();
+                pauseBtn.setText("Pause");
+            }
+        });
+        pauseBtn.setFocusable(false);
+
+        var exitBtn = new JButton("Exit game");
+        exitBtn.addActionListener(e -> exitGame());
+        exitBtn.setFocusable(false);
+
+        var saveBtn = new JButton("Save game");
+        saveBtn.addActionListener(e -> saveGame());
+        saveBtn.setFocusable(false);
+
+        var loadBtn = new JButton("Load game");
+        loadBtn.addActionListener(e -> loadGame());
+        loadBtn.setFocusable(false);
+
+        renderer.addKeyListener(p.controller());
+        renderer.addKeyListener(gameController);
+
+
+        JLabel timeLeft = new JLabel("Time Left: " + p.model().timeLeft());
+        timeLeft.setFont(new Font("Verdana",1,20));
+        timeLeft.setFocusable(false);
+        renderer.add(timeLeft);
+        p.model().entities().forEach(e -> e.setSoundEffect(Audio.getSoundPlayer(e.getSprite())));
         //Creates timer, so it runs in approximately 30 frames per second
-        timer = new Timer(34,unused->{
+        timer = new Timer(1000 / FRAME_RATE, unused -> {
             assert SwingUtilities.isEventDispatchThread();
             pings++;
             if(pings % 4 == 0) {
                 p.model().ping();
             }
-            renderer.ping(p.model().player().getPoint(), p.model().entities(), new ArrayList<>());
+            renderer.ping(p.model().player().getPoint(), p.model().entities(), p.model().player().getKeys());
             renderer.repaint();
+            if(pings % FRAME_RATE == 0) {
+                p.model().decrementTime();
+                timeLeft.setText("Time Left: " + p.model().timeLeft());
+            }
         });
         timer.start();
 
-        closePhase = ()->{
-            p.model().recorder().endRecording();
-            System.exit(0);
-        };
+        renderer.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 5;
+        c.weightx = 0.5;
+        c.anchor = GridBagConstraints.LAST_LINE_END;
 
-        var startRecording=new JButton("Start recording");
-        var endRecording=new JButton("End recording");
+        //adds buttons to renderer
+        renderer.add(startRecording,c);
+        renderer.add(endRecording,c);
+        renderer.add(pauseBtn,c);
+        renderer.add(exitBtn,c);
+        renderer.add(saveBtn,c);
+        renderer.add(loadBtn,c);
 
-        startRecording.addActionListener(e -> p.model().recorder().startRecording("default.xml","level 1"));
-        endRecording.addActionListener(e -> p.model().recorder().endRecording());
-        startRecording.setFocusable(false);
-        endRecording.setFocusable(false);
-
+        add(BorderLayout.CENTER, renderer);
         renderer.setFocusable(true);
-        setPreferredSize(getSize());//to keep the current size
-
-        renderer.addKeyListener(p.controller());
-        renderer.addKeyListener(gameController);
-
-        add(BorderLayout.CENTER,renderer);
-        add(BorderLayout.WEST,startRecording);
-        add(BorderLayout.EAST,endRecording);
+        setPreferredSize(getSize()); //to keep the current size
         pack();                     //after pack
         renderer.requestFocus();
     }
@@ -115,6 +162,7 @@ public class ChapsChallenge extends JFrame{
      * Pauses the game
      */
     public void pauseGame() {
+        paused = true;
         timer.stop();
     }
 
@@ -122,6 +170,7 @@ public class ChapsChallenge extends JFrame{
      * If the game is paused, unpauses it
      */
     public void unPauseGame() {
+        paused = false;
         timer.start();
     }
 
@@ -145,6 +194,10 @@ public class ChapsChallenge extends JFrame{
      */
     public void exitGame() {
         closePhase.run();
+    }
+    
+    public Phase getPhase() {
+    	return currentPhase;
     }
 
 }
