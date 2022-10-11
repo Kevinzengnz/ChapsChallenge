@@ -101,6 +101,15 @@ public class Renderer extends JPanel {
         drawEntities(g, cellsLeft, cellsTop);
         drawAnimations(g, cellsLeft, cellsTop);
         drawInventory(g, cellsTop);
+
+        List<InfoTile> infoTiles =entities.stream()
+                .filter(e -> e.getPoint().equals(camera.getTilePoint()) && e instanceof InfoTile)
+                .map(e -> (InfoTile)e)
+                .toList();
+        if (infoTiles.size() != 0) {
+            drawPopup(g, cellsLeft, cellsTop, infoTiles.get(0).getText());
+        }
+
     }
 
     /**
@@ -140,6 +149,27 @@ public class Renderer extends JPanel {
 
             i++;
         }
+    }
+
+
+    /**
+     * Draws text popups to display InfoTiles
+     * @param g the graphics object to draw on
+     * @param left the left side of the game board
+     * @param top the top of the game board
+     * @param message the message to draw
+     */
+    private void drawPopup(Graphics g, int left, int top, String message) {
+        if (message == null) return;
+        String[] split = message.split("(?<=\\G.{" + 70 + "})");
+        Image bg = Sprite.TEXT_POPUP.image;
+        int drawLeft = left + (camera.getVisionSize() * tileSize - bg.getWidth(null)) / 2;
+        int drawTop = top + 20;
+        g.drawImage(bg, drawLeft, drawTop, null);
+        for (int i=0;i< split.length;i++) {
+            g.drawString(split[i], drawLeft + 10, drawTop + 20 * (i+1));
+        }
+
     }
 
     /**

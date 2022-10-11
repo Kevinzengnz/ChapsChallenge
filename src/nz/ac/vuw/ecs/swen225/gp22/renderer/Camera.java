@@ -70,6 +70,14 @@ public class Camera {
     }
 
     /**
+     * Gets the camera's position in tile coordinates (in world space)
+     * @return tile coordinates as point
+     */
+    public Point getTilePoint() {
+        return position;
+    }
+
+    /**
      * Adds an animation to the Camera. Replaces the existing animation if there is one present.
      * Used to smoothly animate the camera's position between tiles.
      * @param newAnimation the new animation to add to the camera

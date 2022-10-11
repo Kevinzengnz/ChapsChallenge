@@ -30,6 +30,9 @@ public enum Sprite {
 
     // UI
     UI_TWO("Assets/UI/2.png"),
+    TEXT_POPUP("Assets/UI/text_popup.png"),
+
+
 
     // Player
     PLAYER_UP("Assets/Actors/player_up.png"),
@@ -44,7 +47,7 @@ public enum Sprite {
     PLAYER_WALK_LEFT_2("Assets/Actors/player_left2.png"),
     PLAYER_WALK_RIGHT_1("Assets/Actors/player_right1.png"),
     PLAYER_WALK_RIGHT_2("Assets/Actors/player_right2.png"),
-
+    // Robot
     ROBOT_LEFT("Assets/Actors/robot_left.png"),
     ROBOT_RIGHT("Assets/Actors/robot_right.png"),
     ROBOT_UP("Assets/Actors/robot_up.png"),
