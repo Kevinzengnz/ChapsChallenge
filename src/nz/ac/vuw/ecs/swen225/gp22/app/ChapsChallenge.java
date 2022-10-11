@@ -14,12 +14,33 @@ import java.awt.event.WindowEvent;
  * ID: 300563468
  */
 public class ChapsChallenge extends JFrame{
+    /**
+     * Frames per second that the game should run in
+     */
     private static final int FRAME_RATE = 30;
+    /**
+     * Runs when game is closed
+     */
     private Runnable closePhase = () -> System.exit(0);
-    private int pings; //number of frames ran from start of game
+    /**
+     * Number of frames ran from start of game
+     */
+    private int pings;
+    /**
+     * Current phase of the game
+     */
     private Phase currentPhase;
+    /**
+     * KeyListener for UI controls.
+     */
     private final GameController gameController;
+    /**
+     * Timer that performs certain actions every frame
+     */
     private Timer timer;
+    /**
+     * Boolean for whether the game is currently paused
+     */
     private boolean paused = false;
 
     /**
@@ -104,9 +125,8 @@ public class ChapsChallenge extends JFrame{
         renderer.addKeyListener(p.controller());
         renderer.addKeyListener(gameController);
 
-
         JLabel timeLeft = new JLabel("Time Left: " + p.model().timeLeft());
-        timeLeft.setFont(new Font("Verdana",1,20));
+        timeLeft.setFont(new Font("Verdana",Font.PLAIN,20));
         timeLeft.setFocusable(false);
         renderer.add(timeLeft);
         p.model().entities().forEach(e -> e.setSoundEffect(Audio.getSoundPlayer(e.getSprite())));
@@ -195,7 +215,11 @@ public class ChapsChallenge extends JFrame{
     public void exitGame() {
         closePhase.run();
     }
-    
+
+    /**
+     * Returns the current phase of the game.
+     * @return currentPhase
+     */
     public Phase getPhase() {
     	return currentPhase;
     }
