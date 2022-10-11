@@ -10,7 +10,8 @@ public enum SoundEffect {
     TREASURE("coin"),
     DOOR("unlock"),
     EXIT("portal"),
-    KEY("key");
+    KEY("key"),
+    WALL("wall");
 
     final Clip clip;
     SoundEffect(String name) {
