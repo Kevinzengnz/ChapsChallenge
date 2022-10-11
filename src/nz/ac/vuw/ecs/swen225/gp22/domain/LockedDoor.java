@@ -8,17 +8,21 @@ import java.util.NoSuchElementException;
  * @author Alicia Robinson - 300560663
  */
 public class LockedDoor extends Door {
-    Colours colour;
+    private final Colours colour;
     protected LockedDoor(Point point, String colourString) {
         super(point);
+        if(colourString.isEmpty()){
+            throw new IllegalArgumentException("Locked Door colour is null");
+        }
         colour = getColour(colourString);
-        //TODO check for null colour
-        this.sprite = colour.door;
+        this.setSprite(colour.door);
     }
 
     @Override
     public void doAction(Model model, Player player, Point point) {
-        //TODO check that door point and player point are equal
+        if(!this.getPoint().equals(point)){
+            throw new IllegalArgumentException("Player point does not equal LockedDoor Point");
+        }
         try {
             Key key = player.keys.stream()
                     .filter(k -> k.getColour().equals(this.colour.getName()))
@@ -26,6 +30,8 @@ public class LockedDoor extends Door {
                     .get();
             model.remove(this);
             player.keys.remove(key);
+            assert !player.keys.contains(key);
+            assert !model.entities().contains(this);
         } catch(NoSuchElementException e){
             player.moveValid = false;
         }
@@ -34,6 +40,7 @@ public class LockedDoor extends Door {
     public String getColour(){
         return this.colour.getName();
     }
+    @Override
     public String toString() {return "Door_"+getColour();}
 }
 

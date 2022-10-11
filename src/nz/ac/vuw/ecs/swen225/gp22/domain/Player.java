@@ -49,5 +49,6 @@ public class Player extends Actor{
             case Left  -> this.sprite = Sprite.PLAYER_LEFT;
         };
     }
+    @Override
     public String toString() {return "Player";}
 }

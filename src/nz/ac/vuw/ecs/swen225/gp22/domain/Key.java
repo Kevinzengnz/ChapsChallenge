@@ -6,17 +6,21 @@ import java.util.Objects;
  * @author Alicia Robinson - 300560663
  */
 public class Key extends Collectable{
-    Colours colour;
+    private final Colours colour;
     protected Key(Point point, String colourString) {
         super(point);
-        //TODO check for null colour
+        if(colourString.isEmpty()){
+            throw new IllegalArgumentException("Key colour is null");
+        }
         colour = getColour(colourString);
-        this.sprite = colour.key;
+        this.setSprite(colour.key);
     }
 
     @Override
     public void doAction(Model model, Player player, Point point) {
-        //TODO check that key point and player point are equal
+        if(!this.getPoint().equals(point)){
+            throw new IllegalArgumentException("Player point does not equal Key Point");
+        }
         player.addKey(this);
         model.remove(this);
         assert player.keys.contains(this);
@@ -39,5 +43,6 @@ public class Key extends Collectable{
     public String getColour(){
         return this.colour.getName();
     }
+    @Override
     public String toString() {return "Key_"+getColour();}
 }

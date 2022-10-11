@@ -7,5 +7,6 @@ public class FloorTile extends Tile{
     protected FloorTile(Point point) {
         super(Sprite.FLOOR, point);
     }
+    @Override
     public String toString() {return "FloorTile";}
 }
