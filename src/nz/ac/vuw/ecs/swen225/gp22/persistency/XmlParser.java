@@ -96,5 +96,4 @@ public class XmlParser {
         }
         return entities;
     }
-
 }
