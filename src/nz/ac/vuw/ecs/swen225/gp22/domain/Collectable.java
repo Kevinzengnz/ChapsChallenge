@@ -1,5 +1,4 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
-import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 
 /**
  * @author Alicia Robinson - 300560663
@@ -7,6 +6,7 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 public class Collectable implements Entity{
     private String sprite;
     private final Point point;
+    protected Runnable soundEffect;
 
     protected Collectable(String sprite, Point point) {
         if(point == null || sprite == null){
@@ -14,6 +14,12 @@ public class Collectable implements Entity{
         }
         this.sprite = sprite;
         this.point = point;
+    }
+    public void setSoundEffect(Runnable soundEffect){
+        if(soundEffect == null){
+            throw new IllegalArgumentException("Sound Effect is Null");
+        }
+        this.soundEffect = soundEffect;
     }
     protected void setSprite(String sprite){
         this.sprite = sprite;

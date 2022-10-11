@@ -1,5 +1,4 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
-import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 /**
  * @author Alicia Robinson - 300560663
  */
@@ -17,7 +16,6 @@ public class Actor implements Entity{
         this.sprite = sprite;
         this.point = point;
     }
-    protected void setSprite(String sprite){ this.sprite = sprite; }
     public void setDirection(Direction direction){ this.direction = direction; }
     public Direction getDirection(){ return direction; }
     @Override

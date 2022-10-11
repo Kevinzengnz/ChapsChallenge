@@ -3,8 +3,14 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
 public class EntityFactory {
     public Entity createEntity(String type, Point point){
         switch(type){
-            case "PLAYER":
-                return new Player(point);
+            case "PLAYER_UP":
+                return new Player(point,"PLAYER_UP");
+            case "PLAYER_DOWN":
+                return new Player(point,"PLAYER_DOWN");
+            case "PLAYER_LEFT":
+                return new Player(point,"PLAYER_LEFT");
+            case "PLAYER_RIGHT":
+                return new Player(point,"PLAYER_RIGHT");
             case "WALL":
                 return new WallTile(point);
             case "FLOOR":

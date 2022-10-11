@@ -10,8 +10,8 @@ public class Player extends Actor{
     private int treasureCollected = 0;
     List<Key> keys = new ArrayList<>();
     protected boolean moveValid = true;
-    protected Player(Point point) {
-        super("PLAYER_DOWN", point);
+    protected Player(Point point, String sprite) {
+        super(sprite, point);
     }
     protected void addKey(Key key){
         keys.add(key);
@@ -49,6 +49,4 @@ public class Player extends Actor{
             case Left  -> this.sprite = "PLAYER_LEFT";
         };
     }
-    @Override
-    public String toString() {return "PLAYER";}
 }
