@@ -8,11 +8,15 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 public class Door implements Entity{
     private String sprite;
     private final Point point;
+    protected Runnable soundEffect;
     protected Door(Point point) {
         if(point == null){
             throw new IllegalArgumentException("Door Point is null");
         }
         this.point = point;
+    }
+    public void setSoundEffect(Runnable soundEffect){
+        this.soundEffect = soundEffect;
     }
 
     public void setSprite(String sprite){
