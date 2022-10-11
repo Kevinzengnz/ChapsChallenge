@@ -49,7 +49,9 @@ public class XmlParser {
         //iterate and add the entities to the Tiles element
         for (Entity e : entities) {
             String name = e.toString();
-
+            Tiles.addElement(name)
+                    .addAttribute("x", String.valueOf(e.getPoint().x()))
+                    .addAttribute("y", String.valueOf(e.getPoint().y()));
             }
 
             // write to a file
