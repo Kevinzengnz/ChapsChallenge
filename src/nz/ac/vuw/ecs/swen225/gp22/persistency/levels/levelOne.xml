@@ -73,6 +73,7 @@
         <FLOOR x="3" y="8"/>
         <FLOOR x="3" y="9"/>
         <FLOOR x="3" y="10"/>
+        <FLOOR x="3" y="11"/>
         <DOOR_EXIT x="3" y="11"/>
         <EXIT x="3" y="11"/>
         <DOOR_YELLOW x="3" y="11"/>
