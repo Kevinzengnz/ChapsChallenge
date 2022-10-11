@@ -12,4 +12,12 @@ public class Audio {
         return SoundEffect.valueOf(name.toUpperCase());
     }
 
+    public static SoundPlayer getSoundPlayer(String soundName) {
+        return () -> playSoundEffect(soundName);
+    }
+
+}
+
+interface SoundPlayer {
+    void playSound();
 }
