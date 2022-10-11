@@ -3,35 +3,41 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
 public class EntityFactory {
     public Entity createEntity(String type, Point point){
         switch(type){
-            case "Player":
-                return new Player(point);
-            case "WallTile":
+            case "PLAYER_UP":
+                return new Player(point,"PLAYER_UP");
+            case "PLAYER_DOWN":
+                return new Player(point,"PLAYER_DOWN");
+            case "PLAYER_LEFT":
+                return new Player(point,"PLAYER_LEFT");
+            case "PLAYER_RIGHT":
+                return new Player(point,"PLAYER_RIGHT");
+            case "WALL":
                 return new WallTile(point);
-            case "FloorTile":
+            case "FLOOR":
                 return new FloorTile(point);
-            case "InfoTile":
+            case "INFO":
                 return new InfoTile(point);
-            case "Key_YELLOW":
+            case "KEY_YELLOW":
                 return new Key(point, "YELLOW");
-            case "Key_GREEN":
+            case "KEY_GREEN":
                 return new Key(point, "GREEN");
-            case "Key_BLUE":
+            case "KEY_BLUE":
                 return new Key(point, "BLUE");
-            case "Key_RED":
+            case "KEY_RED":
                 return new Key(point, "RED");
-            case "Door_YELLOW":
+            case "DOOR_YELLOW":
                 return new LockedDoor(point, "YELLOW");
-            case "Door_GREEN":
+            case "DOOR_GREEN":
                 return new LockedDoor(point, "GREEN");
-            case "Door_BLUE":
+            case "DOOR_BLUE":
                 return new LockedDoor(point, "BLUE");
-            case "Door_RED":
+            case "DOOR_RED":
                 return new LockedDoor(point, "RED");
-            case "Treasure":
+            case "TREASURE":
                 return new Treasure(point);
-            case "ExitDoor":
+            case "DOOR_EXIT":
                 return new ExitDoor(point);
-            case "Exit":
+            case "EXIT":
                 return new Exit(point);
         }
         throw new IllegalArgumentException("Invalid Entity Type");

@@ -1,21 +1,26 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
-import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
-
 /**
  * @author Alicia Robinson - 300560663
  */
 public class Door implements Entity{
-    private Sprite sprite;
+    private String sprite;
     private final Point point;
+    protected Runnable soundEffect;
     protected Door(Point point) {
         if(point == null){
             throw new IllegalArgumentException("Door Point is null");
         }
         this.point = point;
     }
+    public void setSoundEffect(Runnable soundEffect){
+        if(soundEffect == null){
+            throw new IllegalArgumentException("Sound Effect is Null");
+        }
+        this.soundEffect = soundEffect;
+    }
 
-    public void setSprite(Sprite sprite){
+    public void setSprite(String sprite){
         if(sprite == null){
             throw new IllegalArgumentException("Door Sprite is null");
         }
@@ -23,7 +28,7 @@ public class Door implements Entity{
     }
 
     @Override
-    public Sprite getSprite() {
+    public String getSprite() {
         return this.sprite;
     }
 

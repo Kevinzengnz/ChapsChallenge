@@ -21,6 +21,7 @@ public class Key extends Collectable{
         if(!this.getPoint().equals(point)){
             throw new IllegalArgumentException("Player point does not equal Key Point");
         }
+        soundEffect.run();
         player.addKey(this);
         model.remove(this);
         assert player.keys.contains(this);
@@ -43,6 +44,4 @@ public class Key extends Collectable{
     public String getColour(){
         return this.colour.getName();
     }
-    @Override
-    public String toString() {return "Key_"+getColour();}
 }

@@ -1,21 +1,27 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
-import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 
 /**
  * @author Alicia Robinson - 300560663
  */
 public class Collectable implements Entity{
-    private Sprite sprite;
+    private String sprite;
     private final Point point;
+    protected Runnable soundEffect;
 
-    protected Collectable(Sprite sprite, Point point) {
+    protected Collectable(String sprite, Point point) {
         if(point == null || sprite == null){
             throw new IllegalArgumentException("Collectable Sprite or Point is null");
         }
         this.sprite = sprite;
         this.point = point;
     }
-    protected void setSprite(Sprite sprite){
+    public void setSoundEffect(Runnable soundEffect){
+        if(soundEffect == null){
+            throw new IllegalArgumentException("Sound Effect is Null");
+        }
+        this.soundEffect = soundEffect;
+    }
+    protected void setSprite(String sprite){
         this.sprite = sprite;
     }
     protected Collectable(Point point) {
@@ -23,7 +29,7 @@ public class Collectable implements Entity{
     }
 
     @Override
-    public Sprite getSprite() { return this.sprite; }
+    public String getSprite() { return this.sprite; }
 
     @Override
     public Point getPoint() {

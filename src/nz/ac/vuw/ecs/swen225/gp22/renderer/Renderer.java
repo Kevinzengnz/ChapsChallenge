@@ -21,21 +21,38 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 /**
  * Main class for the renderer. Handles drawing of game board and inventory.
 
- * @author Oliver Silk 300564261
+ * @author Oliver Silk
+ * ID: 300564261
  */
 public class Renderer extends JPanel {
 
+    /**
+     * The camera. Used to represent the focus area of the game.
+     */
     private final Camera camera = new Camera(new Point(5,5));
-    // Drawing constants
+    /**
+     * The size in pixels of the tiles
+     */
     private final static int tileSize = 64;
 
+    /**
+     * Stores the Keys the character has picked up for drawing. Updated every ping.
+     */
     Map<Key, Integer> inventory = new HashMap<>();
 
-    // Entities currently visible
+    /**
+     * Stores the entities for drawing. Updated every ping.
+     */
     private List<Entity> entities = new ArrayList<>();
 
+    /**
+     * Stores the actors to determine which have moved and need animations. Updated every ping.
+     */
     private Map<Actor, Point> actors = new HashMap<>();
 
+    /**
+     * Stores all the currently running animations.
+     */
     private List<Animation> animations = new ArrayList<>();
 
 

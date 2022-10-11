@@ -28,6 +28,7 @@ public class LockedDoor extends Door {
                     .filter(k -> k.getColour().equals(this.colour.getName()))
                     .findFirst()
                     .get();
+            soundEffect.run();
             model.remove(this);
             player.keys.remove(key);
             assert !player.keys.contains(key);
@@ -40,7 +41,5 @@ public class LockedDoor extends Door {
     public String getColour(){
         return this.colour.getName();
     }
-    @Override
-    public String toString() {return "Door_"+getColour();}
 }
 

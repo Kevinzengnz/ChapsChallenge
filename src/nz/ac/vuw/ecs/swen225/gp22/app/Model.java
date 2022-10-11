@@ -25,6 +25,7 @@ public interface Model{
     void remove(Entity e);
     void onGameOver();
     void onNextLevel();
+    long totalTreasures();
 
     /**
      * Returns the number of Treasures left in the level
