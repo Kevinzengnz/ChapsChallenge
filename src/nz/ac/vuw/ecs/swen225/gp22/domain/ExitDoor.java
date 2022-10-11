@@ -17,6 +17,10 @@ public class ExitDoor extends Door {
         if(player.getTreasureCollected() != 5){
             player.moveValid = false;
         } else{
+            if(soundEffect == null){
+                throw new IllegalArgumentException("Sound Effect is Null");
+            }
+            soundEffect.run();
             model.remove(this);
             assert !model.entities().contains(this);
         }
