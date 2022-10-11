@@ -48,66 +48,13 @@ public class XmlParser {
 
         //iterate and add the entities to the Tiles element
         for (Entity e : entities) {
-            if (e instanceof WallTile) {
-                Tiles.addElement("WallTile")
-                        .addAttribute("x", String.valueOf(e.getPoint().x()))
-                        .addAttribute("y", String.valueOf(e.getPoint().y()))
-                        .addAttribute("sprite", String.valueOf(e.getSprite()));
-            } else if (e instanceof FloorTile) {
-                Tiles.addElement("FloorTile")
-                        .addAttribute("x", String.valueOf(e.getPoint().x()))
-                        .addAttribute("y", String.valueOf(e.getPoint().y()))
-                        .addAttribute("sprite", String.valueOf(e.getSprite()));
-            } else if (e instanceof Key) {
-                Tiles.addElement("Key")
-                        .addAttribute("x", String.valueOf(e.getPoint().x()))
-                        .addAttribute("y", String.valueOf(e.getPoint().y()))
-                        .addAttribute("colour", String.valueOf(((Key) e).getColour()));
-                       // .addAttribute("depth", String.valueOf(e.getDepth()));
-            } else if (e instanceof LockedDoor) {
-                Tiles.addElement("LockedDoor")
-                        .addAttribute("x", String.valueOf(e.getPoint().x()))
-                        .addAttribute("y", String.valueOf(e.getPoint().y()))
-                        .addAttribute("colour", String.valueOf(((LockedDoor) e).getColour()));
-            } else if (e instanceof InfoTile) {
-                Tiles.addElement("InfoTile")
-                        .addAttribute("x", String.valueOf(e.getPoint().x()))
-                        .addAttribute("y", String.valueOf(e.getPoint().y()))
-                        .addAttribute("sprite", String.valueOf(e.getSprite()));
-            } else if (e instanceof Treasure) {
-                Tiles.addElement("Treasure")
-                        .addAttribute("x", String.valueOf(e.getPoint().x()))
-                        .addAttribute("y", String.valueOf(e.getPoint().y()))
-                        .addAttribute("sprite", String.valueOf(e.getSprite()))
-                        .addAttribute("depth", String.valueOf(e.getDepth()));
-            } else if (e instanceof ExitDoor) {
-                Tiles.addElement("ExitDoor")
-                        .addAttribute("x", String.valueOf(e.getPoint().x()))
-                        .addAttribute("y", String.valueOf(e.getPoint().y()))
-                        .addAttribute("sprite", String.valueOf(e.getSprite()));
-            } else if (e instanceof Exit) {
-                Tiles.addElement("Exit")
-                        .addAttribute("x", String.valueOf(e.getPoint().x()))
-                        .addAttribute("y", String.valueOf(e.getPoint().y()))
-                        .addAttribute("sprite", String.valueOf(e.getSprite()))
-                        .addAttribute("depth", String.valueOf(e.getDepth()));
-            } else if (e instanceof Player) {
-                Element player = Tiles.addElement("Player")
-                        .addAttribute("x", String.valueOf(e.getPoint().x()))
-                        .addAttribute("y", String.valueOf(e.getPoint().y()))
-                        .addAttribute("direction", String.valueOf(((Player) e).getDirection()))
-                        .addAttribute("treasure", String.valueOf(((Player) e).getTreasureCollected()));
-                Element keys = player.addElement("Keys");
-                //write arraylist of keys to extra element
-                for (Key k : ((Player) e).getKeys()) {
-                    keys.addElement("Key")
-                            .addAttribute("sprite", String.valueOf(k.getSprite()));
-                }
+            String name = e.toString();
+
             }
 
             // write to a file
             write(document, levelName, "src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/");
-        }
+
     }
 
 
@@ -140,74 +87,9 @@ public class XmlParser {
             Document document = parse(file);
             Element root = document.getRootElement();
             Element Tiles = root.element("Tiles");
-            List<Element> tiles = Tiles.elements();
-            for (Element e : tiles) {
-                if (e.getName().equals("Player")) {
-                    int x = Integer.parseInt(e.attributeValue("x"));
-                    int y = Integer.parseInt(e.attributeValue("y"));
-                    Player player = new Player(new Point(x, y));
-                    player.setDirection(Direction.valueOf(e.attributeValue("direction")));
-
-                    //key list to player
-                    List<Key> keys = new ArrayList<>();
-                    List<Element> keyElements = e.element("Keys").elements();
-                    for (Element key : keyElements){
-
-                    }
-                    //player.setKeys(keys);
-
-                    entities.add(player);
-                } else if (e.getName().equals("WallTile")) {
-                    int x = Integer.parseInt(e.attributeValue("x"));
-                    int y = Integer.parseInt(e.attributeValue("y"));
-                    WallTile wallTile = new WallTile(new Point(x, y));
-                    entities.add(wallTile);
-                } else if (e.getName().equals("FloorTile")){
-                    int x = Integer.parseInt(e.attributeValue("x"));
-                    int y = Integer.parseInt(e.attributeValue("y"));
-                    FloorTile floorTile = new FloorTile(new Point(x, y));
-                    entities.add(floorTile);
-                }
-                else if (e.getName().equals("Key")){
-                    int x = Integer.parseInt(e.attributeValue("x"));
-                    int y = Integer.parseInt(e.attributeValue("y"));
-                    String colour = e.attributeValue("colour");
-                    Key key = new Key(colour, new Point(x, y));
-                    entities.add(key);
-                }
-                else if (e.getName().equals("LockedDoor")){
-                    int x = Integer.parseInt(e.attributeValue("x"));
-                    int y = Integer.parseInt(e.attributeValue("y"));
-                    String colour = e.attributeValue("colour");
-                    LockedDoor lockedDoor = new LockedDoor(colour, new Point(x, y));
-                    entities.add(lockedDoor);
-                }
-                else if (e.getName().equals("InfoTile")){
-                    int x = Integer.parseInt(e.attributeValue("x"));
-                    int y = Integer.parseInt(e.attributeValue("y"));
-                    InfoTile infoTile = new InfoTile(new Point(x, y), "");
-                    entities.add(infoTile);
-                }
-                else if (e.getName().equals("Treasure")){
-                    int x = Integer.parseInt(e.attributeValue("x"));
-                    int y = Integer.parseInt(e.attributeValue("y"));
-                    Treasure treasure = new Treasure(new Point(x, y));
-                    entities.add(treasure);
-                }
-                else if (e.getName().equals("ExitDoor")){
-                    int x = Integer.parseInt(e.attributeValue("x"));
-                    int y = Integer.parseInt(e.attributeValue("y"));
-                    ExitDoor exitDoor = new ExitDoor(new Point(x, y));
-                    entities.add(exitDoor);
-                }
-                else if (e.getName().equals("Exit")){
-                    int x = Integer.parseInt(e.attributeValue("x"));
-                    int y = Integer.parseInt(e.attributeValue("y"));
-                    Exit exit = new Exit(new Point(x, y));
-                    entities.add(exit);
-                }
-
-
+            EntityFactory factory = new EntityFactory();
+            for (Element e : Tiles.elements()) {
+                entities.add(factory.createEntity(e.getName(),new Point(Integer.parseInt(e.attributeValue("x")), Integer.parseInt(e.attributeValue("y")))));
             }
         } catch (DocumentException e) {
             e.printStackTrace();
@@ -215,31 +97,4 @@ public class XmlParser {
         return entities;
     }
 
-    /**
-     * Test saving
-     * @param args
-     */
-    public static void main(String[] args){
-        List<Entity> entities = new ArrayList<>();
-        for (int i=0;i<20;i++) {
-            for (int j=0;j<20;j++) {
-                if (i == 0 || j == 0 || i==19 || j == 19) {
-                    entities.add(new Tile(Sprite.WALL, new Point(i, j)));
-                }
-                else {
-                    entities.add(new Tile(Sprite.FLOOR, new Point(i, j)));
-                }
-            }
-        }
-
-        try {
-            saveGame(entities, "test");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        //load game
-        loadGame("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/test.xml");
-
-    }
 }
