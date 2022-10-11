@@ -427,6 +427,5 @@
         <WALL x="20" y="17" sprite="WALL"/>
         <WALL x="20" y="18" sprite="WALL"/>
         <WALL x="20" y="19" sprite="WALL"/>
-
     </Tiles>
 </root>
