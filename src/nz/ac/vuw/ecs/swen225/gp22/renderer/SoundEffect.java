@@ -11,7 +11,8 @@ public enum SoundEffect {
     DOOR("unlock"),
     EXIT("portal"),
     KEY("key"),
-    WALL("wall");
+    WALL("wall"),
+    INFO("info");
 
     final Clip clip;
     SoundEffect(String name) {
