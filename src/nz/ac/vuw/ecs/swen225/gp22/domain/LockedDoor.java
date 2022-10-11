@@ -41,7 +41,5 @@ public class LockedDoor extends Door {
     public String getColour(){
         return this.colour.getName();
     }
-    @Override
-    public String toString() {return "Door_"+getColour();}
 }
 
