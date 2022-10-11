@@ -5,13 +5,18 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
  * @author Alicia Robinson - 300560663
  */
 public class Collectable implements Entity{
-    protected Sprite sprite;
+    private Sprite sprite;
     private final Point point;
 
     protected Collectable(Sprite sprite, Point point) {
-        //TODO check for null sprite and point
+        if(point == null || sprite == null){
+            throw new IllegalArgumentException("Collectable Sprite or Point is null");
+        }
         this.sprite = sprite;
         this.point = point;
+    }
+    protected void setSprite(Sprite sprite){
+        this.sprite = sprite;
     }
     protected Collectable(Point point) {
         this.point = point;

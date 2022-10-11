@@ -4,17 +4,14 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
  * @author Alicia Robinson - 300560663
  */
 public class Tile implements Entity{
-    protected Sprite sprite;
+    private final Sprite sprite;
     private final Point point;
 
     public Tile(Sprite sprite, Point point) {
-        //TODO check for null sprite and point
+        if(point == null || sprite == null){
+            throw new IllegalArgumentException("Tile Sprite or Point is null");
+        }
         this.sprite = sprite;
-        this.point = point;
-    }
-
-    public Tile(Point point) {
-        //TODO check for null point
         this.point = point;
     }
 

@@ -10,8 +10,11 @@ public class WallTile extends Tile{
     }
     @Override
     public void doAction(Model model, Player player, Point point) {
-        //TODO Check that player point and wall tile point are equal
+        if(!this.getPoint().equals(point)){
+            throw new IllegalArgumentException("Player point does not equal WallTile Point");
+        }
         player.moveValid = false;
     }
+    @Override
     public String toString() {return "WallTile";}
 }

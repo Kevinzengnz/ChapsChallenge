@@ -10,7 +10,9 @@ public class InfoTile extends Tile{
         super(Sprite.INFO, point);
     }
     public void setText(String infoText){
-        //TODO check for blank text
+        if(infoText.isEmpty()){
+            throw new IllegalArgumentException("Text cannot be empty");
+        }
         this.infoText = infoText;
     }
     public String getText(){
@@ -20,6 +22,6 @@ public class InfoTile extends Tile{
     public void doAction(Model model, Player player, Point point) {
         //TODO InfoTile doAction
     }
-
+    @Override
     public String toString() {return "InfoTile";}
 }
