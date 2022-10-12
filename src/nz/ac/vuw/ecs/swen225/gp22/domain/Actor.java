@@ -24,9 +24,6 @@ public class Actor implements Entity{
      */
     protected Direction direction = Direction.Down;
     protected Actor(String sprite, Point point) {
-        if(point == null || sprite == null){
-            throw new IllegalArgumentException("Actor Sprite or Point is null");
-        }
         this.sprite = sprite;
         this.point = point;
     }
