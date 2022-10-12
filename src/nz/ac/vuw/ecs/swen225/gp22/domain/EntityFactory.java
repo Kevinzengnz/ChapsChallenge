@@ -11,6 +11,9 @@ public class EntityFactory {
      * @return new Entity of given type
      */
     public Entity createEntity(String type, Point point){
+        if(point == null || type == null || type.isEmpty()){
+            throw new IllegalArgumentException("Type or Point are null");
+        }
         switch(type){
             case "PLAYER_UP":
                 return new Player(point,"PLAYER_UP");
