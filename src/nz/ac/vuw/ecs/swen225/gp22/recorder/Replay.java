@@ -119,7 +119,7 @@ public class Replay {
     private void step(){
         if(this.pings==this.endPing){
             if(this.timer!=null){this.timer.stop();}
-            this.pc.getActionsReleased().getOrDefault(KeyEvent.VK_W, ()->{}).run();
+            this.pc.releaseDirection(KeyEvent.VK_W);
             RecTesting.log("Replay","autoPlay","Replay stopped at frame "+this.pings);
             cleanReplay();
         }
@@ -127,11 +127,11 @@ public class Replay {
                 (a)->{
                     RecTesting.log("Replay", "autoPlay", "Direction changed to: "+a.dir()+" at ping "+a.frame());
                     switch(a.dir()){
-                        case 0 : this.pc.getActionsReleased().getOrDefault(KeyEvent.VK_W, ()->{}).run();break;
-                        case 1 : this.pc.getActionsPressed().getOrDefault(KeyEvent.VK_W, ()->{}).run();break;
-                        case 2 : this.pc.getActionsPressed().getOrDefault(KeyEvent.VK_D, ()->{}).run();break;
-                        case 3 : this.pc.getActionsPressed().getOrDefault(KeyEvent.VK_S, ()->{}).run();break;
-                        case 4 : this.pc.getActionsPressed().getOrDefault(KeyEvent.VK_A, ()->{}).run();break;
+                        case 0 : this.pc.releaseDirection(KeyEvent.VK_W);break;
+                        case 1 : this.pc.moveUp();break;
+                        case 2 : this.pc.moveRight();break;
+                        case 3 : this.pc.moveDown();break;
+                        case 4 : this.pc.moveLeft();break;
                     }
                 },
                 ()->{}
