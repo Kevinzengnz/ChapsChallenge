@@ -1,5 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
+import nz.ac.vuw.ecs.swen225.gp22.app.ChapsChallenge;
+
 import javax.swing.*;
 
 /**
@@ -20,18 +22,19 @@ public class RecTesting {
         r.startRecording(TEST_REPLAY_FILE, TEST_REPLAY_FILE);
         for(int i=0; i<60; i++){
             if(i%2==0) {
-                r.ping(i % 3);
-                r.ping(i % 3);
+                r.ping(i % 3, true);
+                r.ping(i % 3, true);
             }
         }
         r.endRecording();
-        Replay replay = new Replay();
-        replay.loadReplay(TEST_REPLAY_FILE);
-        replay.autoPlay();
-//        replay.loadReplay(TEST_REPLAY_FILE);
-//        for(int i=0; i<100; i++){
-//            replay.nextTick();
-//        }
+//        Replay replay = new Replay();
+//        replay.loadReplay(TEST_REPLAY_FILE, null);
+//        replay.setReplaySpeed(0.5);
+//        replay.autoPlay();
+////        replay.loadReplay(TEST_REPLAY_FILE);
+////        for(int i=0; i<100; i++){
+////            replay.nextTick();
+////        }
     }
 
     public RecTesting(){

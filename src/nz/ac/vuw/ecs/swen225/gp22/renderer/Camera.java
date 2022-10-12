@@ -8,13 +8,28 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
  * ID: 300564261
  */
 public class Camera {
+    /**
+     * The dimensions of the total size of the square vision area (width and height).
+     */
     private final static int visionSize = 9;
+    /**
+     * The distance in tiles the camera can see (from camera location).
+     */
     private final static int visionDistance = (visionSize-1)/2;
 
+    /**
+     * The size in pixels of the tiles
+     */
     private final static int tileSize = 64;
 
+    /**
+     * The camera's position in tile coordinates (in world space)
+     */
     private Point position;
 
+    /**
+     * The camera's animation. Used to move the camera smoothly between Tiles using MoveAnimation.
+     */
     private Animation animation;
 
     /**
@@ -107,11 +122,5 @@ public class Camera {
         return visionSize;
     }
 
-    /**
-     * @return the size of the tiles
-     */
-    public int getTileSize() {
-        return tileSize;
-    }
 
 }

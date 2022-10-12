@@ -1,7 +1,19 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+/**
+ * Allows Entities to be created from external classes
+ * @author Alicia Robinson - 300560663
+ */
 public class EntityFactory {
+    /**
+     * @param type String of the type of Entity needing to be made
+     * @param point Point that Entity needs to be created at
+     * @return new Entity of given type
+     */
     public Entity createEntity(String type, Point point){
+        if(point == null || type == null || type.isEmpty()){
+            throw new IllegalArgumentException("Type or Point are null");
+        }
         switch(type){
             case "PLAYER_UP":
                 return new Player(point,"PLAYER_UP");

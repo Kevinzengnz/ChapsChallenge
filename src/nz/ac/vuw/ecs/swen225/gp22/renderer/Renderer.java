@@ -26,18 +26,43 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
  */
 public class Renderer extends JPanel {
 
+    /**
+     * The camera. Used to represent the focus area of the game.
+     */
     private final Camera camera = new Camera(new Point(5,5));
-    // Drawing constants
+    /**
+     * The size in pixels of the tiles
+     */
     private final static int tileSize = 64;
 
+    /**
+     * Stores the Keys the character has picked up for drawing. Updated every ping.
+     */
     Map<Key, Integer> inventory = new HashMap<>();
 
-    // Entities currently visible
+    /**
+     * Stores the entities for drawing. Updated every ping.
+     */
     private List<Entity> entities = new ArrayList<>();
 
+    /**
+     * Stores the actors to determine which have moved and need animations. Updated every ping.
+     */
     private Map<Actor, Point> actors = new HashMap<>();
 
+    /**
+     * Stores all the currently running animations.
+     */
     private List<Animation> animations = new ArrayList<>();
+
+    /**
+     * Message to display on the screen. Used to display help messages.
+     */
+    private String message;
+    /**
+     * Timer to display above message for. Counts down till 0 then hides message.
+     */
+    private int messageTimer = 0;
 
 
     /**
@@ -47,6 +72,7 @@ public class Renderer extends JPanel {
      * @param keys list of keys in the players inventory
      */
     public void ping(Point cameraPosition, List<Entity> allEntities, List<Key> keys) {
+        if (messageTimer != 0) messageTimer--;
         camera.update(cameraPosition);
         // Update inventory
         inventory.clear();
@@ -119,6 +145,9 @@ public class Renderer extends JPanel {
         if (infoTiles.size() != 0) {
             drawPopup(g, cellsLeft, cellsTop, infoTiles.get(0).getText());
         }
+        if (messageTimer != 0) {
+            drawPopup(g, cellsLeft, cellsTop, message);
+        }
 
     }
 
@@ -181,6 +210,16 @@ public class Renderer extends JPanel {
             g.drawString(split[i], drawLeft + 10, drawTop + 20 * (i+1));
         }
 
+    }
+
+    /**
+     * Displays a popup with the message for the specified number of pings.
+     * @param message the message to add
+     * @param length the number of pings to display it for
+     */
+    public void addPopup(String message, int length) {
+        this.message = message;
+        this.messageTimer = length;
     }
 
     /**

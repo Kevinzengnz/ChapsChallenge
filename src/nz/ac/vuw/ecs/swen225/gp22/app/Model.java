@@ -57,7 +57,7 @@ public interface Model{
      */
     default void ping(){
         entities().forEach(a -> a.ping(this));
-        recorder().ping(player().getDirection().ordinal());
+        recorder().ping(player().getDirection().ordinal(), player().isMoving());
         var end = false;
         if(end){ onNextLevel(); }
     }

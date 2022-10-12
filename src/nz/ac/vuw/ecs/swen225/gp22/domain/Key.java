@@ -2,11 +2,23 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
 import nz.ac.vuw.ecs.swen225.gp22.app.Model;
 
 import java.util.Objects;
+
 /**
+ * Represents Keys in the game.
+ * Keys are able to unlock LockedDoors
  * @author Alicia Robinson - 300560663
  */
 public class Key extends Collectable{
+    /**
+     * Colour of the key
+     */
     private final Colours colour;
+
+    /**
+     * Creates Key from given point and colourString
+     * @param point position of key
+     * @param colourString colour of key
+     */
     protected Key(Point point, String colourString) {
         super(point);
         if(colourString.isEmpty()){
@@ -14,6 +26,12 @@ public class Key extends Collectable{
         }
         colour = getColour(colourString);
         this.setSprite(colour.key);
+    }
+    /**
+     * @return colour of key as a string
+     */
+    public String getColour(){
+        return this.colour.getName();
     }
 
     @Override
@@ -24,6 +42,7 @@ public class Key extends Collectable{
         soundEffect.run();
         player.addKey(this);
         model.remove(this);
+        this.setPoint(new Point(0, 0));
         assert player.keys.contains(this);
         assert !model.entities().contains(this);
     }
@@ -33,7 +52,7 @@ public class Key extends Collectable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Key key = (Key) o;
-        return colour == key.colour;
+        return colour == key.colour && this.getPoint().equals(((Key) o).getPoint());
     }
 
     @Override
@@ -41,7 +60,4 @@ public class Key extends Collectable{
         return Objects.hash(colour);
     }
 
-    public String getColour(){
-        return this.colour.getName();
-    }
 }

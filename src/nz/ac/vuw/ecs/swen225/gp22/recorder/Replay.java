@@ -1,11 +1,15 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
+import nz.ac.vuw.ecs.swen225.gp22.app.ChapsChallenge;
+import nz.ac.vuw.ecs.swen225.gp22.app.PlayerController;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.XmlParser;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,17 +22,20 @@ import java.util.List;
 public class Replay {
     private List<Action> actionList;
     private int pings=0;
-    private double speed=1;
+    private double speed=0.25;
     private Timer timer=null;
     private boolean isRunning=false;
     private int endPing=1;
+    private int frames=0;
+    private PlayerController pc;
 
     /**
      * Loads replay file data into this replay instance.
      * @param replayName File name of recording.
      */
-    public void loadReplay(String replayName){
+    public void loadReplay(String replayName, ChapsChallenge game){
         this.cleanReplay();
+        this.pc = game.getPhase().controller();
         Document replay = null;
         try {
             replay = XmlParser.parse(new File("Replays/" + replayName + ".xml"));
@@ -42,6 +49,7 @@ public class Replay {
         for(Element action : actions){
             this.actionList.add(new Action(Integer.parseInt(action.attribute("dir").getValue()), Integer.parseInt(action.attribute("frame").getValue())));
         }
+        this.actionList.remove(0);
         RecTesting.log("Replay", "loadReplay", "Replay loaded");
     }
 
@@ -60,8 +68,10 @@ public class Replay {
         //Restart timer if it already exists and is paused.
         if(this.timer!=null){this.timer.restart();return;}
         //Otherwise create a new timer and start it.
-        this.timer = new Timer(136, x->{
+        this.timer = new Timer(1000/30, x->{
             assert SwingUtilities.isEventDispatchThread();
+            this.frames++;
+            if(this.frames % (int)(4/this.speed) == 0){this.pings++;}
             step();
         });
         this.timer.start();
@@ -87,6 +97,7 @@ public class Replay {
      */
     public void nextTick(){
         autoPause();
+        this.pings++;
         step();
     }
 
@@ -106,14 +117,22 @@ public class Replay {
      * Move to the next tick of the game clock in the replay.
      */
     private void step(){
-        this.pings++;
         if(this.pings==this.endPing){
             if(this.timer!=null){this.timer.stop();}
             RecTesting.log("Replay","autoPlay","Replay stopped at frame "+this.pings);
             cleanReplay();
         }
         this.actionList.stream().filter(a->a.frame()==this.pings).findFirst().ifPresentOrElse(
-                a->RecTesting.log("Replay", "autoPlay", "Direction changed to: "+a.dir()+" at ping "+a.frame()),
+                (a)->{
+                    RecTesting.log("Replay", "autoPlay", "Direction changed to: "+a.dir()+" at ping "+a.frame());
+                    switch(a.dir()){
+                        case 0 : this.pc.getActionsReleased().getOrDefault(KeyEvent.VK_W, ()->{}).run();break;
+                        case 1 : this.pc.getActionsPressed().getOrDefault(KeyEvent.VK_W, ()->{}).run();break;
+                        case 2 : this.pc.getActionsPressed().getOrDefault(KeyEvent.VK_D, ()->{}).run();break;
+                        case 3 : this.pc.getActionsPressed().getOrDefault(KeyEvent.VK_S, ()->{}).run();break;
+                        case 4 : this.pc.getActionsPressed().getOrDefault(KeyEvent.VK_A, ()->{}).run();break;
+                    }
+                },
                 ()->{}
         );
     }
@@ -127,5 +146,6 @@ public class Replay {
         this.pings=0;
         this.endPing=1;
         if(this.timer!=null){this.timer.stop();this.timer=null;}
+        this.frames=0;
     }
 }
