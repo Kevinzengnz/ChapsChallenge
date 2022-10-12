@@ -83,7 +83,7 @@ public class PlayerController extends Keys {
     /**
      * Begins moving the player up.
      */
-    private void moveUp() {
+    public void moveUp() {
         p.setMoving(true);
         p.setDirection(Direction.Up);
     }
@@ -91,7 +91,7 @@ public class PlayerController extends Keys {
     /**
      * Begins moving the player down.
      */
-    private void moveDown() {
+    public void moveDown() {
         p.setMoving(true);
         p.setDirection(Direction.Down);
     }
@@ -99,7 +99,7 @@ public class PlayerController extends Keys {
     /**
      * Begins moving the player left.
      */
-    private void moveLeft() {
+    public void moveLeft() {
         p.setMoving(true);
         p.setDirection(Direction.Left);
     }
@@ -107,7 +107,7 @@ public class PlayerController extends Keys {
     /**
      * Begins moving the player right.
      */
-    private void moveRight() {
+    public void moveRight() {
         p.setMoving(true);
         p.setDirection(Direction.Right);
     }
