@@ -1,8 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.renderer;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -63,6 +61,10 @@ public class Renderer extends JPanel {
    */
   private int messageTimer = 0;
 
+  /**
+   * The font used for displaying popup messages.
+   */
+  private final Font font = new Font("Courier",Font.PLAIN,16);
 
   /**
    * Updates the renderer with drawing information.
@@ -216,13 +218,26 @@ public class Renderer extends JPanel {
     if (message == null) {
       return;
     }
-    String[] split = message.split("(?<=\\G.{" + 70 + "})");
+    List<String> list = new ArrayList<>();
+    StringBuilder line = new StringBuilder();
+    for (String s : message.split(" ")) {
+      if (line.length() + s.length() > 40) {
+        list.add(line.toString());
+        line = new StringBuilder();
+      }
+      else {
+        line.append(s).append(" ");
+      }
+    }
+    list.add(line.toString());
+
+    g.setFont(font);
     Image bg = Sprite.TEXT_POPUP.image;
     int drawLeft = left + (camera.getVisionSize() * tileSize - bg.getWidth(null)) / 2;
     int drawTop = top + 20;
-    g.drawImage(bg, drawLeft, drawTop, null);
-    for (int i = 0; i < split.length; i++) {
-      g.drawString(split[i], drawLeft + 10, drawTop + 20 * (i + 1));
+    g.drawImage(bg, drawLeft, drawTop, null);;
+    for (int i = 0; i < list.size(); i++) {
+      g.drawString(list.get(i), drawLeft + 10, drawTop + 20 * (i + 1));
     }
 
   }
