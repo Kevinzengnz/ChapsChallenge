@@ -55,6 +55,15 @@ public class Renderer extends JPanel {
      */
     private List<Animation> animations = new ArrayList<>();
 
+    /**
+     * Message to display on the screen. Used to display help messages.
+     */
+    private String message;
+    /**
+     * Timer to display above message for. Counts down till 0 then hides message.
+     */
+    private int messageTimer = 0;
+
 
     /**
      * Updates the renderer with drawing information.
@@ -63,6 +72,7 @@ public class Renderer extends JPanel {
      * @param keys list of keys in the players inventory
      */
     public void ping(Point cameraPosition, List<Entity> allEntities, List<Key> keys) {
+        if (messageTimer != 0) messageTimer--;
         camera.update(cameraPosition);
         // Update inventory
         inventory.clear();
@@ -135,6 +145,9 @@ public class Renderer extends JPanel {
         if (infoTiles.size() != 0) {
             drawPopup(g, cellsLeft, cellsTop, infoTiles.get(0).getText());
         }
+        if (messageTimer != 0) {
+            drawPopup(g, cellsLeft, cellsTop, message);
+        }
 
     }
 
@@ -197,6 +210,16 @@ public class Renderer extends JPanel {
             g.drawString(split[i], drawLeft + 10, drawTop + 20 * (i+1));
         }
 
+    }
+
+    /**
+     * Displays a popup with the message for the specified number of pings.
+     * @param message the message to add
+     * @param length the number of pings to display it for
+     */
+    public void addPopup(String message, int length) {
+        this.message = message;
+        this.messageTimer = length;
     }
 
     /**
