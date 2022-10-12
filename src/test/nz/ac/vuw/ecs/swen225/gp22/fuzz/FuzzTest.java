@@ -38,11 +38,21 @@ Size of the list
 
 	 */
 	private List<Integer> genEvents(int size){
+		int next = 0;
+		int prev = 0;
+		int times = 0;
 		List<Integer> es = new ArrayList<Integer>();
 		Random r = new Random();
-		for(int i = 0; i<size; i++) {
-			int next = r.nextInt(keyList.size());
-			es.add(keyList.get(next));
+		while(es.size() < size) {
+			//Generating the direction, want to be different than previous
+			next = r.nextInt(keyList.size());
+			if(next == prev) {next = r.nextInt(keyList.size());}
+			//Run in one direction for random number of steps
+			times = r.nextInt(8);
+			for(int i = 0; i<times;i++) {
+				es.add(keyList.get(next));
+			}
+			prev = next;
 		}
 		return es;
 	}
@@ -78,7 +88,7 @@ Size of the list
 			e.printStackTrace();
 		}
 		//Random Key presses
-		var events = genEvents(500);
+		var events = genEvents(1000);
 		checkMovement(events);
 	}
 	
@@ -119,7 +129,7 @@ Size of the list
 	
 	
 	
-//Pair of integers which acts as a point
+	//Pair of integers which acts as a point
 	record Pair(int x, int y) {}
 	/**
 	 * Simulated the mouse clicks with a robot
