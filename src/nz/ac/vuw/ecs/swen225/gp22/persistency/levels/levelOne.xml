@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <Tiles>
-        <PLAYER x="11" y="11"/>
-        <WALL x="0" y="0"/>
-        <WALL x="0" y="1"/>
-        <WALL x="0" y="2"/>
-        <WALL x="0" y="3"/>
-        <WALL x="0" y="4"/>
-        <WALL x="0" y="5"/>
-        <WALL x="0" y="6"/>
-        <WALL x="0" y="7"/>
-        <WALL x="0" y="8"/>
-        <WALL x="0" y="9"/>
-        <WALL x="0" y="10"/>
-        <WALL x="0" y="11"/>
-        <WALL x="0" y="12"/>
-        <WALL x="0" y="13"/>
-        <WALL x="0" y="14"/>
-        <WALL x="0" y="15"/>
-        <WALL x="0" y="16"/>
-        <WALL x="0" y="17"/>
-        <WALL x="0" y="18"/>
-        <WALL x="0" y="19"/>
-        <WALL x="1" y="0"/>
+        <PLAYER_DOWN x="10" y="9"/>
+        <INFO x="10" y="8"/>
+        <INFO x="11" y="7"/>
+        <FLOOR x="0" y="0"/>
+        <FLOOR x="0" y="1"/>
+        <FLOOR x="0" y="2"/>
+        <FLOOR x="0" y="3"/>
+        <FLOOR x="0" y="4"/>
+        <FLOOR x="0" y="5"/>
+        <FLOOR x="0" y="6"/>
+        <FLOOR x="0" y="7"/>
+        <FLOOR x="0" y="8"/>
+        <FLOOR x="0" y="9"/>
+        <FLOOR x="0" y="10"/>
+        <FLOOR x="0" y="11"/>
+        <FLOOR x="0" y="12"/>
+        <FLOOR x="0" y="13"/>
+        <FLOOR x="0" y="14"/>
+        <FLOOR x="0" y="15"/>
+        <FLOOR x="0" y="16"/>
+        <FLOOR x="0" y="17"/>
+        <FLOOR x="0" y="18"/>
+        <FLOOR x="0" y="19"/>
+        <FLOOR x="1" y="0"/>
         <FLOOR x="1" y="1"/>
         <FLOOR x="1" y="2"/>
         <FLOOR x="1" y="3"/>
@@ -41,8 +43,8 @@
         <FLOOR x="1" y="16"/>
         <FLOOR x="1" y="17"/>
         <FLOOR x="1" y="18"/>
-        <WALL x="1" y="19"/>
-        <WALL x="2" y="0"/>
+        <FLOOR x="1" y="19"/>
+        <FLOOR x="2" y="0"/>
         <FLOOR x="2" y="1"/>
         <FLOOR x="2" y="2"/>
         <FLOOR x="2" y="3"/>
@@ -61,8 +63,8 @@
         <FLOOR x="2" y="16"/>
         <FLOOR x="2" y="17"/>
         <FLOOR x="2" y="18"/>
-        <WALL x="2" y="19"/>
-        <WALL x="3" y="0"/>
+        <FLOOR x="2" y="19"/>
+        <FLOOR x="3" y="0"/>
         <FLOOR x="3" y="1"/>
         <FLOOR x="3" y="2"/>
         <FLOOR x="3" y="3"/>
@@ -74,9 +76,6 @@
         <FLOOR x="3" y="9"/>
         <FLOOR x="3" y="10"/>
         <FLOOR x="3" y="11"/>
-        <DOOR_EXIT x="3" y="11"/>
-        <EXIT x="3" y="11"/>
-        <DOOR_YELLOW x="3" y="11"/>
         <FLOOR x="3" y="12"/>
         <FLOOR x="3" y="13"/>
         <FLOOR x="3" y="14"/>
@@ -84,9 +83,8 @@
         <FLOOR x="3" y="16"/>
         <FLOOR x="3" y="17"/>
         <FLOOR x="3" y="18"/>
-        <KEY_YELLOW x="3" y="18"/>
-        <WALL x="3" y="19"/>
-        <WALL x="4" y="0"/>
+        <FLOOR x="3" y="19"/>
+        <FLOOR x="4" y="0"/>
         <FLOOR x="4" y="1"/>
         <FLOOR x="4" y="2"/>
         <FLOOR x="4" y="3"/>
@@ -102,17 +100,17 @@
         <FLOOR x="4" y="13"/>
         <FLOOR x="4" y="14"/>
         <FLOOR x="4" y="15"/>
-        <INFO x="4" y="16"/>
+        <FLOOR x="4" y="16"/>
         <FLOOR x="4" y="17"/>
         <FLOOR x="4" y="18"/>
-        <WALL x="4" y="19"/>
-        <WALL x="5" y="0"/>
-        <WALL x="5" y="1"/>
-        <WALL x="5" y="2"/>
-        <WALL x="5" y="3"/>
-        <WALL x="5" y="4"/>
-        <WALL x="5" y="5"/>
-        <WALL x="5" y="6"/>
+        <FLOOR x="4" y="19"/>
+        <FLOOR x="5" y="0"/>
+        <FLOOR x="5" y="1"/>
+        <FLOOR x="5" y="2"/>
+        <FLOOR x="5" y="3"/>
+        <FLOOR x="5" y="4"/>
+        <FLOOR x="5" y="5"/>
+        <FLOOR x="5" y="6"/>
         <FLOOR x="5" y="7"/>
         <FLOOR x="5" y="8"/>
         <FLOOR x="5" y="9"/>
@@ -125,8 +123,8 @@
         <FLOOR x="5" y="16"/>
         <FLOOR x="5" y="17"/>
         <FLOOR x="5" y="18"/>
-        <WALL x="5" y="19"/>
-        <WALL x="6" y="0"/>
+        <FLOOR x="5" y="19"/>
+        <FLOOR x="6" y="0"/>
         <FLOOR x="6" y="1"/>
         <FLOOR x="6" y="2"/>
         <FLOOR x="6" y="3"/>
@@ -145,8 +143,8 @@
         <FLOOR x="6" y="16"/>
         <FLOOR x="6" y="17"/>
         <FLOOR x="6" y="18"/>
-        <WALL x="6" y="19"/>
-        <WALL x="7" y="0"/>
+        <FLOOR x="6" y="19"/>
+        <FLOOR x="7" y="0"/>
         <FLOOR x="7" y="1"/>
         <FLOOR x="7" y="2"/>
         <FLOOR x="7" y="3"/>
@@ -165,8 +163,8 @@
         <FLOOR x="7" y="16"/>
         <FLOOR x="7" y="17"/>
         <FLOOR x="7" y="18"/>
-        <WALL x="7" y="19"/>
-        <WALL x="8" y="0"/>
+        <FLOOR x="7" y="19"/>
+        <FLOOR x="8" y="0"/>
         <FLOOR x="8" y="1"/>
         <FLOOR x="8" y="2"/>
         <FLOOR x="8" y="3"/>
@@ -185,8 +183,8 @@
         <FLOOR x="8" y="16"/>
         <FLOOR x="8" y="17"/>
         <FLOOR x="8" y="18"/>
-        <WALL x="8" y="19"/>
-        <WALL x="9" y="0"/>
+        <FLOOR x="8" y="19"/>
+        <FLOOR x="9" y="0"/>
         <FLOOR x="9" y="1"/>
         <FLOOR x="9" y="2"/>
         <FLOOR x="9" y="3"/>
@@ -205,8 +203,8 @@
         <FLOOR x="9" y="16"/>
         <FLOOR x="9" y="17"/>
         <FLOOR x="9" y="18"/>
-        <WALL x="9" y="19"/>
-        <WALL x="10" y="0"/>
+        <FLOOR x="9" y="19"/>
+        <FLOOR x="10" y="0"/>
         <FLOOR x="10" y="1"/>
         <FLOOR x="10" y="2"/>
         <FLOOR x="10" y="3"/>
@@ -225,8 +223,8 @@
         <FLOOR x="10" y="16"/>
         <FLOOR x="10" y="17"/>
         <FLOOR x="10" y="18"/>
-        <WALL x="10" y="19"/>
-        <WALL x="11" y="0"/>
+        <FLOOR x="10" y="19"/>
+        <FLOOR x="11" y="0"/>
         <FLOOR x="11" y="1"/>
         <FLOOR x="11" y="2"/>
         <FLOOR x="11" y="3"/>
@@ -245,8 +243,8 @@
         <FLOOR x="11" y="16"/>
         <FLOOR x="11" y="17"/>
         <FLOOR x="11" y="18"/>
-        <WALL x="11" y="19"/>
-        <WALL x="12" y="0"/>
+        <FLOOR x="11" y="19"/>
+        <FLOOR x="12" y="0"/>
         <FLOOR x="12" y="1"/>
         <FLOOR x="12" y="2"/>
         <FLOOR x="12" y="3"/>
@@ -265,8 +263,8 @@
         <FLOOR x="12" y="16"/>
         <FLOOR x="12" y="17"/>
         <FLOOR x="12" y="18"/>
-        <WALL x="12" y="19"/>
-        <WALL x="13" y="0"/>
+        <FLOOR x="12" y="19"/>
+        <FLOOR x="13" y="0"/>
         <FLOOR x="13" y="1"/>
         <FLOOR x="13" y="2"/>
         <FLOOR x="13" y="3"/>
@@ -285,8 +283,8 @@
         <FLOOR x="13" y="16"/>
         <FLOOR x="13" y="17"/>
         <FLOOR x="13" y="18"/>
-        <WALL x="13" y="19"/>
-        <WALL x="14" y="0"/>
+        <FLOOR x="13" y="19"/>
+        <FLOOR x="14" y="0"/>
         <FLOOR x="14" y="1"/>
         <FLOOR x="14" y="2"/>
         <FLOOR x="14" y="3"/>
@@ -305,8 +303,8 @@
         <FLOOR x="14" y="16"/>
         <FLOOR x="14" y="17"/>
         <FLOOR x="14" y="18"/>
-        <WALL x="14" y="19"/>
-        <WALL x="15" y="0"/>
+        <FLOOR x="14" y="19"/>
+        <FLOOR x="15" y="0"/>
         <FLOOR x="15" y="1"/>
         <FLOOR x="15" y="2"/>
         <FLOOR x="15" y="3"/>
@@ -325,8 +323,8 @@
         <FLOOR x="15" y="16"/>
         <FLOOR x="15" y="17"/>
         <FLOOR x="15" y="18"/>
-        <WALL x="15" y="19"/>
-        <WALL x="16" y="0"/>
+        <FLOOR x="15" y="19"/>
+        <FLOOR x="16" y="0"/>
         <FLOOR x="16" y="1"/>
         <FLOOR x="16" y="2"/>
         <FLOOR x="16" y="3"/>
@@ -345,8 +343,8 @@
         <FLOOR x="16" y="16"/>
         <FLOOR x="16" y="17"/>
         <FLOOR x="16" y="18"/>
-        <WALL x="16" y="19"/>
-        <WALL x="17" y="0"/>
+        <FLOOR x="16" y="19"/>
+        <FLOOR x="17" y="0"/>
         <FLOOR x="17" y="1"/>
         <FLOOR x="17" y="2"/>
         <FLOOR x="17" y="3"/>
@@ -365,8 +363,8 @@
         <FLOOR x="17" y="16"/>
         <FLOOR x="17" y="17"/>
         <FLOOR x="17" y="18"/>
-        <WALL x="17" y="19"/>
-        <WALL x="18" y="0"/>
+        <FLOOR x="17" y="19"/>
+        <FLOOR x="18" y="0"/>
         <FLOOR x="18" y="1"/>
         <FLOOR x="18" y="2"/>
         <FLOOR x="18" y="3"/>
@@ -385,8 +383,8 @@
         <FLOOR x="18" y="16"/>
         <FLOOR x="18" y="17"/>
         <FLOOR x="18" y="18"/>
-        <WALL x="18" y="19"/>
-        <WALL x="19" y="0"/>
+        <FLOOR x="18" y="19"/>
+        <FLOOR x="19" y="0"/>
         <FLOOR x="19" y="1"/>
         <FLOOR x="19" y="2"/>
         <FLOOR x="19" y="3"/>
@@ -405,26 +403,137 @@
         <FLOOR x="19" y="16"/>
         <FLOOR x="19" y="17"/>
         <FLOOR x="19" y="18"/>
-        <WALL x="19" y="19"/>
-        <WALL x="20" y="0"/>
-        <WALL x="20" y="1"/>
-        <WALL x="20" y="2"/>
-        <WALL x="20" y="3"/>
-        <WALL x="20" y="4"/>
-        <WALL x="20" y="5"/>
-        <WALL x="20" y="6"/>
-        <WALL x="20" y="7"/>
-        <WALL x="20" y="8"/>
-        <WALL x="20" y="9"/>
-        <WALL x="20" y="10"/>
-        <WALL x="20" y="11"/>
-        <WALL x="20" y="12"/>
-        <WALL x="20" y="13"/>
-        <WALL x="20" y="14"/>
-        <WALL x="20" y="15"/>
-        <WALL x="20" y="16"/>
-        <WALL x="20" y="17"/>
-        <WALL x="20" y="18"/>
-        <WALL x="20" y="19"/>
+        <FLOOR x="19" y="19"/>
+        <FLOOR x="20" y="0"/>
+        <FLOOR x="20" y="1"/>
+        <FLOOR x="20" y="2"/>
+        <FLOOR x="20" y="3"/>
+        <FLOOR x="20" y="4"/>
+        <FLOOR x="20" y="5"/>
+        <FLOOR x="20" y="6"/>
+        <FLOOR x="20" y="7"/>
+        <FLOOR x="20" y="8"/>
+        <FLOOR x="20" y="9"/>
+        <FLOOR x="20" y="10"/>
+        <FLOOR x="20" y="11"/>
+        <FLOOR x="20" y="12"/>
+        <FLOOR x="20" y="13"/>
+        <FLOOR x="20" y="14"/>
+        <FLOOR x="20" y="15"/>
+        <FLOOR x="20" y="16"/>
+        <FLOOR x="20" y="17"/>
+        <FLOOR x="20" y="18"/>
+        <FLOOR x="20" y="19"/>
+        <WALL x="3" y="6"/>
+        <WALL x="17" y="6"/>
+        <WALL x="3" y="7"/>
+        <WALL x="17" y="7"/>
+        <WALL x="3" y="8"/>
+        <WALL x="17" y="8"/>
+        <WALL x="3" y="9"/>
+        <WALL x="17" y="9"/>
+        <WALL x="3" y="10"/>
+        <WALL x="17" y="10"/>
+        <WALL x="3" y="11"/>
+        <WALL x="17" y="11"/>
+        <WALL x="3" y="12"/>
+        <WALL x="17" y="12"/>
+        <WALL x="5" y="4"/>
+        <WALL x="15" y="4"/>
+        <WALL x="5" y="5"/>
+        <WALL x="15" y="5"/>
+        <WALL x="5" y="3"/>
+        <WALL x="12" y="3"/>
+        <WALL x="6" y="3"/>
+        <WALL x="13" y="3"/>
+        <WALL x="7" y="3"/>
+        <WALL x="14" y="3"/>
+        <WALL x="8" y="3"/>
+        <WALL x="15" y="3"/>
+        <WALL x="4" y="6"/>
+        <WALL x="4" y="9"/>
+        <WALL x="4" y="12"/>
+        <WALL x="13" y="6"/>
+        <WALL x="13" y="9"/>
+        <WALL x="13" y="12"/>
+        <WALL x="5" y="6"/>
+        <WALL x="5" y="9"/>
+        <WALL x="5" y="12"/>
+        <WALL x="14" y="6"/>
+        <WALL x="14" y="9"/>
+        <WALL x="14" y="12"/>
+        <WALL x="6" y="6"/>
+        <WALL x="6" y="9"/>
+        <WALL x="6" y="12"/>
+        <WALL x="15" y="6"/>
+        <WALL x="15" y="9"/>
+        <WALL x="15" y="12"/>
+        <WALL x="7" y="6"/>
+        <WALL x="7" y="9"/>
+        <WALL x="7" y="12"/>
+        <WALL x="16" y="6"/>
+        <WALL x="16" y="9"/>
+        <WALL x="16" y="12"/>
+        <WALL x="9" y="3"/>
+        <WALL x="11" y="3"/>
+        <WALL x="7" y="13"/>
+        <WALL x="13" y="13"/>
+        <WALL x="10" y="12"/>
+        <WALL x="9" y="4"/>
+        <WALL x="11" y="4"/>
+        <WALL x="7" y="14"/>
+        <WALL x="13" y="14"/>
+        <WALL x="10" y="13"/>
+        <WALL x="9" y="5"/>
+        <WALL x="11" y="5"/>
+        <WALL x="7" y="15"/>
+        <WALL x="13" y="15"/>
+        <WALL x="10" y="14"/>
+        <WALL x="9" y="6"/>
+        <WALL x="11" y="6"/>
+        <WALL x="7" y="16"/>
+        <WALL x="13" y="16"/>
+        <WALL x="10" y="15"/>
+        <WALL x="8" y="16"/>
+        <WALL x="9" y="16"/>
+        <WALL x="10" y="16"/>
+        <WALL x="11" y="16"/>
+        <WALL x="12" y="16"/>
+        <WALL x="10" y="4"/>
+        <WALL x="8" y="12"/>
+        <WALL x="12" y="12"/>
+        <WALL x="7" y="8"/>
+        <WALL x="7" y="10"/>
+        <WALL x="13" y="8"/>
+        <WALL x="13" y="10"/>
+        <KEY_BLUE x="8" y="8"/>
+        <KEY_BLUE x="8" y="10"/>
+        <KEY_BLUE x="7" y="7"/>
+        <KEY_BLUE x="13" y="11"/>
+        <KEY_RED x="12" y="8"/>
+        <KEY_RED x="12" y="10"/>
+        <DOOR_RED x="7" y="11"/>
+        <DOOR_RED x="13" y="7"/>
+        <DOOR_YELLOW x="9" y="12"/>
+        <DOOR_YELLOW x="11" y="12"/>
+        <KEY_YELLOW x="5" y="7"/>
+        <KEY_YELLOW x="15" y="7"/>
+        <TREASURE x="8" y="9"/>
+        <TREASURE x="12" y="9"/>
+        <TREASURE x="10" y="11"/>
+        <TREASURE x="9" y="14"/>
+        <TREASURE x="11" y="14"/>
+        <TREASURE x="5" y="8"/>
+        <TREASURE x="5" y="10"/>
+        <TREASURE x="15" y="8"/>
+        <TREASURE x="15" y="10"/>
+        <TREASURE x="7" y="5"/>
+        <TREASURE x="13" y="5"/>
+        <DOOR_GREEN x="8" y="6"/>
+        <DOOR_GREEN x="12" y="6"/>
+        <KEY_GREEN x="11" y="15"/>
+        <KEY_GREEN x="12" y="15"/>
+        <DOOR_EXIT x="10" y="6"/>
+        <EXIT x="10" y="5"/>
     </Tiles>
 </root>
