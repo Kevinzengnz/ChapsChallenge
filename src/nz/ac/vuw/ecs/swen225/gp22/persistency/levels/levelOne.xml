@@ -508,8 +508,8 @@
         <WALL x="13" y="10"/>
         <KEY_BLUE x="8" y="8"/>
         <KEY_BLUE x="8" y="10"/>
-        <KEY_BLUE x="7" y="7"/>
-        <KEY_BLUE x="13" y="11"/>
+        <DOOR_BLUE x="7" y="7"/>
+        <DOOR_BLUE x="13" y="11"/>
         <KEY_RED x="12" y="8"/>
         <KEY_RED x="12" y="10"/>
         <DOOR_RED x="7" y="11"/>
