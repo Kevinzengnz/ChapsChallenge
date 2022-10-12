@@ -39,12 +39,16 @@ public class XmlParser {
      * This function saves the current game to a xml file
      * @param entities the list of entities in the current game
      */
-    public static void saveGame(List<Entity> entities, String levelName) throws IOException {
+    public static void saveGame(List<Entity> entities, String levelName, int time ) throws IOException {
         //print the list of entities
         //add the list of entities to the Tiles element
         Document document = DocumentHelper.createDocument();
         Element root = document.addElement("root");
         Element Tiles = root.addElement("Tiles");
+
+        //add time to the xml file
+        Element Time = root.addElement("Time");
+        Time.addAttribute("time", String.valueOf(time));
 
         //iterate and add the entities to the Tiles element
         for (Entity e : entities) {
@@ -142,5 +146,25 @@ public class XmlParser {
             e.printStackTrace();
         }
         return entities;
+    }
+
+    /**
+     * This function returns the time
+     * @param path the path of the xml file
+     */
+    public static int loadTime(String path) {
+        //load file from path
+        File file = new File(path);
+
+        //Iterate through the xml file and add the entities to the list
+        try {
+            Document document = parse(file);
+            Element root = document.getRootElement();
+            Element time = root.element("TIME");
+            return Integer.parseInt(time.attributeValue("time"));
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
