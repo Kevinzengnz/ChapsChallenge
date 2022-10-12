@@ -14,7 +14,7 @@ public class InfoTile extends Tile{
     /**
      * Sound effect that can be run when InfoTile is interacted with
      */
-    protected Runnable soundEffect;
+    public Runnable soundEffect;
 
     /**
      * Creates InfoTile at specified point
@@ -29,7 +29,7 @@ public class InfoTile extends Tile{
      * @param infoText instruction text
      */
     public void setText(String infoText){
-        if(infoText.isEmpty()){
+        if(infoText == null || infoText.isEmpty()){
             throw new IllegalArgumentException("Text cannot be empty");
         }
         this.infoText = infoText;

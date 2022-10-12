@@ -7,16 +7,13 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
 public class Door implements Entity{
     private String sprite;
     private final Point point;
-    protected Runnable soundEffect;
+    public Runnable soundEffect;
 
     /**
      * Creates a door at the given point
      * @param point point that door is at
      */
     protected Door(Point point) {
-        if(point == null){
-            throw new IllegalArgumentException("Door Point is null");
-        }
         this.point = point;
     }
 

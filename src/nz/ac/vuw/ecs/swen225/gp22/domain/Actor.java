@@ -32,13 +32,20 @@ public class Actor implements Entity{
      * Sets moving to true or false
      * @param moving boolean for if the Actor should be moving
      */
-    public void setMoving(boolean moving){ this.moving = moving; }
+    public void setMoving(boolean moving){
+        this.moving = moving;
+    }
 
     /**
      * Sets the Actors direction
      * @param direction direction that Actor is facing
      */
-    public void setDirection(Direction direction){ this.direction = direction; }
+    public void setDirection(Direction direction){
+        if(direction == null){
+            throw new IllegalArgumentException("direction is null");
+        }
+        this.direction = direction;
+    }
 
     /**
      * @return true if Actor is moving and false if they aren't
