@@ -8,20 +8,19 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import javax.swing.SwingUtilities;
-import org.junit.jupiter.api.Test;
 import nz.ac.vuw.ecs.swen225.gp22.app.ChapsChallenge;
 import nz.ac.vuw.ecs.swen225.gp22.app.Main;
+import org.junit.jupiter.api.Test;
 
 /**
- * 
+ * FuzzTest class is as the name implies, where fuzz tests are taking place.
+
  * @author Hayden Curtis
- * ID:300586379
+ID:300586379
  */
 class FuzzTest {
 	private static Robot robot = null;
-	
 	/**
 	 * Returns a list of possible key inputs.
 	 */
@@ -30,18 +29,31 @@ class FuzzTest {
 			KeyEvent.VK_LEFT, KeyEvent.VK_A,
 			KeyEvent.VK_RIGHT, KeyEvent.VK_D);
 	
-	/**
-	 * Generates a list of random integers each corresponding to key inputs
-	 * @param size
-	 * 		Size of the list
-	 * @return
+ /**
+ * Generates a list of random integers each corresponding to key inputs.
+
+ * @param size
+Size of the list
+ * @return List<Integer>
+
 	 */
 	private List<Integer> genEvents(int size){
 		List<Integer> es = new ArrayList<Integer>();
 		Random r = new Random();
 		for(int i = 0; i<size; i++) {
-			int next = r.nextInt(8);
+			int next = r.nextInt(keyList.size());
 			es.add(keyList.get(next));
+		}
+		return es;
+	}
+	
+	private List<Pair> genPoints(int size){
+		List<Pair> es = new ArrayList<Pair>();
+		Random r = new Random();
+		for(int i = 0; i<size; i++) {
+			int x = r.nextInt();
+			int y = r.nextInt();
+			es.add(new Pair(x, y));
 		}
 		return es;
 	}
@@ -54,6 +66,11 @@ class FuzzTest {
 	public void test1() {
 		//Call the creation of the level
 		Main.main(null);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
 		//Create Robot to apply clicks and key presses
 		try {
 			robot = new Robot();
@@ -61,15 +78,17 @@ class FuzzTest {
 			e.printStackTrace();
 		}
 		//Random Key presses
-		var events = genEvents(100);
+		var events = genEvents(500);
 		checkMovement(events);
 	}
 	
+	/**
+	 * test2 is for the second level of the game
+	 */
 	@Test
 	public void test2() {
 		//Call the creation of the level
 		Main.main(null);		
-		
 		//Create Robot to apply clicks and key presses
 		try {
 			robot = new Robot();
@@ -77,7 +96,7 @@ class FuzzTest {
 			e.printStackTrace();
 		}
 		//Random Key presses
-		var events = genEvents(100);
+		var events = genEvents(500);
 		checkMovement(events);
 	}
 	
@@ -90,23 +109,31 @@ class FuzzTest {
 			.forEach(e -> {
 				try {
 					robot.keyPress(e);
+					robot.delay(33);
 					robot.keyRelease(e);
-					System.out.println("Pressed: " + e);
 				} catch (Exception exc) {
 					System.out.println(exc);
 				}
 			});
 	}
 	
+	
+	
+//Pair of integers which acts as a point
+	record Pair(int x, int y) {}
 	/**
+	 * Simulated the mouse clicks with a robot
 	 * 
 	 * @param x
 	 * @param y
 	 */
-	private void mouseClicks(int x, int y) {
-		robot.mouseMove(x, y);
-		robot.delay(5);
-		robot.mousePress(MouseEvent.BUTTON1_DOWN_MASK);
-		robot.mouseRelease(MouseEvent.BUTTON1_DOWN_MASK);
+	private void mouseClicks(List<Pair> clicks) {
+		clicks.stream()
+			.forEach(p -> {
+				robot.mouseMove(p.x(), p.y());
+				robot.delay(5);
+				robot.mousePress(MouseEvent.BUTTON1_DOWN_MASK);
+				robot.mouseRelease(MouseEvent.BUTTON1_DOWN_MASK);}
+			);
 	}
 }
