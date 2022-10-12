@@ -22,24 +22,8 @@ public class RecTesting {
     }
   }
 
-  /**
-   * Creates a mock replay for testing.
-   */
-  public static void createMockReplay() {
-    Recorder r = new GameRecorder();
-    r.startRecording(TEST_REPLAY_FILE, TEST_REPLAY_FILE);
-    for (int i = 0; i < 60; i++) {
-      if (i % 2 == 0) {
-        r.ping(i % 3, true);
-        r.ping(i % 3, true);
-      }
-    }
-    r.endRecording();
-  }
-
   public RecTesting() {
     assert SwingUtilities.isEventDispatchThread();
-    createMockReplay();
   }
 
   public static void main(String[] a) {
