@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Treasure;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.XmlParser;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.GameRecorder;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
@@ -16,15 +17,31 @@ import java.util.List;
  */
 record Phase(Model model, PlayerController controller, Renderer renderer) {
 
+    /**
+     * Returns a new level with the given list of entities
+     * @param next runnable to perform after finishing this level
+     * @param first runnable to perform after failing this level
+     * @param levelEntities list of entities in this level
+     * @return new phase with the list of given entitities
+     */
     static Phase newLevel(Runnable next, Runnable first, List<Entity> levelEntities) {
         Renderer renderer = new Renderer();
         GameRecorder recorder = new GameRecorder();
         Player p = levelEntities.stream().filter(a -> a instanceof Player).map(a -> (Player)
                 a).findFirst().orElseThrow();
         renderer.ping(p.getPoint(), levelEntities, new ArrayList<>());
+        long totalTreasures = levelEntities.stream().filter(e -> e instanceof Treasure).count();
         var m = new Model() {
+            int timeLeft;
             List<Entity> entities = levelEntities;
-
+            @Override
+            public int timeLeft() {
+                return timeLeft;
+            }
+            @Override
+            public void decrementTime() {
+                timeLeft -= 1;
+            }
             @Override
             public Player player() {
                 return p;
@@ -56,6 +73,11 @@ record Phase(Model model, PlayerController controller, Renderer renderer) {
             public void onNextLevel() {
                 next.run();
             }
+
+            @Override
+            public long totalTreasures() {
+                return totalTreasures;
+            }
         };
         return new Phase(m, new PlayerController(p),renderer);
     }
@@ -82,6 +104,11 @@ record Phase(Model model, PlayerController controller, Renderer renderer) {
         return newLevel(next, first, levelEntities);
     }
 
+    /**
+     * Loads a level from a given file
+     * @param fileName file to load game state from
+     * @return new phase created from given file
+     */
     static Phase loadLevel(String fileName) {
         List<Entity> levelEntities = XmlParser.loadGame(fileName);
         return newLevel(()->{}, ()->{}, levelEntities);

@@ -1,24 +1,21 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
-import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 /**
  * @author Alicia Robinson - 300560663
  */
 public class Tile implements Entity{
-    protected Sprite sprite;
-    protected Point point;
-    protected int depth = 0;
+    private final String sprite;
+    private final Point point;
 
-    public Tile(Sprite sprite, Point point) {
+    public Tile(String sprite, Point point) {
+        if(point == null || sprite == null){
+            throw new IllegalArgumentException("Tile Sprite or Point is null");
+        }
         this.sprite = sprite;
         this.point = point;
     }
 
-    public Tile(Point point) {
-        this.point = point;
-    }
-
     @Override
-    public Sprite getSprite() {
+    public String getSprite() {
         return this.sprite;
     }
 
@@ -27,7 +24,7 @@ public class Tile implements Entity{
 
     @Override
     public int getDepth() {
-        return this.depth;
+        return 0;
     }
 }
 

@@ -1,25 +1,35 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
-import nz.ac.vuw.ecs.swen225.gp22.app.Model;
-import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 
-import java.awt.*;
 /**
  * @author Alicia Robinson - 300560663
  */
 public class Collectable implements Entity{
-    protected Sprite sprite;
-    protected Point point;
-    protected int depth = 1;
-    public Collectable(Sprite sprite, Point point) {
+    private String sprite;
+    private final Point point;
+    protected Runnable soundEffect;
+
+    protected Collectable(String sprite, Point point) {
+        if(point == null || sprite == null){
+            throw new IllegalArgumentException("Collectable Sprite or Point is null");
+        }
         this.sprite = sprite;
         this.point = point;
     }
-    public Collectable(Point point) {
+    public void setSoundEffect(Runnable soundEffect){
+        if(soundEffect == null){
+            throw new IllegalArgumentException("Sound Effect is Null");
+        }
+        this.soundEffect = soundEffect;
+    }
+    protected void setSprite(String sprite){
+        this.sprite = sprite;
+    }
+    protected Collectable(Point point) {
         this.point = point;
     }
 
     @Override
-    public Sprite getSprite() { return this.sprite; }
+    public String getSprite() { return this.sprite; }
 
     @Override
     public Point getPoint() {
@@ -28,7 +38,7 @@ public class Collectable implements Entity{
 
     @Override
     public int getDepth() {
-        return this.depth;
+        return 1;
     }
 }
 

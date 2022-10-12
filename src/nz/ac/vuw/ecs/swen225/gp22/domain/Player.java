@@ -7,46 +7,46 @@ import java.util.List;
  * @author Alicia Robinson - 300560663
  */
 public class Player extends Actor{
-    int treasureCollected = 0;
+    private int treasureCollected = 0;
     List<Key> keys = new ArrayList<>();
-    public Player(Point point) {
-        super(Sprite.PLAYER_DOWN, point);
+    protected boolean moveValid = true;
+    protected Player(Point point, String sprite) {
+        super(sprite, point);
     }
-    public void addKey(Key key){
+    protected void addKey(Key key){
         keys.add(key);
     }
-    public void addTreasure(){ treasureCollected += 1; }
+    protected void addTreasure(){ treasureCollected += 1; }
     public int getTreasureCollected() {
         return treasureCollected;
     }
     public List<Key> getKeys(){
         return keys;
     }
+    //TODO Add remove method for keys list
     @Override
-    public void ping(Model m){
-        if(isMoving()) {
+    public void ping(Model m) {
+        if (isMoving()) {
             Point newPoint = point.add(direction.arrow);
-            for (Entity entity : m.entities()) {
-                if (entity.getPoint().equals(newPoint) && !entity.equals(this)) {
-                    if (!(entity instanceof WallTile || entity instanceof LockedDoor)) {
-                        point = newPoint;
-                    }
-                    if(entity instanceof Key){
-                        this.addKey((Key) entity);
-                        m.remove(entity);
-                    }
-                }
+            moveValid = true;
+            m.entities().stream()
+                    .filter(entity -> (!(entity instanceof FloorTile || entity instanceof Player)
+                            && entity.getPoint().equals(newPoint)))
+                    .forEach(entity -> entity.doAction(m, this, newPoint));
+            if (moveValid) {
+                this.point = newPoint;
             }
+
         }
     }
     @Override
-    public Sprite getSprite() {
+    public String getSprite() {
         return switch (getDirection()) {
             case None  -> this.sprite;
-            case Up    -> this.sprite = Sprite.PLAYER_UP;
-            case Right -> this.sprite = Sprite.PLAYER_RIGHT;
-            case Down  -> this.sprite = Sprite.PLAYER_DOWN;
-            case Left  -> this.sprite = Sprite.PLAYER_LEFT;
+            case Up    -> this.sprite = "PLAYER_UP";
+            case Right -> this.sprite = "PLAYER_RIGHT";
+            case Down  -> this.sprite = "PLAYER_DOWN";
+            case Left  -> this.sprite = "PLAYER_LEFT";
         };
     }
 }

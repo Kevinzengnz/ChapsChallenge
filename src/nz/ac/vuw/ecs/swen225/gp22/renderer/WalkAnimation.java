@@ -5,6 +5,10 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
 
+/**
+ * Animation to represent an Actor walking between two tiles.
+ * Extends the MoveAnimation by cycling the Sprite through multiple frames.
+ */
 public class WalkAnimation extends MoveAnimation{
     private int currentFrame = 0;
 
@@ -13,10 +17,24 @@ public class WalkAnimation extends MoveAnimation{
     private final Sprite[] leftFrames = {Sprite.PLAYER_WALK_LEFT_1, Sprite.PLAYER_LEFT, Sprite.PLAYER_WALK_LEFT_2};
     private final Sprite[] rightFrames = {Sprite.PLAYER_WALK_RIGHT_1, Sprite.PLAYER_RIGHT, Sprite.PLAYER_WALK_RIGHT_2};
 
+    /**
+     * Constructs a new WalkAnimation
+     * @param startTile the tile to start the animation in
+     * @param direction the direction to move in from the startTile
+     * @param length the length of the animation in ticks
+     * @param entity the entity to animate
+     */
     public WalkAnimation(Point startTile, Direction direction, int length, Entity entity) {
         super(startTile, direction, length, entity);
     }
 
+    /**
+     * Alternative constructor that has start and end tiles rather than a direction
+     * @param startTile the tile to start the animation in
+     * @param endTile the tile to end the animation in
+     * @param length the length of the animation in ticks
+     * @param entity the entity to animate
+     */
     public WalkAnimation(Point startTile, Point endTile, int length, Entity entity) {
         super(startTile, Direction.Up, length, entity);
         if      (startTile.x() > endTile.x()) direction = Direction.Left;
@@ -26,10 +44,13 @@ public class WalkAnimation extends MoveAnimation{
     }
 
 
+    /**
+     * @return the current sprite of the animation.
+     */
     @Override
     public Sprite getSprite() {
         return switch (direction) {
-            case None  -> null;
+            case None -> throw new IllegalStateException("WalkAnimation must have valid direction");
             case Up    -> upFrames[currentFrame];
             case Right -> rightFrames[currentFrame];
             case Down  -> downFrames[currentFrame];
@@ -37,6 +58,10 @@ public class WalkAnimation extends MoveAnimation{
         };
     }
 
+    /**
+     * Causes the animation to advance 1 tick and move in the direction set.
+     * Advances the animation frame every two ticks.
+     */
     @Override
     public void ping() {
         super.ping();
@@ -47,6 +72,9 @@ public class WalkAnimation extends MoveAnimation{
         }
     }
 
+    /**
+     * @return a new copy of the WalkAnimation
+     */
     @Override
     public Animation copy() {
         return new WalkAnimation(tile, direction, length, entity);
