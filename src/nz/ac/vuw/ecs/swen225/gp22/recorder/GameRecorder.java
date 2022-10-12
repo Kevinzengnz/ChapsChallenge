@@ -66,18 +66,18 @@ public class GameRecorder implements Recorder{
     public void ping(int dir, boolean isMoving){
         this.frame++;
         if(!this.isRecording){return;}
-        if(isMoving){
-            if(this.prevDir!=dir) {
-                this.actionHistory.add(dir);
-                this.prevDir=dir;
-                this.frameHistory.add(this.frame);
-            }
-        } else {
+        if(!isMoving){
+            if(this.prevDir==0){return;}
             this.actionHistory.add(0);
             this.prevDir=0;
             this.frameHistory.add(this.frame);
+            RecTesting.log("GameRecorder", "onAction", "Added stop");
+            return;
         }
-        //Remove below for final
+        if(this.prevDir==dir){return;}
+        this.actionHistory.add(dir);
+        this.prevDir=dir;
+        this.frameHistory.add(this.frame);
         RecTesting.log("GameRecorder", "onAction", "Added action "+dir+" : "+isMoving);
     }
 
