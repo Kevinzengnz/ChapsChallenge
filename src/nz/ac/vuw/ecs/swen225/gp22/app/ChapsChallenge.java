@@ -228,7 +228,7 @@ public class ChapsChallenge extends JFrame {
     var startRecording = new JButton("Start recording");
     var endRecording = new JButton("End recording");
     startRecording.addActionListener(e ->
-        p.model().recorder().startRecording("default.xml", "level 1"));
+        p.model().recorder().startRecording(p.model(), "default"));
     endRecording.addActionListener(e ->
         p.model().recorder().endRecording());
     startRecording.setFocusable(false);
@@ -263,8 +263,8 @@ public class ChapsChallenge extends JFrame {
     helpBtn.setFocusable(false);
 
     var startStopReplay = new JButton("Start/Stop Replay");
-    helpBtn.addActionListener(e -> currentPhase.model());
-    helpBtn.setFocusable(false);
+    startStopReplay.addActionListener(e -> {});
+    startStopReplay.setFocusable(false);
 
     c.gridx = 5;
     c.weightx = 0.5;
