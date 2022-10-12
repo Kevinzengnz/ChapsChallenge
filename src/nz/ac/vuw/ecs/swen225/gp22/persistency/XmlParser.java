@@ -48,7 +48,7 @@ public class XmlParser {
 
         //iterate and add the entities to the Tiles element
         for (Entity e : entities) {
-            String name = e.toString();
+            String name = e.getSprite();
             if (name == "INFO") {
                 Tiles.addElement(name)
                         .addAttribute("x", String.valueOf(e.getPoint().x()))
