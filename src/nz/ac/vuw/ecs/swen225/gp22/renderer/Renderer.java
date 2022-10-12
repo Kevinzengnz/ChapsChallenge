@@ -76,7 +76,7 @@ public class Renderer extends JPanel {
    * @param keys           list of keys in the players inventory
    */
   public void ping(Point cameraPosition, List<Entity> allEntities, List<Key> keys) {
-    if (cameraPosition == null || allEntities == null|| keys == null) {
+    if (cameraPosition == null || allEntities == null || keys == null) {
       throw new IllegalArgumentException("Arguments cannot be null");
     }
     camera.update(cameraPosition);
@@ -229,9 +229,9 @@ public class Renderer extends JPanel {
       if (line.length() + s.length() > 40) {
         list.add(line.toString());
         line = new StringBuilder();
-      } else {
-        line.append(s).append(" ");
       }
+      line.append(s).append(" ");
+
     }
     list.add(line.toString());
 
