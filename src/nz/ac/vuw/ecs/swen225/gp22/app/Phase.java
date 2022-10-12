@@ -83,6 +83,12 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
             public long totalTreasures() {
                 return totalTreasures;
             }
+
+            @Override
+            public int levelNumber() {
+                //TODO: return level number from XML file.
+                return 1;
+            }
         };
         return new Phase(m, new PlayerController(p),renderer);
     }
