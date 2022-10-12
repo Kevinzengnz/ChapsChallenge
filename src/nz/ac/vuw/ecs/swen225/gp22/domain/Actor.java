@@ -23,8 +23,6 @@ public class Actor implements Entity{
      * Initially set to Down
      */
     protected Direction direction = Direction.Down;
-    public void setMoving(boolean moving){ this.moving = moving; }
-    public boolean isMoving(){ return this.moving; }
     protected Actor(String sprite, Point point) {
         if(point == null || sprite == null){
             throw new IllegalArgumentException("Actor Sprite or Point is null");
@@ -48,7 +46,7 @@ public class Actor implements Entity{
     /**
      * @return true if Actor is moving and false if they aren't
      */
-    protected boolean isMoving(){ return this.moving; }
+    public boolean isMoving(){ return this.moving; }
 
     /**
      * @return direction that Actor is facing

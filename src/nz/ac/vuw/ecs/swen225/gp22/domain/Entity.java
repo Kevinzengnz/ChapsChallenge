@@ -63,7 +63,7 @@ public interface Entity {
     enum Colours{
         YELLOW("DOOR_YELLOW", "KEY_YELLOW", "YELLOW"),
         GREEN("DOOR_GREEN", "KEY_GREEN", "GREEN"),
-        BLUE("KEY_BLUE", "KEY_BLUE", "BLUE"),
+        BLUE("DOOR_BLUE", "KEY_BLUE", "BLUE"),
         RED("DOOR_RED", "KEY_RED", "RED");
 
         /**
