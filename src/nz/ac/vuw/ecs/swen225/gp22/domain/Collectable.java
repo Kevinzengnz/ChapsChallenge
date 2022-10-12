@@ -12,11 +12,11 @@ public class Collectable implements Entity{
     /**
      * Point that Collectable is currently at
      */
-    private final Point point;
+    private Point point;
     /**
      * Sound effect that can be run when Collectable is interacted with
      */
-    protected Runnable soundEffect;
+    public Runnable soundEffect;
 
     /**
      * Creates a Collectable using given sprite and point
@@ -24,9 +24,6 @@ public class Collectable implements Entity{
      * @param point point where the collectable is
      */
     protected Collectable(String sprite, Point point) {
-        if(point == null || sprite == null){
-            throw new IllegalArgumentException("Collectable Sprite or Point is null");
-        }
         this.sprite = sprite;
         this.point = point;
     }
@@ -54,6 +51,17 @@ public class Collectable implements Entity{
             throw new IllegalArgumentException("Collectable Sprite is null");
         }
         this.sprite = sprite;
+    }
+
+    /**
+     * Sets position of point
+     * @param point position of point
+     */
+    protected void setPoint(Point point){
+        if(point == null){
+            throw new IllegalArgumentException("Collectable Sprite is null");
+        }
+        this.point = point;
     }
 
     @Override

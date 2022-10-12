@@ -22,9 +22,6 @@ public class LockedDoor extends Door {
      */
     protected LockedDoor(Point point, String colourString) {
         super(point);
-        if(colourString.isEmpty()){
-            throw new IllegalArgumentException("Locked Door colour is null");
-        }
         colour = getColour(colourString);
         this.setSprite(colour.door);
     }
@@ -47,7 +44,7 @@ public class LockedDoor extends Door {
                     .get();
             soundEffect.run();
             model.remove(this);
-            player.keys.remove(key);
+            player.removeKey(key);
             assert !player.keys.contains(key);
             assert !model.entities().contains(this);
         } catch(NoSuchElementException e){

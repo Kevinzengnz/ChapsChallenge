@@ -4,32 +4,126 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
 
 import java.awt.event.KeyEvent;
+import java.util.*;
 
 /**
- * PlayerController class
- * PlayerController only has keys for controlling/moving the player
+ * PlayerController class, which has key controls for moving the player.
+ *
  * @author Kevin Zeng
  * ID: 300563468
  */
-public class PlayerController extends Keys{
+public class PlayerController extends Keys {
+    /**
+     * Set of keycodes that are currently held down.
+     */
+    private final LinkedHashSet<Integer> keysHeld = new LinkedHashSet<>();
 
     /**
-     * Initialises a new controller for the player character
+     * Player that is being controlled.
+     */
+    private final Player p;
+
+    /**
+     * Initialises a new controller for the player character.
+     *
      * @param p Player character
      */
-    PlayerController(Player p){
-        //UP, DOWN, LEFT, RIGHT ARROWS -- move Chap within the maze
-        setAction(KeyEvent.VK_UP,() -> { p.setMoving(true); p.setDirection(Direction.Up);},() -> p.setMoving(false));
-        setAction(KeyEvent.VK_DOWN,() -> { p.setMoving(true); p.setDirection(Direction.Down);},() ->p.setMoving(false));
-        setAction(KeyEvent.VK_LEFT,() -> { p.setMoving(true); p.setDirection(Direction.Left);},() -> p.setMoving(false));
-        setAction(KeyEvent.VK_RIGHT,() -> { p.setMoving(true); p.setDirection(Direction.Right);},() ->p.setMoving(false));
-
-        //WASD also moves Chap within the maze
-        setAction(KeyEvent.VK_W,() -> { p.setMoving(true); p.setDirection(Direction.Up);},() -> p.setMoving(false));
-        setAction(KeyEvent.VK_S,() -> { p.setMoving(true); p.setDirection(Direction.Down);},() -> p.setMoving(false));
-        setAction(KeyEvent.VK_A,() -> { p.setMoving(true); p.setDirection(Direction.Left);},() -> p.setMoving(false));
-        setAction(KeyEvent.VK_D,() -> { p.setMoving(true); p.setDirection(Direction.Right);},() -> p.setMoving(false));
+    protected PlayerController(Player p) {
+        this.p = p;
+        unPause();
     }
 
+    /**
+     * Pauses the controller, which disables all controls while paused.
+     */
+    public void pause() {
+        setAction(KeyEvent.VK_UP, () -> {}, () -> {});
+        setAction(KeyEvent.VK_DOWN, () -> {}, () -> {});
+        setAction(KeyEvent.VK_LEFT, () -> {}, () -> {});
+        setAction(KeyEvent.VK_RIGHT, () -> {}, () -> {});
+        setAction(KeyEvent.VK_W, () -> {}, () -> {});
+        setAction(KeyEvent.VK_S, () -> {}, () -> {});
+        setAction(KeyEvent.VK_A, () -> {}, () -> {});
+        setAction(KeyEvent.VK_D, () -> {}, () -> {});
+    }
+
+    /**
+     * Unpauses the controller, which restarts all the player keybindings.
+     */
+    public void unPause(){
+        //UP, DOWN, LEFT, RIGHT ARROWS -- move Chap within the maze
+        setAction(KeyEvent.VK_UP,
+                () -> { moveUp(); keysHeld.add(KeyEvent.VK_UP); },
+                () -> releaseDirection(KeyEvent.VK_UP));
+        setAction(KeyEvent.VK_DOWN,
+                () -> { moveDown(); keysHeld.add(KeyEvent.VK_DOWN); },
+                () -> releaseDirection(KeyEvent.VK_DOWN));
+        setAction(KeyEvent.VK_LEFT,
+                () -> { moveLeft();keysHeld.add(KeyEvent.VK_LEFT); },
+                () -> releaseDirection(KeyEvent.VK_LEFT));
+        setAction(KeyEvent.VK_RIGHT,
+                () -> { moveRight(); keysHeld.add(KeyEvent.VK_RIGHT); },
+                () -> releaseDirection(KeyEvent.VK_RIGHT));
+
+        //WASD also moves Chap within the maze
+        setAction(KeyEvent.VK_W,
+                () -> { moveUp(); keysHeld.add(KeyEvent.VK_W); },
+                () -> releaseDirection(KeyEvent.VK_W));
+        setAction(KeyEvent.VK_S,
+                () -> {moveDown(); keysHeld.add(KeyEvent.VK_S); },
+                () -> releaseDirection(KeyEvent.VK_S));
+        setAction(KeyEvent.VK_A,
+                () -> {moveLeft(); keysHeld.add(KeyEvent.VK_A); },
+                () -> releaseDirection(KeyEvent.VK_A));
+        setAction(KeyEvent.VK_D,
+                () -> {moveRight(); keysHeld.add(KeyEvent.VK_D); },
+                () -> releaseDirection(KeyEvent.VK_D));
+    }
+
+    /**
+     * Begins moving the player up.
+     */
+    public void moveUp() {
+        p.setMoving(true);
+        p.setDirection(Direction.Up);
+    }
+
+    /**
+     * Begins moving the player down.
+     */
+    public void moveDown() {
+        p.setMoving(true);
+        p.setDirection(Direction.Down);
+    }
+
+    /**
+     * Begins moving the player left.
+     */
+    public void moveLeft() {
+        p.setMoving(true);
+        p.setDirection(Direction.Left);
+    }
+
+    /**
+     * Begins moving the player right.
+     */
+    public void moveRight() {
+        p.setMoving(true);
+        p.setDirection(Direction.Right);
+    }
+
+    /**
+     * Stops moving a player in one direction.
+     * If any other keys are still held, moves player in that direction,
+     * otherwise stops moving the player.
+     */
+    public void releaseDirection(int keyCode) {
+        keysHeld.remove(keyCode);
+        if (keysHeld.isEmpty()) {
+            p.setMoving(false);
+        } else {
+            getActionsPressed().getOrDefault(keysHeld.iterator().next(), () -> {}).run();
+        }
+    }
 
 }

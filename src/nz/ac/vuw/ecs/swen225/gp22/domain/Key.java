@@ -21,9 +21,6 @@ public class Key extends Collectable{
      */
     protected Key(Point point, String colourString) {
         super(point);
-        if(colourString.isEmpty()){
-            throw new IllegalArgumentException("Key colour is null");
-        }
         colour = getColour(colourString);
         this.setSprite(colour.key);
     }
@@ -42,6 +39,7 @@ public class Key extends Collectable{
         soundEffect.run();
         player.addKey(this);
         model.remove(this);
+        this.setPoint(new Point(0, 0));
         assert player.keys.contains(this);
         assert !model.entities().contains(this);
     }
