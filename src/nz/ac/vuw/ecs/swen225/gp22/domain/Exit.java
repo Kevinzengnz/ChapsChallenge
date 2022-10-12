@@ -1,29 +1,52 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 import nz.ac.vuw.ecs.swen225.gp22.app.Model;
+
 /**
+ * Represents the Exit in the game.
+ * Exit allows game to move to next level
  * @author Alicia Robinson - 300560663
  */
 public class Exit implements Entity{
+    /**
+     * String of the sprite name
+     * Only one type of Exit so name cannot be changed
+     */
     private final String sprite = "EXIT";
+    /**
+     * Point that Exit is at
+     */
     private final Point point;
+    /**
+     * Sound effect that can be run when Exit is interacted with
+     */
     protected Runnable soundEffect;
+
+    /**
+     * Creates Exit at given point
+     * @param point point that Exit is at
+     */
     protected Exit(Point point) {
         if(point == null){
             throw new IllegalArgumentException("Door Point is null");
         }
         this.point = point;
     }
+
+    @Override
     public void setSoundEffect(Runnable soundEffect){
         this.soundEffect = soundEffect;
     }
 
+
     @Override
     public String getSprite() { return this.sprite; }
+
 
     @Override
     public Point getPoint() {
         return this.point;
     }
+
 
     @Override
     public int getDepth() {
@@ -44,7 +67,7 @@ public class Exit implements Entity{
             throw new IllegalArgumentException("Sound Effect is Null");
         }
         soundEffect.run();
-        model.onGameOver();
+        model.onNextLevel();
     }
 }
 
