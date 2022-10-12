@@ -26,6 +26,7 @@ public class Replay {
     private boolean isRunning=false;
     private int endPing=1;
     private PlayerController pc;
+    private int frames=0;
 
     /**
      * Loads replay file data into this replay instance.
@@ -34,6 +35,7 @@ public class Replay {
     public void loadReplay(String replayName, ChapsChallenge game){
         this.cleanReplay();
         this.pc = game.getPhase().controller();
+        this.frames=0;
         Document replay = null;
         try {
             replay = XmlParser.parse(new File("Replays/" + replayName + ".xml"));
@@ -66,8 +68,10 @@ public class Replay {
         //Restart timer if it already exists and is paused.
         if(this.timer!=null){this.timer.restart();return;}
         //Otherwise create a new timer and start it.
-        this.timer = new Timer((int)(136/this.speed), x->{
+        this.timer = new Timer(1000/30, x->{
             assert SwingUtilities.isEventDispatchThread();
+            this.frames++;
+            if(this.frames % 4 == 0){this.pings++;}
             step();
         });
         this.timer.start();
@@ -112,7 +116,6 @@ public class Replay {
      * Move to the next tick of the game clock in the replay.
      */
     private void step(){
-        this.pings++;
         if(this.pings==this.endPing){
             if(this.timer!=null){this.timer.stop();}
             RecTesting.log("Replay","autoPlay","Replay stopped at frame "+this.pings);

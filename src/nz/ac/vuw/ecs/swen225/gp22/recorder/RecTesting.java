@@ -22,8 +22,8 @@ public class RecTesting {
         r.startRecording(TEST_REPLAY_FILE, TEST_REPLAY_FILE);
         for(int i=0; i<60; i++){
             if(i%2==0) {
-                r.ping(i % 3);
-                r.ping(i % 3);
+                r.ping(i % 3, true);
+                r.ping(i % 3, true);
             }
         }
         r.endRecording();
