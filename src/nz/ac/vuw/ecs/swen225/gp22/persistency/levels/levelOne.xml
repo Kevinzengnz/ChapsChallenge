@@ -531,7 +531,7 @@
         <DOOR_GREEN x="8" y="6"/>
         <DOOR_GREEN x="12" y="6"/>
         <KEY_GREEN x="11" y="15"/>
-        <KEY_GREEN x="12" y="15"/>
+        <KEY_GREEN x="9" y="15"/>
         <DOOR_EXIT x="10" y="6"/>
         <EXIT x="10" y="5"/>
     </Tiles>
