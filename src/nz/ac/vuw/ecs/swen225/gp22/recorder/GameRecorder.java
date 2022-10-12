@@ -40,7 +40,7 @@ public class GameRecorder implements Recorder {
       this.startFrame = this.frame;
       this.actionHistory = new ArrayList<>();
       this.frameHistory = new ArrayList<>();
-      this.level = String.join("_", level.split(" "));
+      this.level = String.join("_", lvl.split(" "));
       this.replayFile = (replay.endsWith(".xml"))
           ? Arrays.stream(replay.split(".xml")).findFirst().orElse("default") : replay;
       setRecording(true);
