@@ -43,15 +43,43 @@ public interface Model {
      */
     List<Entity> entities();
 
+    /**
+     * Gets the recorder for the level.
+     *
+     * @return GameRecorder object that is recording the level
+     */
     GameRecorder recorder();
 
+    /**
+     * Removes an entity from the entity list
+     *
+     * @param e entity to be removed.
+     */
     void remove(Entity e);
 
+    /**
+     * Action to perform once game is lost.
+     */
     void onGameOver();
 
+    /**
+     * Action to perform once game has been completed.
+     */
     void onNextLevel();
 
+    /**
+     * Gets the total number of treasures at the start of the level.
+     *
+     * @return nnumber of treasures that were at the start of the level
+     */
     long totalTreasures();
+
+    /**
+     * Gets the current level number.
+     *
+     * @return the current level number
+     */
+    int levelNumber();
 
     /**
      * Returns the number of Treasures left in the level.
