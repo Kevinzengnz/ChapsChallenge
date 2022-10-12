@@ -182,6 +182,7 @@ public class ChapsChallenge extends JFrame{
      * Pauses the game
      */
     public void pauseGame() {
+        currentPhase.controller().pause();
         paused = true;
         timer.stop();
     }
@@ -190,6 +191,7 @@ public class ChapsChallenge extends JFrame{
      * If the game is paused, unpauses it
      */
     public void unPauseGame() {
+        currentPhase.controller().pause();
         paused = false;
         timer.start();
     }
