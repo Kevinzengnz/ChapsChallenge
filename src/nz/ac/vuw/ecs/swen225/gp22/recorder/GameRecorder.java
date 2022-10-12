@@ -61,6 +61,7 @@ public class GameRecorder implements Recorder{
      * This function should be called on every step of the game clock. Will record changes in player direction
      * and the step it occurs at to the replay file.
      * @param dir Ordinal of direction.
+     * @param isMoving Boolean that indicates whether player is currently moving.
      */
     @Override
     public void ping(int dir, boolean isMoving){

@@ -14,6 +14,7 @@ public interface Recorder {
     /**
      * Call this function every time an action takes place in the game.
      * @param dir Ordinal of Direction.
+     * @param isMoving Boolean that indicates whether player is currently moving.
      */
     void ping(int dir, boolean isMoving);
 }

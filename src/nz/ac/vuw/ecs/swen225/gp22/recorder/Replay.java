@@ -31,6 +31,7 @@ public class Replay {
     /**
      * Loads replay file data into this replay instance.
      * @param replayName File name of recording.
+     * @param game Instance of ChapsChallenge that is being recorded.
      */
     public void loadReplay(String replayName, ChapsChallenge game){
         this.cleanReplay();
