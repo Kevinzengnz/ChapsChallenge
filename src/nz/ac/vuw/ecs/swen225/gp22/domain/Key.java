@@ -42,6 +42,7 @@ public class Key extends Collectable{
         soundEffect.run();
         player.addKey(this);
         model.remove(this);
+        this.setPoint(new Point(0, 0));
         assert player.keys.contains(this);
         assert !model.entities().contains(this);
     }
