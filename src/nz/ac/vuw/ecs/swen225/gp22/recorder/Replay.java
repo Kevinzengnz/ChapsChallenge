@@ -27,7 +27,9 @@ public class Replay {
   private boolean isRunning = false;
   private int endPing = 1;
   private int frames = 0;
-  private PlayerController pc;
+  private ChapsChallenge pc;
+  private Element tiles;
+  private int timeLeft;
 
   /**
    * Loads replay file data into this replay instance.
@@ -36,16 +38,20 @@ public class Replay {
    */
   public void loadReplay(String replayName, ChapsChallenge game) {
     this.cleanReplay();
-    this.pc = game.getPhase().controller();
+    this.pc = game;
     Document replay = null;
     try {
       replay = XmlParser.parse(new File("Replays/" + replayName + ".xml"));
     } catch (DocumentException de) {
       RecTesting.log("Replay", "loadReplay", "Error loading replay file");
     }
+    this.tiles = replay.getRootElement().element("Tiles");
+    this.timeLeft = Integer.parseInt(replay.getRootElement().element("Level")
+        .attribute("time").getValue());
     Element replayElem = replay.getRootElement().element("Replay");
     Element player = replayElem.element("Player");
     this.endPing = Integer.parseInt(replayElem.attribute("end").getValue());
+    this.pings = Integer.parseInt(replayElem.attribute("start").getValue());
     List<Element> actions = player.elements("action");
     for (Element action : actions) {
       this.actionList.add(new Action(Integer.parseInt(action.attribute("dir").getValue()),
@@ -117,6 +123,14 @@ public class Replay {
     step();
   }
 
+  public Element getTiles(){
+    return this.tiles;
+  }
+
+  public int getTimeLeft(){
+    return this.timeLeft;
+  }
+
   /**
    * Move to previous game tick in replay. Pauses autoplay.
    */
@@ -137,11 +151,13 @@ public class Replay {
    * Move to the next tick of the game clock in the replay.
    */
   private void step() {
+    PlayerController controller = this.pc.getPhase().controller();
     if (this.pings == this.endPing) {
       if (this.timer != null) {
         this.timer.stop();
+        this.pc.pauseGame();
       }
-      this.pc.releaseDirection(KeyEvent.VK_W);
+      controller.releaseDirection(KeyEvent.VK_W);
       RecTesting.log("Replay", "autoPlay", "Replay stopped at frame " + this.pings);
       cleanReplay();
     }
@@ -150,11 +166,11 @@ public class Replay {
           RecTesting.log("Replay", "autoPlay",
               "Direction changed to: " + a.dir() + " at ping " + a.frame());
           switch (a.dir()) {
-            case 0 -> this.pc.releaseDirection(KeyEvent.VK_W);
-            case 1 -> this.pc.moveUp();
-            case 2 -> this.pc.moveRight();
-            case 3 -> this.pc.moveDown();
-            case 4 -> this.pc.moveLeft();
+            case 0 -> controller.releaseDirection(KeyEvent.VK_W);
+            case 1 -> controller.moveUp();
+            case 2 -> controller.moveRight();
+            case 3 -> controller.moveDown();
+            case 4 -> controller.moveLeft();
             default -> {
             }
           }
