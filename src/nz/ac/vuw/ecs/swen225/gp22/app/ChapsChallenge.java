@@ -51,6 +51,11 @@ public class ChapsChallenge extends JFrame {
     private boolean paused = false;
 
     /**
+     * Boolean for whether the help dialogue is currently shown.
+     */
+    private boolean helpDialogue = false;
+
+    /**
      * Creates a new instance of Chaps Challenge.
      */
     ChapsChallenge() {
@@ -152,6 +157,10 @@ public class ChapsChallenge extends JFrame {
         loadBtn.addActionListener(e -> loadGame());
         loadBtn.setFocusable(false);
 
+        var helpBtn = new JButton("Help");
+        helpBtn.addActionListener(e -> showHelp());
+        helpBtn.setFocusable(false);
+
         renderer.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 5;
@@ -165,6 +174,7 @@ public class ChapsChallenge extends JFrame {
         renderer.add(exitBtn,c);
         renderer.add(saveBtn,c);
         renderer.add(loadBtn,c);
+        renderer.add(helpBtn,c);
 
         add(BorderLayout.CENTER, renderer);
         renderer.setFocusable(true);
@@ -223,6 +233,19 @@ public class ChapsChallenge extends JFrame {
      */
     public void exitGame() {
         closePhase.run();
+    }
+
+    /**
+     * Shows/hides the help dialogue.
+     */
+    public void showHelp() {
+        if (!helpDialogue) {
+            currentPhase.renderer().addPopup("Controls:", 100);
+            helpDialogue = true;
+        } else {
+            currentPhase.renderer().addPopup("",0);
+            helpDialogue = false;
+        }
     }
 
     /**
