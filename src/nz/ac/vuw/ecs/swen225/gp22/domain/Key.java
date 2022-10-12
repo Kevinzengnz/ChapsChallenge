@@ -42,6 +42,7 @@ public class Key extends Collectable{
         soundEffect.run();
         player.addKey(this);
         model.remove(this);
+        this.setPoint(new Point(0, 0));
         assert player.keys.contains(this);
         assert !model.entities().contains(this);
     }
@@ -51,7 +52,7 @@ public class Key extends Collectable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Key key = (Key) o;
-        return colour == key.colour;
+        return colour == key.colour && this.getPoint().equals(((Key) o).getPoint());
     }
 
     @Override
