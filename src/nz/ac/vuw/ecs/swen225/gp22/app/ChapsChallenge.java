@@ -264,10 +264,10 @@ public class ChapsChallenge extends JFrame {
      */
     public void showHelp() {
         if (!helpDialogue) {
-            currentPhase.renderer().addPopup("Controls:", 100);
+            currentPhase.renderer().showPopup("Controls:");
             helpDialogue = true;
         } else {
-            currentPhase.renderer().addPopup("",0);
+            currentPhase.renderer().hidePopup();
             helpDialogue = false;
         }
     }
