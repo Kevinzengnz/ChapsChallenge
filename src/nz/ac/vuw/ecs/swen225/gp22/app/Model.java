@@ -25,6 +25,7 @@ public interface Model{
     void remove(Entity e);
     void onGameOver();
     void onNextLevel();
+    long totalTreasures();
 
     /**
      * Returns the number of Treasures left in the level
@@ -56,7 +57,7 @@ public interface Model{
      */
     default void ping(){
         entities().forEach(a -> a.ping(this));
-        recorder().ping(player().getDirection().ordinal());
+        recorder().ping(player().getDirection().ordinal(), player().isMoving());
         var end = false;
         if(end){ onNextLevel(); }
     }

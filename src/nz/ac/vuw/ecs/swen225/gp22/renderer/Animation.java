@@ -9,6 +9,27 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
  * ID: 300564261
  */
 abstract public class Animation {
+    /**
+     * The tile the animation is on.
+     */
+    Point tile;
+    /**
+     * The x and y coordinates of the animation in pixels. Not using Point as needs double.
+     */
+    double x, y;
+    /**
+     * The entity that is being animated.
+     */
+    Entity entity;
+    /**
+     * The length of the animation.
+     */
+    int length;
+    /**
+     * The size in pixels of the tiles
+     */
+    static final int tileSize = 64;
+
     public Animation(Point tile, int length, Entity entity) {
         this.tile = tile;
         this.x = tile.x() * tileSize;
@@ -16,11 +37,7 @@ abstract public class Animation {
         this.length = length;
         this.entity = entity;
     }
-    Point tile;
-    double x, y;
-    Entity entity;
-    int length;
-    static final int tileSize = 64;
+
 
     /**
      * Gets the x coordinate in screen space

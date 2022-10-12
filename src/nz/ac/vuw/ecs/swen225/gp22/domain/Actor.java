@@ -23,12 +23,8 @@ public class Actor implements Entity{
      * Initially set to Down
      */
     protected Direction direction = Direction.Down;
-
-    /**
-     * Creates an Actor with given sprite and point
-     * @param sprite Actors sprite name
-     * @param point Actors position
-     */
+    public void setMoving(boolean moving){ this.moving = moving; }
+    public boolean isMoving(){ return this.moving; }
     protected Actor(String sprite, Point point) {
         if(point == null || sprite == null){
             throw new IllegalArgumentException("Actor Sprite or Point is null");
