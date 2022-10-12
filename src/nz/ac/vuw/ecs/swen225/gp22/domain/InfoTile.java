@@ -54,4 +54,9 @@ public class InfoTile extends Tile{
         soundEffect.run();
         //TODO InfoTile doAction
     }
+
+    @Override
+    public int getDepth() {
+        return 1;
+    }
 }

@@ -63,6 +63,28 @@ public class Player extends Actor{
      * @param key to be removed
      */
     public void removeKey(Key key){keys.remove(key);}
+
+    /**
+     * sets keys list to given list
+     * @param keys list of keys
+     */
+    public void setKeys(List<Key> keys){
+        if(keys == null){
+            throw new IllegalArgumentException("Keys list is null");
+        }
+        this.keys = keys;
+    }
+
+    /**
+     * Sets treasureCollected
+     * @param treasureCollected number to set treasure collected to
+     */
+    public void setTreasureCollected(int treasureCollected){
+        if(treasureCollected < 0){
+            throw new IllegalArgumentException("Collected treasures cannot be less than 0");
+        }
+        this.treasureCollected = treasureCollected;
+    }
     @Override
     public void ping(Model m) {
         if (isMoving()) {

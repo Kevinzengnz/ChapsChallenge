@@ -39,20 +39,42 @@ public class XmlParser {
      * This function saves the current game to a xml file
      * @param entities the list of entities in the current game
      */
-    public static void saveGame(List<Entity> entities, String levelName) throws IOException {
+    public static void saveGame(List<Entity> entities, String levelName, int time ) throws IOException {
         //print the list of entities
         //add the list of entities to the Tiles element
         Document document = DocumentHelper.createDocument();
         Element root = document.addElement("root");
         Element Tiles = root.addElement("Tiles");
 
+        //add time to the xml file
+        Element Time = root.addElement("Time");
+        Time.addAttribute("time", String.valueOf(time));
+
         //iterate and add the entities to the Tiles element
         for (Entity e : entities) {
-            String name = e.toString();
-            Tiles.addElement(name)
-                    .addAttribute("x", String.valueOf(e.getPoint().x()))
-                    .addAttribute("y", String.valueOf(e.getPoint().y()));
+            String name = e.getSprite();
+            if (e instanceof InfoTile) {
+                Tiles.addElement(name)
+                        .addAttribute("x", String.valueOf(e.getPoint().x()))
+                        .addAttribute("y", String.valueOf(e.getPoint().y()))
+                        .addAttribute("text", ((InfoTile) e).getText());
+            } else if (e instanceof Player) {
+                ArrayList<String> inventory = new ArrayList<>();
+                for (Key item : ((Player) e).getKeys()) {
+                    inventory.add(item.getSprite());
+                }
+
+                Tiles.addElement(name)
+                        .addAttribute("x", String.valueOf(e.getPoint().x()))
+                        .addAttribute("y", String.valueOf(e.getPoint().y()))
+                        .addAttribute("inventory", inventory.toString())
+                        .addAttribute("treasure", String.valueOf(((Player) e).getTreasureCollected()));
+            } else {
+                Tiles.addElement(name)
+                        .addAttribute("x", String.valueOf(e.getPoint().x()))
+                        .addAttribute("y", String.valueOf(e.getPoint().y()));
             }
+        }
 
             // write to a file
             write(document, levelName, "src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/");
@@ -91,11 +113,58 @@ public class XmlParser {
             Element Tiles = root.element("Tiles");
             EntityFactory factory = new EntityFactory();
             for (Element e : Tiles.elements()) {
-                entities.add(factory.createEntity(e.getName(),new Point(Integer.parseInt(e.attributeValue("x")), Integer.parseInt(e.attributeValue("y")))));
+                if (e.getName().equals("INFO")) {
+                    Entity IT = factory.createEntity(e.getName(),
+                            new Point(Integer.parseInt(e.attributeValue("x")), Integer.parseInt(e.attributeValue("y"))));
+                    ((InfoTile) IT).setText(e.attributeValue("text"));
+                    entities.add(IT);
+                } else if(e.getName().equals("PLAYER_UP") ||e.getName().equals("PLAYER_DOWN") || e.getName().equals("PLAYER_RIGHT") ||e.getName().equals("PLAYER_LEFT") ){
+                    Entity player = factory.createEntity(e.getName(),
+                            new Point(Integer.parseInt(e.attributeValue("x")), Integer.parseInt(e.attributeValue("y"))));
+
+                    if (e.attributeValue("inventory") != null) {
+
+                        String[] keys = e.attributeValue("inventory").substring(1, e.attributeValue("inventory").length() - 1).split(", ");
+                        ArrayList<Key> keyList = new ArrayList<>();
+                        for (String key : keys) {
+                            keyList.add((Key) factory.createEntity(key, new Point(0, 0)));
+                        }
+                        ((Player) player).setKeys(keyList);
+
+                        ((Player) player).setTreasureCollected(Integer.parseInt(e.attributeValue("treasure")));
+
+                    }
+                    entities.add(player);
+
+                }
+                else {
+                    entities.add(factory.createEntity(e.getName(),
+                            new Point(Integer.parseInt(e.attributeValue("x")), Integer.parseInt(e.attributeValue("y")))));
+                }
             }
         } catch (DocumentException e) {
             e.printStackTrace();
         }
         return entities;
+    }
+
+    /**
+     * This function returns the time
+     * @param path the path of the xml file
+     */
+    public static int loadTime(String path) {
+        //load file from path
+        File file = new File(path);
+
+        //Iterate through the xml file and add the entities to the list
+        try {
+            Document document = parse(file);
+            Element root = document.getRootElement();
+            Element time = root.element("TIME");
+            return Integer.parseInt(time.attributeValue("time"));
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
