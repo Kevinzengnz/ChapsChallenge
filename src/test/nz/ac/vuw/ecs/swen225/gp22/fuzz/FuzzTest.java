@@ -1,7 +1,6 @@
 package test.nz.ac.vuw.ecs.swen225.gp22.fuzz;
 
 import static org.junit.jupiter.api.Assertions.assertTimeout;
-
 import java.awt.AWTException; 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
@@ -12,18 +11,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javax.swing.SwingUtilities;
-import nz.ac.vuw.ecs.swen225.gp22.app.ChapsChallenge;
 import nz.ac.vuw.ecs.swen225.gp22.app.Main;
 import org.junit.jupiter.api.Test;
 
 /**
  * FuzzTest class is as the name implies, where fuzz tests are taking place.
-
  * @author Hayden Curtis
-ID:300586379
+ * 		ID:300586379
  */
 class FuzzTest {
+	
+	/**
+	 * Robot that will execute the random key and mouse presses
+	 */
 	private static Robot robot = null;
+	
 	/**
 	 * Returns a list of possible key inputs.
 	 */
@@ -32,14 +34,19 @@ class FuzzTest {
 			KeyEvent.VK_LEFT, KeyEvent.VK_A,
 			KeyEvent.VK_RIGHT, KeyEvent.VK_D);
 	
- /**
- * Generates a list of random integers each corresponding to key inputs.
-
- * @param size
-Size of the list
- * @return List<Integer>
-
+	/**
+	 * Simple record which acts as a x and y point for clicks
+	 * @author Hayden Curtis
+	 *
 	 */
+	record Pair(int x, int y) {}
+	
+	/**
+	* Generates a list of random integers each corresponding to key inputs.
+	* @param size
+			Size of the list
+	* @return List<Integer>
+	*/
 	private List<Integer> genEvents(int size){
 		int next = 0;
 		int prev = 0;
@@ -60,12 +67,17 @@ Size of the list
 		return es;
 	}
 	
+	/**
+	 * Generates a list of Pairs which contain an x and y point.
+	 * @param size
+	 * @return List<Pair>
+	 */
 	private List<Pair> genPoints(int size){
 		List<Pair> es = new ArrayList<Pair>();
 		Random r = new Random();
 		for(int i = 0; i<size; i++) {
-			int x = r.nextInt();
-			int y = r.nextInt();
+			int x = r.nextInt(1000)+100;
+			int y = r.nextInt(400)+100;
 			es.add(new Pair(x, y));
 		}
 		return es;
@@ -91,12 +103,17 @@ Size of the list
 			e.printStackTrace();
 		}
 		//Random Key presses
-		var events = genEvents(1000);
-		assertTimeout(Duration.ofMinutes(1), ()->{checkMovement(events);});
+		var events = genEvents(500);
+		var clicks = genPoints(50);
+		assertTimeout(Duration.ofMinutes(1), ()->{
+			checkMovement(events);
+			mouseClicks(clicks);
+		});
 	}
 	
 	/**
-	 * test2 is for the second level of the game
+	 * @author Hayden Curtis
+	 * test2() : fuzz tests for level 2
 	 */
 	@Test
 	public void test2() {
@@ -130,13 +147,8 @@ Size of the list
 			});
 	}
 	
-	
-	
-	//Pair of integers which acts as a point
-	record Pair(int x, int y) {}
 	/**
 	 * Simulated the mouse clicks with a robot
-	 * 
 	 * @param x
 	 * @param y
 	 */
@@ -144,7 +156,7 @@ Size of the list
 		clicks.stream()
 			.forEach(p -> {
 				robot.mouseMove(p.x(), p.y());
-				robot.delay(5);
+				robot.delay(10);
 				robot.mousePress(MouseEvent.BUTTON1_DOWN_MASK);
 				robot.mouseRelease(MouseEvent.BUTTON1_DOWN_MASK);}
 			);
