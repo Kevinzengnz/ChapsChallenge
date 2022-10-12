@@ -14,6 +14,7 @@ public enum Sprite {
     INFO("Assets/Tiles/info.png"),
     WALL("Assets/Tiles/wall.png"),
     EXIT("Assets/Tiles/exit.png"),
+    WASTE("Assets/Tiles/waste.png"),
 
     DOOR_BLUE("Assets/Tiles/blue_door.png"),
     DOOR_RED("Assets/Tiles/red_door.png"),
