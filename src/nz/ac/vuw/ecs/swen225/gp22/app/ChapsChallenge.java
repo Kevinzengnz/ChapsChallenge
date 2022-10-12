@@ -265,11 +265,9 @@ public class ChapsChallenge extends JFrame {
     public void showHelp() {
         if (!helpDialogue) {
             currentPhase.renderer().showPopup("Controls:");
-            pauseGame();
             helpDialogue = true;
         } else {
             currentPhase.renderer().hidePopup();
-            unPauseGame();
             helpDialogue = false;
         }
     }
