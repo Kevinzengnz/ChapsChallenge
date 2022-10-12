@@ -16,7 +16,7 @@ public class Collectable implements Entity{
     /**
      * Sound effect that can be run when Collectable is interacted with
      */
-    protected Runnable soundEffect;
+    public Runnable soundEffect;
 
     /**
      * Creates a Collectable using given sprite and point
@@ -24,9 +24,6 @@ public class Collectable implements Entity{
      * @param point point where the collectable is
      */
     protected Collectable(String sprite, Point point) {
-        if(point == null || sprite == null){
-            throw new IllegalArgumentException("Collectable Sprite or Point is null");
-        }
         this.sprite = sprite;
         this.point = point;
     }

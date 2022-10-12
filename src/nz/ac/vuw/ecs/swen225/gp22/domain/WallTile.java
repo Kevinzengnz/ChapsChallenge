@@ -5,7 +5,7 @@ import nz.ac.vuw.ecs.swen225.gp22.app.Model;
  * @author Alicia Robinson - 300560663
  */
 public class WallTile extends Tile{
-    protected Runnable soundEffect;
+    public Runnable soundEffect;
 
     /**
      * Creates new WallTile at the given point
@@ -22,6 +22,7 @@ public class WallTile extends Tile{
         }
         this.soundEffect = soundEffect;
     }
+
     @Override
     public void doAction(Model model, Player player, Point point) {
         if(!this.getPoint().equals(point)){

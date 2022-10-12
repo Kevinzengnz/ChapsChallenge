@@ -19,21 +19,21 @@ public class Exit implements Entity{
     /**
      * Sound effect that can be run when Exit is interacted with
      */
-    protected Runnable soundEffect;
+    public Runnable soundEffect;
 
     /**
      * Creates Exit at given point
      * @param point point that Exit is at
      */
     protected Exit(Point point) {
-        if(point == null){
-            throw new IllegalArgumentException("Door Point is null");
-        }
         this.point = point;
     }
 
     @Override
     public void setSoundEffect(Runnable soundEffect){
+        if(soundEffect == null){
+            throw new IllegalArgumentException("Sound Effect is Null");
+        }
         this.soundEffect = soundEffect;
     }
 
@@ -62,9 +62,6 @@ public class Exit implements Entity{
         if(model.treasuresLeft() != 0){
             player.moveValid = false;
             throw new IllegalStateException("All treasures have not been collected, Exit should not be accessible");
-        }
-        if(soundEffect == null){
-            throw new IllegalArgumentException("Sound Effect is Null");
         }
         soundEffect.run();
         model.onNextLevel();

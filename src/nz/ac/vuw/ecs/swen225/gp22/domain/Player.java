@@ -62,7 +62,7 @@ public class Player extends Actor{
      * Removes given key from players keys list
      * @param key to be removed
      */
-    public void removeKey(Key key){keys.remove(key);}
+    public void removeKey(Key key){this.keys.remove(key);}
 
     /**
      * sets keys list to given list
@@ -97,7 +97,6 @@ public class Player extends Actor{
             if (moveValid) {
                 this.point = newPoint;
             }
-
         }
     }
     @Override
