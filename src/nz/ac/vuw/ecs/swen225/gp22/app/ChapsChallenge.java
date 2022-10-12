@@ -9,42 +9,49 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- * Chap's Challenge
+ * Chap's Challenge.
+ *
  * @author Kevin Zeng
  * ID: 300563468
  */
-public class ChapsChallenge extends JFrame{
+public class ChapsChallenge extends JFrame {
     /**
-     * Frames per second that the game should run in
+     * Frames per second that the game should run in.
      */
     private static final int FRAME_RATE = 30;
+
     /**
-     * Runs when game is closed
+     * Runs when game is closed.
      */
     private Runnable closePhase = () -> System.exit(0);
+
     /**
-     * Number of frames ran from start of game
+     * Number of frames ran from start of game.
      */
     private int pings;
+
     /**
-     * Current phase of the game
+     * Current phase of the game.
      */
     private Phase currentPhase;
+
     /**
      * KeyListener for UI controls.
      */
     private final GameController gameController;
+
     /**
-     * Timer that performs certain actions every frame
+     * Timer that performs certain actions every frame.
      */
     private Timer timer;
+
     /**
-     * Boolean for whether the game is currently paused
+     * Boolean for whether the game is currently paused.
      */
     private boolean paused = false;
 
     /**
-     * Creates a new instance of Chaps Challenge
+     * Creates a new instance of Chaps Challenge.
      */
     ChapsChallenge() {
         assert SwingUtilities.isEventDispatchThread();
@@ -59,21 +66,22 @@ public class ChapsChallenge extends JFrame{
     }
     
     /**
-     * Starts up level one
+     * Starts up level one.
      */
     public void levelOne() {
         setPhase(Phase.level1(this::levelOne, this::levelOne));
     }
 
     /**
-     * Starts up level two
+     * Starts up level two.
      */
     public void levelTwo() {
         setPhase(Phase.level2(this::levelTwo, this::levelTwo));
     }
 
     /**
-     * Sets up the timer and the viewport
+     * Sets up the timer and the viewport.
+     *
      * @param p Phase
      */
     private void setPhase(Phase p){
@@ -168,10 +176,11 @@ public class ChapsChallenge extends JFrame{
     }
 
     /**
-     * Loads a game from a file, which user chooses from file chooser
+     * Loads a game from a file, which user chooses from file chooser.
      */
     public void loadGame() {
-        JFileChooser fileChooser = new JFileChooser("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/");
+        JFileChooser fileChooser =
+                new JFileChooser("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/");
         if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             String fileName = fileChooser.getSelectedFile().getPath();
             setPhase(Phase.loadLevel(fileName));
@@ -179,23 +188,25 @@ public class ChapsChallenge extends JFrame{
     }
 
     /**
-     * Pauses the game
+     * Pauses the game.
      */
     public void pauseGame() {
+        currentPhase.controller().pause();
         paused = true;
         timer.stop();
     }
 
     /**
-     * If the game is paused, unpauses it
+     * If the game is paused, unpauses it.
      */
     public void unPauseGame() {
+        currentPhase.controller().pause();
         paused = false;
         timer.start();
     }
 
     /**
-     * Saves the current state of the game, and exits
+     * Saves the current state of the game, and exits.
      */
     public void saveAndExit() {
         saveGame();
@@ -203,14 +214,14 @@ public class ChapsChallenge extends JFrame{
     }
 
     /**
-     * Saves the current phase of the game to an xml file
+     * Saves the current phase of the game to an xml file.
      */
     public void saveGame() {
         currentPhase.model().saveGame();
     }
 
     /**
-     * Exits the game
+     * Exits the game.
      */
     public void exitGame() {
         closePhase.run();
@@ -218,6 +229,7 @@ public class ChapsChallenge extends JFrame{
 
     /**
      * Returns the current phase of the game.
+     *
      * @return currentPhase
      */
     public Phase getPhase() {
