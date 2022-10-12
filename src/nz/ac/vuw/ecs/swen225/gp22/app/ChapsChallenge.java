@@ -84,52 +84,18 @@ public class ChapsChallenge extends JFrame {
      *
      * @param p Phase
      */
-    private void setPhase(Phase p){
+    private void setPhase(Phase p) {
         currentPhase = p;
-        Renderer renderer = p.renderer();
+        closePhase = () -> {
+            p.model().recorder().endRecording();
+            System.exit(0);
+        };
         setVisible(true);
 
         if(timer != null) timer.stop();
         pings = 0;
 
-        closePhase = () -> {
-            p.model().recorder().endRecording();
-            System.exit(0);
-        };
-
-        //Initialises buttons
-        var startRecording = new JButton("Start recording");
-        var endRecording = new JButton("End recording");
-        startRecording.addActionListener(e -> p.model().recorder().startRecording("default.xml", "level 1"));
-        endRecording.addActionListener(e -> p.model().recorder().endRecording());
-        startRecording.setFocusable(false);
-        endRecording.setFocusable(false);
-
-        var pauseBtn = new JButton("Pause");
-
-        pauseBtn.addActionListener(e -> {
-            if(!paused) {
-                pauseGame();
-                pauseBtn.setText("Resume");
-            } else {
-                unPauseGame();
-                pauseBtn.setText("Pause");
-            }
-        });
-        pauseBtn.setFocusable(false);
-
-        var exitBtn = new JButton("Exit game");
-        exitBtn.addActionListener(e -> exitGame());
-        exitBtn.setFocusable(false);
-
-        var saveBtn = new JButton("Save game");
-        saveBtn.addActionListener(e -> saveGame());
-        saveBtn.setFocusable(false);
-
-        var loadBtn = new JButton("Load game");
-        loadBtn.addActionListener(e -> loadGame());
-        loadBtn.setFocusable(false);
-
+        Renderer renderer = p.renderer();
         renderer.addKeyListener(p.controller());
         renderer.addKeyListener(gameController);
 
@@ -153,6 +119,38 @@ public class ChapsChallenge extends JFrame {
             }
         });
         timer.start();
+
+        //Initialises buttons
+        var startRecording = new JButton("Start recording");
+        var endRecording = new JButton("End recording");
+        startRecording.addActionListener(e -> p.model().recorder().startRecording("default.xml", "level 1"));
+        endRecording.addActionListener(e -> p.model().recorder().endRecording());
+        startRecording.setFocusable(false);
+        endRecording.setFocusable(false);
+
+        var pauseBtn = new JButton("Pause");
+        pauseBtn.addActionListener(e -> {
+            if(!paused) {
+                pauseGame();
+                pauseBtn.setText("Resume");
+            } else {
+                unPauseGame();
+                pauseBtn.setText("Pause");
+            }
+        });
+        pauseBtn.setFocusable(false);
+
+        var exitBtn = new JButton("Exit game");
+        exitBtn.addActionListener(e -> exitGame());
+        exitBtn.setFocusable(false);
+
+        var saveBtn = new JButton("Save game");
+        saveBtn.addActionListener(e -> saveGame());
+        saveBtn.setFocusable(false);
+
+        var loadBtn = new JButton("Load game");
+        loadBtn.addActionListener(e -> loadGame());
+        loadBtn.setFocusable(false);
 
         renderer.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
