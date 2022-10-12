@@ -3,7 +3,6 @@
     <Tiles>
         <PLAYER_DOWN x="10" y="9"/>
         <INFO x="10" y="8"/>
-        <INFO x="11" y="7"/>
         <FLOOR x="0" y="0"/>
         <FLOOR x="0" y="1"/>
         <FLOOR x="0" y="2"/>
