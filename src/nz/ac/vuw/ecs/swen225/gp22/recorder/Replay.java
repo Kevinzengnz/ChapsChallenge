@@ -22,7 +22,7 @@ import java.util.List;
 public class Replay {
     private List<Action> actionList;
     private int pings=0;
-    private double speed=0.25;
+    private double speed=1;
     private Timer timer=null;
     private boolean isRunning=false;
     private int endPing=1;
@@ -119,6 +119,7 @@ public class Replay {
     private void step(){
         if(this.pings==this.endPing){
             if(this.timer!=null){this.timer.stop();}
+            this.pc.getActionsReleased().getOrDefault(KeyEvent.VK_W, ()->{}).run();
             RecTesting.log("Replay","autoPlay","Replay stopped at frame "+this.pings);
             cleanReplay();
         }
