@@ -54,30 +54,30 @@ public class PlayerController extends Keys {
         //UP, DOWN, LEFT, RIGHT ARROWS -- move Chap within the maze
         setAction(KeyEvent.VK_UP,
                 () -> { moveUp(); keysHeld.add(KeyEvent.VK_UP); },
-                () -> releaseDirection(p, KeyEvent.VK_UP));
+                () -> releaseDirection(KeyEvent.VK_UP));
         setAction(KeyEvent.VK_DOWN,
                 () -> { moveDown(); keysHeld.add(KeyEvent.VK_DOWN); },
-                () -> releaseDirection(p, KeyEvent.VK_DOWN));
+                () -> releaseDirection(KeyEvent.VK_DOWN));
         setAction(KeyEvent.VK_LEFT,
                 () -> { moveLeft();keysHeld.add(KeyEvent.VK_LEFT); },
-                () -> releaseDirection(p, KeyEvent.VK_LEFT));
+                () -> releaseDirection(KeyEvent.VK_LEFT));
         setAction(KeyEvent.VK_RIGHT,
                 () -> { moveRight(); keysHeld.add(KeyEvent.VK_RIGHT); },
-                () -> releaseDirection(p, KeyEvent.VK_RIGHT));
+                () -> releaseDirection(KeyEvent.VK_RIGHT));
 
         //WASD also moves Chap within the maze
         setAction(KeyEvent.VK_W,
                 () -> { moveUp(); keysHeld.add(KeyEvent.VK_W); },
-                () -> releaseDirection(p, KeyEvent.VK_W));
+                () -> releaseDirection(KeyEvent.VK_W));
         setAction(KeyEvent.VK_S,
                 () -> {moveDown(); keysHeld.add(KeyEvent.VK_S); },
-                () -> releaseDirection(p, KeyEvent.VK_S));
+                () -> releaseDirection(KeyEvent.VK_S));
         setAction(KeyEvent.VK_A,
                 () -> {moveLeft(); keysHeld.add(KeyEvent.VK_A); },
-                () -> releaseDirection(p, KeyEvent.VK_A));
+                () -> releaseDirection(KeyEvent.VK_A));
         setAction(KeyEvent.VK_D,
                 () -> {moveRight(); keysHeld.add(KeyEvent.VK_D); },
-                () -> releaseDirection(p, KeyEvent.VK_D));
+                () -> releaseDirection(KeyEvent.VK_D));
     }
 
     /**
@@ -117,7 +117,7 @@ public class PlayerController extends Keys {
      * If any other keys are still held, moves player in that direction,
      * otherwise stops moving the player.
      */
-    public void releaseDirection(Player p, int keyCode) {
+    public void releaseDirection(int keyCode) {
         keysHeld.remove(keyCode);
         if (keysHeld.isEmpty()) {
             p.setMoving(false);
