@@ -98,7 +98,7 @@ public interface Model {
     try {
       String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
           .format(new java.util.Date());
-      XmlParser.saveGame(entities(), "saveGame" + timeStamp, timeLeft());
+      XmlParser.saveGame(entities(), "saveGame" + timeStamp, timeLeft(), levelNumber());
       recorder().endRecording();
     } catch (IOException e) {
       System.out.println("Error saving game");
