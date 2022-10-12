@@ -176,8 +176,12 @@ public class ChapsChallenge extends JFrame {
         loadBtn.addActionListener(e -> loadGame());
         loadBtn.setFocusable(false);
 
-        var helpBtn = new JButton("Help");
+        var helpBtn = new JButton("Show/Hide Help");
         helpBtn.addActionListener(e -> showHelp());
+        helpBtn.setFocusable(false);
+
+        var startStopReplay = new JButton("Start/Stop Replay");
+        helpBtn.addActionListener(e -> currentPhase.model());
         helpBtn.setFocusable(false);
 
         c.gridx = 5;
@@ -192,13 +196,14 @@ public class ChapsChallenge extends JFrame {
         c.gridy = 2;
         renderer.add(pauseBtn,c);
         c.gridy = 3;
-        renderer.add(exitBtn,c);
+        renderer.add(helpBtn,c);
         c.gridy = 4;
         renderer.add(saveBtn,c);
         c.gridy = 5;
         renderer.add(loadBtn,c);
         c.gridy = 6;
-        renderer.add(helpBtn,c);
+        renderer.add(exitBtn,c);
+
 
         add(BorderLayout.CENTER, renderer);
         renderer.setFocusable(true);
@@ -264,7 +269,11 @@ public class ChapsChallenge extends JFrame {
      */
     public void showHelp() {
         if (!helpDialogue) {
-            currentPhase.renderer().showPopup("Controls:");
+            currentPhase.renderer().showPopup("Controls: WASD or arrow keys to control player, " +
+                    "ESC to pause, " +
+                    "SPACE to resume, " +
+                    "CTRL-1 to load level 1, " +
+                    "CTRL-2 to load level 2");
             helpDialogue = true;
         } else {
             currentPhase.renderer().hidePopup();
