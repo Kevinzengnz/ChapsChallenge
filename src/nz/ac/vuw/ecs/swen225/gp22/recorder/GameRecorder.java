@@ -61,17 +61,25 @@ public class GameRecorder implements Recorder{
      * This function should be called on every step of the game clock. Will record changes in player direction
      * and the step it occurs at to the replay file.
      * @param dir Ordinal of direction.
+     * @param isMoving Boolean that indicates whether player is currently moving.
      */
     @Override
-    public void ping(int dir){
+    public void ping(int dir, boolean isMoving){
         this.frame++;
-        if(this.isRecording && this.prevDir !=dir){
-            this.actionHistory.add(dir);
+        if(!this.isRecording){return;}
+        if(!isMoving){
+            if(this.prevDir==0){return;}
+            this.actionHistory.add(0);
+            this.prevDir=0;
             this.frameHistory.add(this.frame);
-            this.prevDir=dir;
-            //Remove below for final
-            RecTesting.log("GameRecorder", "onAction", "Added action "+dir);
+            RecTesting.log("GameRecorder", "onAction", "Added stop");
+            return;
         }
+        if(this.prevDir==dir){return;}
+        this.actionHistory.add(dir);
+        this.prevDir=dir;
+        this.frameHistory.add(this.frame);
+        RecTesting.log("GameRecorder", "onAction", "Added action "+dir+" : "+isMoving);
     }
 
     /**

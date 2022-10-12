@@ -1,13 +1,21 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 import nz.ac.vuw.ecs.swen225.gp22.app.Model;
 /**
+ * Represents the Walls in the game
  * @author Alicia Robinson - 300560663
  */
 public class WallTile extends Tile{
     protected Runnable soundEffect;
+
+    /**
+     * Creates new WallTile at the given point
+     * @param point position of WallTile
+     */
     protected WallTile(Point point) {
         super("WALL", point);
     }
+
+    @Override
     public void setSoundEffect(Runnable soundEffect){
         if(soundEffect == null){
             throw new IllegalArgumentException("Sound Effect is Null");
