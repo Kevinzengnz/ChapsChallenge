@@ -121,11 +121,13 @@ public class XmlParser {
                     if (e.attributeValue("inventory") != null) {
 
                         String[] keys = e.attributeValue("inventory").substring(1, e.attributeValue("inventory").length() - 1).split(", ");
+                        ArrayList<Key> keyList = new ArrayList<>();
                         for (String key : keys) {
-                            Key key1 = (Key) factory.createEntity(key, new Point(0, 0));
-                            // if (!key.equals("")) {((Player) player).addKey(key1);}
-                            System.out.println(key);
+                            keyList.add((Key) factory.createEntity(key, new Point(0, 0)));
                         }
+                        ((Player) player).setKeys(keyList);
+
+                        ((Player) player).setTreasureCollected(Integer.parseInt(e.attributeValue("treasure")));
 
                     }
                     entities.add(player);
