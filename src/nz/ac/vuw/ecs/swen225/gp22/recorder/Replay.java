@@ -8,6 +8,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -25,18 +26,15 @@ public class Replay {
     private Timer timer=null;
     private boolean isRunning=false;
     private int endPing=1;
-    private PlayerController pc;
     private int frames=0;
+    private Robot robot;
 
     /**
      * Loads replay file data into this replay instance.
      * @param replayName File name of recording.
-     * @param game Instance of ChapsChallenge that is being recorded.
      */
-    public void loadReplay(String replayName, ChapsChallenge game){
+    public void loadReplay(String replayName){
         this.cleanReplay();
-        this.pc = game.getPhase().controller();
-        this.frames=0;
         Document replay = null;
         try {
             replay = XmlParser.parse(new File("Replays/" + replayName + ".xml"));
@@ -98,6 +96,7 @@ public class Replay {
      */
     public void nextTick(){
         autoPause();
+        this.pings++;
         step();
     }
 
@@ -126,13 +125,12 @@ public class Replay {
                 (a)->{
                     RecTesting.log("Replay", "autoPlay", "Direction changed to: "+a.dir()+" at ping "+a.frame());
                     switch(a.dir()){
-                        case 0 : this.pc.getActionsReleased().getOrDefault(KeyEvent.VK_W, ()->{}).run();break;
-                        case 1 : this.pc.getActionsPressed().getOrDefault(KeyEvent.VK_W, ()->{}).run();break;
-                        case 2 : this.pc.getActionsPressed().getOrDefault(KeyEvent.VK_D, ()->{}).run();break;
-                        case 3 : this.pc.getActionsPressed().getOrDefault(KeyEvent.VK_S, ()->{}).run();break;
-                        case 4 : this.pc.getActionsPressed().getOrDefault(KeyEvent.VK_A, ()->{}).run();break;
+                        case 0 : this.robot.keyRelease(KeyEvent.VK_W);break;
+                        case 1 : this.robot.keyPress(KeyEvent.VK_W);break;
+                        case 2 : this.robot.keyPress(KeyEvent.VK_D);break;
+                        case 3 : this.robot.keyPress(KeyEvent.VK_S);break;
+                        case 4 : this.robot.keyPress(KeyEvent.VK_A);break;
                     }
-
                 },
                 ()->{}
         );
@@ -147,5 +145,11 @@ public class Replay {
         this.pings=0;
         this.endPing=1;
         if(this.timer!=null){this.timer.stop();this.timer=null;}
+        this.frames=0;
+        try {
+            this.robot=new Robot();
+        } catch (AWTException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

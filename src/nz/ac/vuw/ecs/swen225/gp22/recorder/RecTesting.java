@@ -28,7 +28,7 @@ public class RecTesting {
         }
         r.endRecording();
         Replay replay = new Replay();
-        replay.loadReplay(TEST_REPLAY_FILE, new ChapsChallenge());
+        replay.loadReplay(TEST_REPLAY_FILE);
         replay.setReplaySpeed(0.5);
         replay.autoPlay();
 //        replay.loadReplay(TEST_REPLAY_FILE);
