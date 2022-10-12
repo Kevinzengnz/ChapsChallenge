@@ -4,26 +4,65 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 import java.util.ArrayList;
 import java.util.List;
 /**
+ * Represents the Player in the game.
+ * Player can move around and interact with other Entities.
  * @author Alicia Robinson - 300560663
  */
 public class Player extends Actor{
+    /**
+     * Number of Treasures Player has collected
+     */
     private int treasureCollected = 0;
+    /**
+     * Keys Player has collected
+     */
     List<Key> keys = new ArrayList<>();
+    /**
+     * Boolean for if the player should currently be moving.
+     */
     protected boolean moveValid = true;
+
+    /**
+     * Creates Player using given point and sprite.
+     * @param point position of Player
+     * @param sprite Player sprite
+     */
     protected Player(Point point, String sprite) {
         super(sprite, point);
     }
+
+    /**
+     * Adds given key to the players key list
+     * @param key key that player has picked up
+     */
     protected void addKey(Key key){
         keys.add(key);
     }
+
+    /**
+     * Increases treasureCollected by 1
+     */
     protected void addTreasure(){ treasureCollected += 1; }
+
+    /**
+     * @return number of treasures player has collected
+     */
     public int getTreasureCollected() {
         return treasureCollected;
     }
+
+    /**
+     * @return players keys list
+     */
     public List<Key> getKeys(){
         return keys;
     }
-    //TODO Add remove method for keys list
+
+    /**
+     * Removes given key from players keys list
+     * @param key to be removed
+     */
+    public void removeKey(Key key){keys.remove(key);}
     @Override
     public void ping(Model m) {
         if (isMoving()) {
