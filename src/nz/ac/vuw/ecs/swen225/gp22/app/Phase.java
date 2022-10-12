@@ -103,7 +103,7 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
         String fileName = "src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/levelOne.xml";
         List<Entity> levelEntities = XmlParser
                 .loadGame(fileName);
-        return newLevel(next, first, levelEntities, XmlParser.loadTime(fileName));
+        return newLevel(next, first, levelEntities, XmlParser.getTime());
     }
 
     /**
@@ -117,7 +117,7 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
         String fileName = "src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/levelTwo.xml";
         List<Entity> levelEntities = XmlParser
                 .loadGame(fileName);
-        return newLevel(next, first, levelEntities, XmlParser.loadTime(fileName));
+        return newLevel(next, first, levelEntities, XmlParser.getTime());
     }
 
     /**
@@ -128,6 +128,6 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
      */
     static Phase loadLevel(String fileName) {
         List<Entity> levelEntities = XmlParser.loadGame(fileName);
-        return newLevel(() -> {}, () -> {}, levelEntities,XmlParser.loadTime(fileName));
+        return newLevel(() -> {}, () -> {}, levelEntities,XmlParser.getTime());
     }
 }
