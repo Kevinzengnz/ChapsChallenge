@@ -1,10 +1,13 @@
 package test.nz.ac.vuw.ecs.swen225.gp22.fuzz;
 
+import static org.junit.jupiter.api.Assertions.assertTimeout;
+
 import java.awt.AWTException; 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -48,7 +51,7 @@ Size of the list
 			next = r.nextInt(keyList.size());
 			if(next == prev) {next = r.nextInt(keyList.size());}
 			//Run in one direction for random number of steps
-			times = r.nextInt(8);
+			times = r.nextInt(10);
 			for(int i = 0; i<times;i++) {
 				es.add(keyList.get(next));
 			}
@@ -89,7 +92,7 @@ Size of the list
 		}
 		//Random Key presses
 		var events = genEvents(1000);
-		checkMovement(events);
+		assertTimeout(Duration.ofMinutes(1), ()->{checkMovement(events);});
 	}
 	
 	/**
@@ -122,7 +125,7 @@ Size of the list
 					robot.delay(33);
 					robot.keyRelease(e);
 				} catch (Exception exc) {
-					System.out.println(exc);
+					throw exc;
 				}
 			});
 	}
