@@ -63,15 +63,22 @@ public class GameRecorder implements Recorder{
      * @param dir Ordinal of direction.
      */
     @Override
-    public void ping(int dir){
+    public void ping(int dir, boolean isMoving){
         this.frame++;
-        if(this.isRecording && this.prevDir !=dir){
-            this.actionHistory.add(dir);
+        if(!this.isRecording){return;}
+        if(isMoving){
+            if(this.prevDir!=dir) {
+                this.actionHistory.add(dir);
+                this.prevDir=dir;
+                this.frameHistory.add(this.frame);
+            }
+        } else {
+            this.actionHistory.add(0);
+            this.prevDir=0;
             this.frameHistory.add(this.frame);
-            this.prevDir=dir;
-            //Remove below for final
-            RecTesting.log("GameRecorder", "onAction", "Added action "+dir);
         }
+        //Remove below for final
+        RecTesting.log("GameRecorder", "onAction", "Added action "+dir+" : "+isMoving);
     }
 
     /**
