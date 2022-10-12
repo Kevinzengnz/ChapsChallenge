@@ -8,7 +8,7 @@ public class Actor implements Entity{
     protected Point point;
     protected Direction direction = Direction.Down;
     public void setMoving(boolean moving){ this.moving = moving; }
-    protected boolean isMoving(){ return this.moving; }
+    public boolean isMoving(){ return this.moving; }
     protected Actor(String sprite, Point point) {
         if(point == null || sprite == null){
             throw new IllegalArgumentException("Actor Sprite or Point is null");
