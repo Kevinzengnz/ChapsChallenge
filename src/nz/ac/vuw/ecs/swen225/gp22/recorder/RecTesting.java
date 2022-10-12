@@ -27,14 +27,14 @@ public class RecTesting {
             }
         }
         r.endRecording();
-        Replay replay = new Replay();
-        replay.loadReplay(TEST_REPLAY_FILE);
-        replay.setReplaySpeed(0.5);
-        replay.autoPlay();
-//        replay.loadReplay(TEST_REPLAY_FILE);
-//        for(int i=0; i<100; i++){
-//            replay.nextTick();
-//        }
+//        Replay replay = new Replay();
+//        replay.loadReplay(TEST_REPLAY_FILE, null);
+//        replay.setReplaySpeed(0.5);
+//        replay.autoPlay();
+////        replay.loadReplay(TEST_REPLAY_FILE);
+////        for(int i=0; i<100; i++){
+////            replay.nextTick();
+////        }
     }
 
     public RecTesting(){
