@@ -10,11 +10,26 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
  * Extends the MoveAnimation by cycling the Sprite through multiple frames.
  */
 public class WalkAnimation extends MoveAnimation{
+    /**
+     * The current frame of the animation
+     */
     private int currentFrame = 0;
 
+    /**
+     * The frames for the player's up animation.
+     */
     private final Sprite[] upFrames = {Sprite.PLAYER_WALK_UP_1, Sprite.PLAYER_UP, Sprite.PLAYER_WALK_UP_2};
+    /**
+     * The frames for the player's down animation.
+     */
     private final Sprite[] downFrames = {Sprite.PLAYER_WALK_DOWN_1, Sprite.PLAYER_DOWN, Sprite.PLAYER_WALK_DOWN_2};
+    /**
+     * The frames for the player's left animation.
+     */
     private final Sprite[] leftFrames = {Sprite.PLAYER_WALK_LEFT_1, Sprite.PLAYER_LEFT, Sprite.PLAYER_WALK_LEFT_2};
+    /**
+     * The frames for the player's right animation.
+     */
     private final Sprite[] rightFrames = {Sprite.PLAYER_WALK_RIGHT_1, Sprite.PLAYER_RIGHT, Sprite.PLAYER_WALK_RIGHT_2};
 
     /**

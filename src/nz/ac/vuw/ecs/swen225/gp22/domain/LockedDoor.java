@@ -5,10 +5,21 @@ import nz.ac.vuw.ecs.swen225.gp22.app.Model;
 import java.util.NoSuchElementException;
 
 /**
+ * Represents a locked door.
+ * LockedDoors can be opened with a key of the same colour.
  * @author Alicia Robinson - 300560663
  */
 public class LockedDoor extends Door {
+    /**
+     * colour of door
+     */
     private final Colours colour;
+
+    /**
+     * Creates a LockedDoor Object with given point and colour.
+     * @param point position of LockedDoor
+     * @param colourString colour of LockedDoor
+     */
     protected LockedDoor(Point point, String colourString) {
         super(point);
         if(colourString.isEmpty()){
@@ -16,6 +27,12 @@ public class LockedDoor extends Door {
         }
         colour = getColour(colourString);
         this.setSprite(colour.door);
+    }
+    /**
+     * @return colour of door
+     */
+    public String getColour(){
+        return this.colour.getName();
     }
 
     @Override
@@ -38,8 +55,5 @@ public class LockedDoor extends Door {
         }
     }
 
-    public String getColour(){
-        return this.colour.getName();
-    }
 }
 
