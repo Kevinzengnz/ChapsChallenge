@@ -8,7 +8,7 @@ import javax.swing.*;
  * Class containing test utilities for recorder package. Will be deleted after.
  */
 public class RecTesting {
-    private static final boolean DEBUG = true; //Set to true to show console debug messages.
+    private static final boolean DEBUG = false; //Set to true to show console debug messages.
     private static final String TEST_REPLAY_FILE = "test_replay";
 
     public static void log(String cls, String method, String message){
