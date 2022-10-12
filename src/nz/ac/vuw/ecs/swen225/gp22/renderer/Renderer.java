@@ -76,6 +76,9 @@ public class Renderer extends JPanel {
    * @param keys           list of keys in the players inventory
    */
   public void ping(Point cameraPosition, List<Entity> allEntities, List<Key> keys) {
+    if (cameraPosition == null || allEntities == null || keys == null) {
+      throw new IllegalArgumentException("Arguments cannot be null");
+    }
     camera.update(cameraPosition);
     // Update inventory
     inventory.clear();
@@ -125,6 +128,9 @@ public class Renderer extends JPanel {
    * @return true if entity is visible, false if not
    */
   private boolean isEntityVisible(Entity entity) {
+    if (entity == null) {
+      throw new IllegalArgumentException("Entity must not be null");
+    }
     return entity.getPoint().x() >= camera.getTileX() - 1 - camera.getVisionDistance()
             && entity.getPoint().x() <= camera.getTileX() + camera.getVisionDistance() + 1
             && entity.getPoint().y() >= camera.getTileY() - 1 - camera.getVisionDistance()
@@ -159,7 +165,6 @@ public class Renderer extends JPanel {
     if (showMessage) {
       drawPopup(g, cellsLeft, cellsTop, message);
     }
-
   }
 
   /**
@@ -215,7 +220,7 @@ public class Renderer extends JPanel {
    */
   private void drawPopup(Graphics g, int left, int top, String message) {
     if (message == null) {
-      return;
+      throw new IllegalArgumentException("Message must not be null");
     }
     message = message.toUpperCase();
     List<String> list = new ArrayList<>();
@@ -224,9 +229,9 @@ public class Renderer extends JPanel {
       if (line.length() + s.length() > 40) {
         list.add(line.toString());
         line = new StringBuilder();
-      } else {
-        line.append(s).append(" ");
       }
+      line.append(s).append(" ");
+
     }
     list.add(line.toString());
 
@@ -248,6 +253,9 @@ public class Renderer extends JPanel {
    * @param message the message to add
    */
   public void showPopup(String message) {
+    if (message == null || message.equals("")) {
+      throw new IllegalArgumentException("Message must not be blank");
+    }
     this.message = message;
     showMessage = true;
   }
@@ -256,6 +264,9 @@ public class Renderer extends JPanel {
    * Hides the popup created by showPopup.
    */
   public void hidePopup() {
+    if (!showMessage) {
+      throw new IllegalStateException("No popup to hide");
+    }
     this.message = null;
     showMessage = false;
   }
