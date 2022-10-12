@@ -24,9 +24,10 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
      * @param next runnable to perform after finishing this level
      * @param first runnable to perform after failing this level
      * @param levelEntities list of entities in this level
+     * @param time amount of time allowed to complete level
      * @return new phase with the list of given entities
      */
-    static Phase newLevel(Runnable next, Runnable first, List<Entity> levelEntities) {
+    static Phase newLevel(Runnable next, Runnable first, List<Entity> levelEntities, int time) {
         Renderer renderer = new Renderer();
         GameRecorder recorder = new GameRecorder();
         Player p = levelEntities.stream().filter(a -> a instanceof Player).map(a -> (Player)
@@ -34,7 +35,7 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
         renderer.ping(p.getPoint(), levelEntities, new ArrayList<>());
         long totalTreasures = levelEntities.stream().filter(e -> e instanceof Treasure).count();
         var m = new Model() {
-            int timeLeft;
+            int timeLeft = time;
             List<Entity> entities = levelEntities;
             @Override
             public int timeLeft() {
@@ -93,9 +94,10 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
      * @return new phase created from entities in levelOne file
      */
     static Phase level1(Runnable next, Runnable first) {
+        String fileName = "src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/levelOne.xml";
         List<Entity> levelEntities = XmlParser
-                .loadGame("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/levelOne.xml");
-        return newLevel(next, first, levelEntities);
+                .loadGame(fileName);
+        return newLevel(next, first, levelEntities, XmlParser.loadTime(fileName));
     }
 
     /**
@@ -106,9 +108,10 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
      * @return new phase created from entities in levelTwo file
      */
     static Phase level2(Runnable next, Runnable first) {
+        String fileName = "src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/levelTwo.xml";
         List<Entity> levelEntities = XmlParser
-                .loadGame("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/levelTwo.xml");
-        return newLevel(next, first, levelEntities);
+                .loadGame(fileName);
+        return newLevel(next, first, levelEntities, XmlParser.loadTime(fileName));
     }
 
     /**
@@ -119,6 +122,6 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
      */
     static Phase loadLevel(String fileName) {
         List<Entity> levelEntities = XmlParser.loadGame(fileName);
-        return newLevel(() -> {}, () -> {}, levelEntities);
+        return newLevel(() -> {}, () -> {}, levelEntities,XmlParser.loadTime(fileName));
     }
 }
