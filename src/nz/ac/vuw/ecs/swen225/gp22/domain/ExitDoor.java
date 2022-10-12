@@ -20,7 +20,7 @@ public class ExitDoor extends Door {
         if(!this.getPoint().equals(point)){
             throw new IllegalArgumentException("Player point does not equal ExitDoor Point");
         }
-        if(player.getTreasureCollected() != 5){
+        if(model.treasuresLeft() != 0){
             player.moveValid = false;
         } else{
             soundEffect.run();
