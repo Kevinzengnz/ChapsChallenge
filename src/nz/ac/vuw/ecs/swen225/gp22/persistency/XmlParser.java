@@ -49,10 +49,17 @@ public class XmlParser {
         //iterate and add the entities to the Tiles element
         for (Entity e : entities) {
             String name = e.toString();
-            Tiles.addElement(name)
-                    .addAttribute("x", String.valueOf(e.getPoint().x()))
-                    .addAttribute("y", String.valueOf(e.getPoint().y()));
+            if (name == "INFO") {
+                Tiles.addElement(name)
+                        .addAttribute("x", String.valueOf(e.getPoint().x()))
+                        .addAttribute("y", String.valueOf(e.getPoint().y()))
+                        .addAttribute("text", ((InfoTile) e).getText());
+            } else {
+                Tiles.addElement(name)
+                        .addAttribute("x", String.valueOf(e.getPoint().x()))
+                        .addAttribute("y", String.valueOf(e.getPoint().y()));
             }
+        }
 
             // write to a file
             write(document, levelName, "src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/");
@@ -91,7 +98,15 @@ public class XmlParser {
             Element Tiles = root.element("Tiles");
             EntityFactory factory = new EntityFactory();
             for (Element e : Tiles.elements()) {
-                entities.add(factory.createEntity(e.getName(),new Point(Integer.parseInt(e.attributeValue("x")), Integer.parseInt(e.attributeValue("y")))));
+                if (e.getName() == "INFO") {
+                    Entity IT = factory.createEntity(e.getName(),
+                            new Point(Integer.parseInt(e.attributeValue("x")), Integer.parseInt(e.attributeValue("y"))));
+                    ((InfoTile) IT).setText(e.attributeValue("text"));
+                    entities.add(IT);
+                } else {
+                    entities.add(factory.createEntity(e.getName(),
+                            new Point(Integer.parseInt(e.attributeValue("x")), Integer.parseInt(e.attributeValue("y")))));
+                }
             }
         } catch (DocumentException e) {
             e.printStackTrace();
