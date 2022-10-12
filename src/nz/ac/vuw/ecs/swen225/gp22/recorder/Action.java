@@ -1,20 +1,26 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
 class Action {
-    private int dir;
-    private int frame;
+  private final int dir;
+  private final int frame;
 
-    /**
-     * Constructor for action
-     * @param dir Direction player changed to
-     * @param frame Frame number of direction changed
-     */
-    public Action(int dir, int frame){
-        this.dir=dir;
-        this.frame=frame;
-    }
+  /**
+   * Constructor for action.
+   *
+   * @param direction Direction player changed to
+   * @param crntFrame Frame number of direction changed
+   */
+  Action(final int direction, final int crntFrame) {
+    this.dir = direction;
+    this.frame = crntFrame;
+  }
 
-    //GETTERS
-    public int dir(){return this.dir;}
-    public int frame(){return this.frame;}
+  //GETTERS
+  public int dir() {
+    return this.dir;
+  }
+
+  public int frame() {
+    return this.frame;
+  }
 }

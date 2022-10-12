@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.swing.JPanel;
+
 import nz.ac.vuw.ecs.swen225.gp22.domain.Actor;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.InfoTile;
@@ -56,15 +57,16 @@ public class Renderer extends JPanel {
    * Message to display on the screen. Used to display help messages.
    */
   private String message;
+
   /**
-   * Timer to display above message for. Counts down till 0 then hides message.
+   * Boolean to determine whether to show the popup message above..
    */
-  private int messageTimer = 0;
+  boolean showMessage = false;
 
   /**
    * The font used for displaying popup messages.
    */
-  private final Font font = new Font("Courier",Font.PLAIN,16);
+  private final Font font = new Font("Courier", Font.PLAIN, 16);
 
   /**
    * Updates the renderer with drawing information.
@@ -74,8 +76,8 @@ public class Renderer extends JPanel {
    * @param keys           list of keys in the players inventory
    */
   public void ping(Point cameraPosition, List<Entity> allEntities, List<Key> keys) {
-    if (messageTimer != 0) {
-      messageTimer--;
+    if (cameraPosition == null || allEntities == null || keys == null) {
+      throw new IllegalArgumentException("Arguments cannot be null");
     }
     camera.update(cameraPosition);
     // Update inventory
@@ -126,6 +128,9 @@ public class Renderer extends JPanel {
    * @return true if entity is visible, false if not
    */
   private boolean isEntityVisible(Entity entity) {
+    if (entity == null) {
+      throw new IllegalArgumentException("Entity must not be null");
+    }
     return entity.getPoint().x() >= camera.getTileX() - 1 - camera.getVisionDistance()
             && entity.getPoint().x() <= camera.getTileX() + camera.getVisionDistance() + 1
             && entity.getPoint().y() >= camera.getTileY() - 1 - camera.getVisionDistance()
@@ -157,10 +162,9 @@ public class Renderer extends JPanel {
     if (infoTiles.size() != 0) {
       drawPopup(g, cellsLeft, cellsTop, infoTiles.get(0).getText());
     }
-    if (messageTimer != 0) {
+    if (showMessage) {
       drawPopup(g, cellsLeft, cellsTop, message);
     }
-
   }
 
   /**
@@ -216,8 +220,9 @@ public class Renderer extends JPanel {
    */
   private void drawPopup(Graphics g, int left, int top, String message) {
     if (message == null) {
-      return;
+      throw new IllegalArgumentException("Message must not be null");
     }
+    message = message.toUpperCase();
     List<String> list = new ArrayList<>();
     StringBuilder line = new StringBuilder();
     for (String s : message.split(" ")) {
@@ -225,9 +230,8 @@ public class Renderer extends JPanel {
         list.add(line.toString());
         line = new StringBuilder();
       }
-      else {
-        line.append(s).append(" ");
-      }
+      line.append(s).append(" ");
+
     }
     list.add(line.toString());
 
@@ -235,7 +239,8 @@ public class Renderer extends JPanel {
     Image bg = Sprite.TEXT_POPUP.image;
     int drawLeft = left + (camera.getVisionSize() * tileSize - bg.getWidth(null)) / 2;
     int drawTop = top + 20;
-    g.drawImage(bg, drawLeft, drawTop, null);;
+    g.drawImage(bg, drawLeft, drawTop, null);
+    ;
     for (int i = 0; i < list.size(); i++) {
       g.drawString(list.get(i), drawLeft + 10, drawTop + 20 * (i + 1));
     }
@@ -243,14 +248,27 @@ public class Renderer extends JPanel {
   }
 
   /**
-   * Displays a popup with the message for the specified number of pings.
+   * Displays a popup with the message until hidePopup is called.
    *
    * @param message the message to add
-   * @param length  the number of pings to display it for
    */
-  public void addPopup(String message, int length) {
+  public void showPopup(String message) {
+    if (message == null || message.equals("")) {
+      throw new IllegalArgumentException("Message must not be blank");
+    }
     this.message = message;
-    this.messageTimer = length;
+    showMessage = true;
+  }
+
+  /**
+   * Hides the popup created by showPopup.
+   */
+  public void hidePopup() {
+    if (!showMessage) {
+      throw new IllegalStateException("No popup to hide");
+    }
+    this.message = null;
+    showMessage = false;
   }
 
   /**

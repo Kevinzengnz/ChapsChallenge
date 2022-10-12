@@ -20,9 +20,6 @@ public class Tile implements Entity{
      * @param point position of Tile
      */
     public Tile(String sprite, Point point) {
-        if(point == null || sprite == null){
-            throw new IllegalArgumentException("Tile Sprite or Point is null");
-        }
         this.sprite = sprite;
         this.point = point;
     }

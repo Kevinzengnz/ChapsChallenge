@@ -15,7 +15,7 @@ public abstract class Audio {
    */
   public static void playSoundEffect(String name) {
     if (name == null) {
-      return;
+      throw new IllegalArgumentException("Name must not be null");
     }
     Clip clip = getSoundEffect(name).clip;
     if (clip.isRunning()) {
@@ -32,6 +32,9 @@ public abstract class Audio {
    * @return SoundEffect object
    */
   public static SoundEffect getSoundEffect(String name) {
+    if (name == null || name.equals("")) {
+      throw new IllegalArgumentException("Name must not be blank");
+    }
     if (name.startsWith("DOOR")) {
       name = "DOOR";
     }
@@ -45,11 +48,14 @@ public abstract class Audio {
    * Gets a Runnable to play the passed in sound name. Allows Domain to play sound effects
    * when conditions are met without having to depend on Renderer.
    *
-   * @param soundName name of sound effect to play in Runnable
+   * @param name name of sound effect to play in Runnable
    * @return Runnable to play the sound effect
    */
-  public static Runnable getSoundPlayer(String soundName) {
-    return () -> playSoundEffect(soundName);
+  public static Runnable getSoundPlayer(String name) {
+    if (name == null) {
+      throw new IllegalArgumentException("Name must not be null");
+    }
+    return () -> playSoundEffect(name);
   }
 
 }
