@@ -25,9 +25,10 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
    * @param first         runnable to perform after failing this level
    * @param levelEntities list of entities in this level
    * @param time          amount of time allowed to complete level
+   * @param level         level number
    * @return new phase with the list of given entities
    */
-  static Phase newLevel(Runnable next, Runnable first, List<Entity> levelEntities, int time) {
+  static Phase newLevel(Runnable next, Runnable first, List<Entity> levelEntities, int time, int level) {
     Renderer renderer = new Renderer();
     GameRecorder recorder = new GameRecorder();
     Player p = levelEntities.stream().filter(a -> a instanceof Player).map(a -> (Player)
@@ -87,8 +88,7 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
 
       @Override
       public int levelNumber() {
-        //TODO: return level number from XML file.
-        return 1;
+        return level;
       }
     };
     return new Phase(m, new PlayerController(p), renderer);
@@ -105,7 +105,7 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
     String fileName = "src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/levelOne.xml";
     List<Entity> levelEntities = XmlParser
         .loadGame(fileName);
-    return newLevel(next, first, levelEntities, XmlParser.getTime());
+    return newLevel(next, first, levelEntities, XmlParser.getTime(), XmlParser.getLevel());
   }
 
   /**
@@ -119,7 +119,7 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
     String fileName = "src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/levelTwo.xml";
     List<Entity> levelEntities = XmlParser
         .loadGame(fileName);
-    return newLevel(next, first, levelEntities, XmlParser.getTime());
+    return newLevel(next, first, levelEntities, XmlParser.getTime(), XmlParser.getLevel());
   }
 
   /**
@@ -132,6 +132,6 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
     List<Entity> levelEntities = XmlParser.loadGame(fileName);
     return newLevel(() -> {
     }, () -> {
-    }, levelEntities, XmlParser.getTime());
+    }, levelEntities, XmlParser.getTime(), XmlParser.getLevel());
   }
 }
