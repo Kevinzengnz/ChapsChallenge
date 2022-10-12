@@ -10,8 +10,14 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
  * ID: 300564261
  */
 public class MoveAnimation extends Animation {
+    /**
+     * The direction the animation is moving.
+     */
     protected Direction direction;
 
+    /**
+     * The number of pings the animation has been running for.
+     */
     protected int count;
 
     /**

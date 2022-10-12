@@ -54,7 +54,9 @@ public enum Sprite {
     ROBOT_DOWN("Assets/Actors/robot_down.png");
 
 
-
+    /**
+     * The image for the Sprite.
+     */
     public final BufferedImage image;
 
     /**
