@@ -51,7 +51,7 @@ public class Key extends Collectable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Key key = (Key) o;
-        return colour == key.colour;
+        return colour == key.colour && this.getPoint().equals(((Key) o).getPoint());
     }
 
     @Override
