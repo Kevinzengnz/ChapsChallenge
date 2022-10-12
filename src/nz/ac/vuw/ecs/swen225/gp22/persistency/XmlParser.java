@@ -74,7 +74,6 @@ public class XmlParser {
         //add the list of entities to the Tiles element
         Document document = DocumentHelper.createDocument();
         Element root = document.addElement("root");
-        Element Tiles = root.addElement("Tiles");
         root.add(getTilesElement(m));
 
         //add level number to the xml file
@@ -127,6 +126,7 @@ public class XmlParser {
                     ((Player) player).setKeys(keyList);
                     ((Player) player).setTreasureCollected(Integer.parseInt(e.attributeValue("treasure")));
                 }
+                System.out.println("added");
                 entities.add(player);
             }
             else {
