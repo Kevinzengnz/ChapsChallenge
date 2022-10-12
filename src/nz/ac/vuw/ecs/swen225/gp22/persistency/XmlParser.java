@@ -120,14 +120,12 @@ public class XmlParser {
                     //check if there is any key in the inventory
                     if (keys.length >= 1 &&!keys[0].equals("")) {
                         for (String key : keys) {
-                            System.out.println("key is " + key);
                             keyList.add((Key) factory.createEntity(key, new Point(0, 0)));
                         }
                     }
                     ((Player) player).setKeys(keyList);
                     ((Player) player).setTreasureCollected(Integer.parseInt(e.attributeValue("treasure")));
                 }
-                System.out.println("added");
                 entities.add(player);
             }
             else {
