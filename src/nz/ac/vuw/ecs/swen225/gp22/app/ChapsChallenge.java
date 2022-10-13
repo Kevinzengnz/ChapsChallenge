@@ -44,11 +44,6 @@ public class ChapsChallenge extends JFrame {
   private Timer timer;
 
   /**
-   * Boolean for whether the game is currently paused.
-   */
-  private boolean paused = false;
-
-  /**
    * Boolean for whether the help dialogue is currently shown.
    */
   private boolean helpDialogue = false;
@@ -74,7 +69,7 @@ public class ChapsChallenge extends JFrame {
   }
 
   public void levelStartMenu() {
-    var welcome=new JLabel("Chap's challenge. ");
+    var welcome=new Label("Chap's challenge. ");
     JPanel bottomPanel = new JPanel();
     addKeyListener(gameController);
     closePhase.run();
@@ -129,7 +124,6 @@ public class ChapsChallenge extends JFrame {
    */
   public void pauseGame() {
     currentPhase.controller().pause();
-    paused = true;
     timer.stop();
   }
 
@@ -138,7 +132,6 @@ public class ChapsChallenge extends JFrame {
    */
   public void unPauseGame() {
     currentPhase.controller().unPause();
-    paused = false;
     timer.start();
   }
 
@@ -217,21 +210,15 @@ public class ChapsChallenge extends JFrame {
     c.anchor = GridBagConstraints.FIRST_LINE_END;
     c.gridy = 0;
 
-    JLabel level = new JLabel("Level: " + p.model().levelNumber());
-    level.setFont(new Font("Verdana", Font.PLAIN, 20));
-    level.setFocusable(false);
+    Label level = new Label("Level: " + p.model().levelNumber());
     infoPanel.add(level, c);
 
     c.gridy = 1;
-    JLabel treasuresLeft = new JLabel("Treasures left: " + p.model().treasuresLeft());
-    treasuresLeft.setFont(new Font("Verdana", Font.PLAIN, 20));
-    treasuresLeft.setFocusable(false);
+    Label treasuresLeft = new Label("Treasures left: " + p.model().treasuresLeft());
     infoPanel.add(treasuresLeft, c);
 
     c.gridy = 2;
-    JLabel timeLeft = new JLabel("Time Left: " + p.model().timeLeft());
-    timeLeft.setFont(new Font("Verdana", Font.PLAIN, 20));
-    timeLeft.setFocusable(false);
+    Label timeLeft = new Label("Time Left: " + p.model().timeLeft());
     infoPanel.add(timeLeft, c);
 
     p.model().entities().forEach(e -> e.setSoundEffect(Audio.getSoundPlayer(e.getSpriteName())));
@@ -257,7 +244,6 @@ public class ChapsChallenge extends JFrame {
     //Initialises buttons
     var startRecording = new Button("Start recording", e -> startRecording());
     var endRecording = new Button("End recording", e -> endRecording());
-
     var pauseBtn = new Button("Pause", e -> pauseGame());
     var resumeBtn = new Button("Resume", e -> unPauseGame());
     var exitBtn = new Button("Exit game", e -> exitGame());

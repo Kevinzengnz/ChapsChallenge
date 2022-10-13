@@ -69,7 +69,7 @@ public interface Model {
   /**
    * Gets the total number of treasures at the start of the level.
    *
-   * @return nnumber of treasures that were at the start of the level
+   * @return number of treasures that were at the start of the level
    */
   long totalTreasures();
 
