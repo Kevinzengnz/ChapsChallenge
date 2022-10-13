@@ -182,4 +182,19 @@ public class XmlParser {
     public static int getTime() {
         return timeLeft;
     }
+
+    public static void main(String[] args){
+        ServiceLoader<ExtraEntity> loader = ServiceLoader.load(ExtraEntity.class);
+
+        Iterator<ExtraEntity> iterator = loader.iterator();
+
+
+
+        HashMap<String, ExtraEntity> services = new HashMap<>();
+        for (ExtraEntity service : loader) {
+            System.out.println(service.getClass().getName());
+            services.put(service.getClass().getName(), service);
+        }
+        System.out.println("Services " + services.size());
+    }
 }
