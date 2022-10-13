@@ -38,10 +38,16 @@ public class ChapsChallenge extends JFrame {
    * Current phase of the game.
    */
   private Phase currentPhase;
+
+  /**
+   * A default timer object that performs no actions
+   */
+  private static final Timer EMPTY_TIMER = new Timer(0, e -> {});
+
   /**
    * Timer that performs certain actions every frame.
    */
-  private Timer timer;
+  private Timer timer = EMPTY_TIMER;
 
   /**
    * Boolean for whether the help dialogue is currently shown.
@@ -115,7 +121,7 @@ public class ChapsChallenge extends JFrame {
   public void gameOver() {
     currentPhase.renderer().showPopup("You Died! Click a button to load a new level.");
     currentPhase.renderer().removeKeyListener(currentPhase.controller());
-    pauseGame();
+    timer = EMPTY_TIMER;
     helpDialogue = true;
   }
 
@@ -207,9 +213,7 @@ public class ChapsChallenge extends JFrame {
     closePhase = () -> p.model().recorder().endRecording();
     setVisible(true);
 
-    if (timer != null) {
-      timer.stop();
-    }
+    timer.stop();
     pings = 0;
 
     Renderer renderer = p.renderer();
@@ -217,6 +221,7 @@ public class ChapsChallenge extends JFrame {
     renderer.addKeyListener(gameController);
 
     JPanel infoPanel = new JPanel();
+    infoPanel.setBackground(Color.BLACK);
     infoPanel.setLayout(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
     c.anchor = GridBagConstraints.CENTER;
@@ -274,6 +279,7 @@ public class ChapsChallenge extends JFrame {
 
     JPanel buttonsPanel = new JPanel();
     buttonsPanel.setLayout(new GridBagLayout());
+    buttonsPanel.setBackground(Color.BLACK);
 
     //adds buttons to buttonsPanel
     buttonsPanel.add(startRecording, c);
