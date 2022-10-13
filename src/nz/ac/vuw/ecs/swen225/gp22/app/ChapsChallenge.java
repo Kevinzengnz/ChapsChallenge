@@ -187,8 +187,7 @@ public class ChapsChallenge extends JFrame {
     c.anchor = GridBagConstraints.FIRST_LINE_END;
     c.gridy = 0;
 
-    //TODO: get level from model once implemented
-    JLabel level = new JLabel("Level: ");
+    JLabel level = new JLabel("Level: " + p.model().levelNumber());
     level.setFont(new Font("Verdana", Font.PLAIN, 20));
     level.setFocusable(false);
     renderer.add(level, c);
