@@ -15,7 +15,7 @@ import javax.sound.sampled.FloatControl;
 public enum SoundEffect {
   TREASURE("coin"),
   DOOR("unlock"),
-  EXIT("portal"),
+  EXIT("exit"),
   KEY("key"),
   WALL("wall"),
   INFO("info"),
