@@ -1,5 +1,8 @@
 package test.nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import nz.ac.vuw.ecs.swen225.gp22.app.Model;
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.GameRecorder;
@@ -7,206 +10,242 @@ import nz.ac.vuw.ecs.swen225.gp22.renderer.Audio;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+/**
+ * Tests for the Domain Package.
+ *
+ * @author Alicia Robinson - 300560663
+ */
 public class TestDomain {
 
     /**
-     * Testing Invalid Arguments for Entity Factory
+     * Testing Invalid Arguments for Entity Factory.
      */
 
-    @Test public void EntityFactoryInvalidType(){
+    @Test public void EntityFactoryInvalidType() {
         EntityFactory entityFactory = new EntityFactory();
         try {
             entityFactory.createEntity("WINDOW", new Point(2, 4));
-        } catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assert true;
         }
     }
 
-    @Test public void EntityFactoryNullType(){
+    @Test public void EntityFactoryNullType() {
         EntityFactory entityFactory = new EntityFactory();
         try {
             entityFactory.createEntity(null, new Point(2, 4));
-        } catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assert true;
         }
     }
 
-    @Test public void EntityFactoryEmptyType(){
+    @Test public void EntityFactoryEmptyType() {
         EntityFactory entityFactory = new EntityFactory();
         try {
             entityFactory.createEntity("", new Point(2, 4));
-        } catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assert true;
         }
     }
 
-    @Test public void EntityFactoryNullPoint(){
+    @Test public void EntityFactoryNullPoint() {
         EntityFactory entityFactory = new EntityFactory();
         try {
             entityFactory.createEntity("EXIT", null);
-        } catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assert true;
         }
     }
 
     /**
-     * Testing Valid Arguments for Entity Factory
+     * Testing Valid Arguments for Entity Factory.
      */
 
-    @Test public void EntityFactoryCreatePlayerUp(){
+    @Test public void EntityFactoryCreatePlayerUp() {
         EntityFactory entityFactory = new EntityFactory();
         Entity entity = entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
         Assert.assertNotNull(entity);
-        Assert.assertTrue(entity instanceof Player);
+        assert entity instanceof Player;
     }
 
-    @Test public void EntityFactoryCreatePlayerDown(){
+    @Test public void EntityFactoryCreatePlayerDown() {
         EntityFactory entityFactory = new EntityFactory();
         Entity entity = entityFactory.createEntity("PLAYER_DOWN", new Point(1, 1));
         Assert.assertNotNull(entity);
-        Assert.assertTrue(entity instanceof Player);
+        assert entity instanceof Player;
     }
 
-    @Test public void EntityFactoryCreatePlayerLeft(){
+    @Test public void EntityFactoryCreatePlayerLeft() {
         EntityFactory entityFactory = new EntityFactory();
         Entity entity = entityFactory.createEntity("PLAYER_LEFT", new Point(1, 1));
         Assert.assertNotNull(entity);
-        Assert.assertTrue(entity instanceof Player);
+        assert entity instanceof Player;
     }
 
-    @Test public void EntityFactoryCreatePlayerRight(){
+    @Test public void EntityFactoryCreatePlayerRight() {
         EntityFactory entityFactory = new EntityFactory();
         Entity entity = entityFactory.createEntity("PLAYER_RIGHT", new Point(1, 1));
         Assert.assertNotNull(entity);
-        Assert.assertTrue(entity instanceof Player);
+        assert entity instanceof Player;
     }
 
-    @Test public void EntityFactoryCreateExit(){
+    @Test public void EntityFactoryCreateRobotDown() {
+        EntityFactory entityFactory = new EntityFactory();
+        Entity entity = entityFactory.createEntity("ROBOT_DOWN", new Point(1, 1));
+        Assert.assertNotNull(entity);
+        assert entity instanceof Robot;
+    }
+
+    @Test public void EntityFactoryCreateRobotUp() {
+        EntityFactory entityFactory = new EntityFactory();
+        Entity entity = entityFactory.createEntity("ROBOT_UP", new Point(1, 1));
+        Assert.assertNotNull(entity);
+        assert entity instanceof Robot;
+    }
+
+    @Test public void EntityFactoryCreateRobotLeft() {
+        EntityFactory entityFactory = new EntityFactory();
+        Entity entity = entityFactory.createEntity("ROBOT_LEFT", new Point(1, 1));
+        Assert.assertNotNull(entity);
+        assert entity instanceof Robot;
+    }
+
+    @Test public void EntityFactoryCreateRobotRight() {
+        EntityFactory entityFactory = new EntityFactory();
+        Entity entity = entityFactory.createEntity("ROBOT_RIGHT", new Point(1, 1));
+        Assert.assertNotNull(entity);
+        assert entity instanceof Robot;
+    }
+
+    @Test public void EntityFactoryCreateSewage() {
+        EntityFactory entityFactory = new EntityFactory();
+        Entity entity = entityFactory.createEntity("SEWAGE", new Point(1, 1));
+        Assert.assertNotNull(entity);
+        assert entity instanceof SewageTile;
+    }
+
+    @Test public void EntityFactoryCreateExit() {
         EntityFactory entityFactory = new EntityFactory();
         Entity entity = entityFactory.createEntity("EXIT", new Point(1, 1));
         Assert.assertNotNull(entity);
-        Assert.assertTrue(entity instanceof Exit);
+        assert entity instanceof Exit;
     }
 
-    @Test public void EntityFactoryCreateExitDoor(){
+    @Test public void EntityFactoryCreateExitDoor() {
         EntityFactory entityFactory = new EntityFactory();
         Entity entity = entityFactory.createEntity("DOOR_EXIT", new Point(1, 1));
         Assert.assertNotNull(entity);
-        Assert.assertTrue(entity instanceof ExitDoor);
+        assert entity instanceof ExitDoor;
     }
 
-    @Test public void EntityFactoryCreateFloor(){
+    @Test public void EntityFactoryCreateFloor() {
         EntityFactory entityFactory = new EntityFactory();
         Entity entity = entityFactory.createEntity("FLOOR", new Point(1, 1));
         Assert.assertNotNull(entity);
-        Assert.assertTrue(entity instanceof FloorTile);
+        assert entity instanceof FloorTile;
     }
 
-    @Test public void EntityFactoryCreateInfo(){
+    @Test public void EntityFactoryCreateInfo() {
         EntityFactory entityFactory = new EntityFactory();
         Entity entity = entityFactory.createEntity("INFO", new Point(1, 1));
         Assert.assertNotNull(entity);
-        Assert.assertTrue(entity instanceof InfoTile);
+        assert entity instanceof InfoTile;
     }
 
-    @Test public void EntityFactoryCreateKeyYellow(){
+    @Test public void EntityFactoryCreateKeyYellow() {
         EntityFactory entityFactory = new EntityFactory();
         Entity entity = entityFactory.createEntity("KEY_YELLOW", new Point(1, 1));
         Assert.assertNotNull(entity);
-        Assert.assertTrue(entity instanceof Key);
+        assert entity instanceof Key;
         Assert.assertEquals("YELLOW", ((Key) entity).getColour());
     }
 
-    @Test public void EntityFactoryCreateKeyBlue(){
+    @Test public void EntityFactoryCreateKeyBlue() {
         EntityFactory entityFactory = new EntityFactory();
         Entity entity = entityFactory.createEntity("KEY_BLUE", new Point(1, 1));
         Assert.assertNotNull(entity);
-        Assert.assertTrue(entity instanceof Key);
+        assert entity instanceof Key;
         Assert.assertEquals("BLUE", ((Key) entity).getColour());
     }
 
-    @Test public void EntityFactoryCreateKeyGreen(){
+    @Test public void EntityFactoryCreateKeyGreen() {
         EntityFactory entityFactory = new EntityFactory();
         Entity entity = entityFactory.createEntity("KEY_GREEN", new Point(1, 1));
         Assert.assertNotNull(entity);
-        Assert.assertTrue(entity instanceof Key);
+        assert entity instanceof Key;
         Assert.assertEquals("GREEN", ((Key) entity).getColour());
     }
 
-    @Test public void EntityFactoryCreateKeyRed(){
+    @Test public void EntityFactoryCreateKeyRed() {
         EntityFactory entityFactory = new EntityFactory();
         Entity entity = entityFactory.createEntity("KEY_RED", new Point(1, 1));
         Assert.assertNotNull(entity);
-        Assert.assertTrue(entity instanceof Key);
+        assert entity instanceof Key;
         Assert.assertEquals("RED", ((Key) entity).getColour());
     }
 
-    @Test public void EntityFactoryCreateDoorYellow(){
+    @Test public void EntityFactoryCreateDoorYellow() {
         EntityFactory entityFactory = new EntityFactory();
         Entity entity = entityFactory.createEntity("DOOR_YELLOW", new Point(1, 1));
         Assert.assertNotNull(entity);
-        Assert.assertTrue(entity instanceof Door);
+        assert entity instanceof Door;
         Assert.assertEquals("YELLOW", ((LockedDoor) entity).getColour());
     }
 
-    @Test public void EntityFactoryCreateDoorBlue(){
+    @Test public void EntityFactoryCreateDoorBlue() {
         EntityFactory entityFactory = new EntityFactory();
         Entity entity = entityFactory.createEntity("DOOR_BLUE", new Point(1, 1));
         Assert.assertNotNull(entity);
-        Assert.assertTrue(entity instanceof Door);
+        assert entity instanceof Door;
         Assert.assertEquals("BLUE", ((LockedDoor) entity).getColour());
     }
 
-    @Test public void EntityFactoryCreateDoorGreen(){
+    @Test public void EntityFactoryCreateDoorGreen() {
         EntityFactory entityFactory = new EntityFactory();
         Entity entity = entityFactory.createEntity("DOOR_GREEN", new Point(1, 1));
         Assert.assertNotNull(entity);
-        Assert.assertTrue(entity instanceof Door);
+        assert entity instanceof Door;
         Assert.assertEquals("GREEN", ((LockedDoor) entity).getColour());
     }
 
-    @Test public void EntityFactoryCreateDoorRed(){
+    @Test public void EntityFactoryCreateDoorRed() {
         EntityFactory entityFactory = new EntityFactory();
         Entity entity = entityFactory.createEntity("DOOR_RED", new Point(1, 1));
         Assert.assertNotNull(entity);
-        Assert.assertTrue(entity instanceof Door);
+        assert entity instanceof Door;
         Assert.assertEquals("RED", ((LockedDoor) entity).getColour());
     }
 
-    @Test public void EntityFactoryCreateWall(){
+    @Test public void EntityFactoryCreateWall() {
         EntityFactory entityFactory = new EntityFactory();
         Entity entity = entityFactory.createEntity("WALL", new Point(1, 1));
         Assert.assertNotNull(entity);
-        Assert.assertTrue(entity instanceof WallTile);
+        assert entity instanceof WallTile;
     }
 
-    @Test public void EntityFactoryCreateTreasure(){
+    @Test public void EntityFactoryCreateTreasure() {
         EntityFactory entityFactory = new EntityFactory();
         Entity entity = entityFactory.createEntity("TREASURE", new Point(1, 1));
         Assert.assertNotNull(entity);
-        Assert.assertTrue(entity instanceof Treasure);
+        assert entity instanceof Treasure;
     }
 
     /**
      * Actor Method Tests with valid inputs
      */
 
-    @Test public void ActorMethodSetMoving(){
+    @Test public void ActorMethodSetMoving() {
         EntityFactory entityFactory = new EntityFactory();
-        Actor entity = (Actor)entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
+        Actor entity = (Actor) entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
         entity.setMoving(false);
         Assert.assertFalse(entity.isMoving());
         entity.setMoving(true);
         Assert.assertTrue(entity.isMoving());
     }
 
-    @Test public void ActorMethodSetDirection(){
+    @Test public void ActorMethodSetDirection() {
         EntityFactory entityFactory = new EntityFactory();
-        Actor entity = (Actor)entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
+        Actor entity = (Actor) entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
         entity.setDirection(Direction.Up);
         Assert.assertEquals(entity.getDirection(), Direction.Up);
         entity.setDirection(Direction.Down);
@@ -217,197 +256,197 @@ public class TestDomain {
         Assert.assertEquals(entity.getDirection(), Direction.Right);
     }
 
-    @Test public void ActorMethodGetSprite(){
+    @Test public void ActorMethodGetSprite() {
         EntityFactory entityFactory = new EntityFactory();
-        Actor entity = (Actor)entityFactory.createEntity("PLAYER_DOWN", new Point(1, 1));
+        Actor entity = (Actor) entityFactory.createEntity("PLAYER_DOWN", new Point(1, 1));
         Assert.assertEquals("PLAYER_DOWN", entity.getSpriteName());
     }
 
-    @Test public void ActorMethodGetPoint(){
+    @Test public void ActorMethodGetPoint() {
         EntityFactory entityFactory = new EntityFactory();
-        Actor entity = (Actor)entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
+        Actor entity = (Actor) entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
         Assert.assertEquals(entity.getPoint(), new Point(1, 1));
     }
 
-    @Test public void ActorMethodGetDepth(){
+    @Test public void ActorMethodGetDepth() {
         EntityFactory entityFactory = new EntityFactory();
-        Actor entity = (Actor)entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
+        Actor entity = (Actor) entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
         Assert.assertEquals(entity.getDepth(), 2);
     }
 
     /**
-     * Actor Method Tests with invalid inputs
+     * Actor Method Tests with invalid inputs.
      */
 
-    @Test public void ActorMethodSetNullDirection(){
+    @Test public void ActorMethodSetNullDirection() {
         EntityFactory entityFactory = new EntityFactory();
-        Actor entity = (Actor)entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
+        Actor entity = (Actor) entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
         try {
             entity.setDirection(null);
-        } catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assert true;
         }
     }
 
     /**
-     * Collectable Method Tests with valid inputs
+     * Collectable Method Tests with valid inputs.
      */
 
-    @Test public void CollectableMethodSetSoundEffect(){
+    @Test public void CollectableMethodSetSoundEffect() {
         EntityFactory entityFactory = new EntityFactory();
         Collectable entity = (Collectable) entityFactory.createEntity("TREASURE", new Point(1, 1));
         entity.setSoundEffect(Audio.getSoundPlayer("TREASURE"));
         assert entity.soundEffect != null;
     }
 
-    @Test public void CollectableMethodGetSprite(){
+    @Test public void CollectableMethodGetSprite() {
         EntityFactory entityFactory = new EntityFactory();
         Collectable entity = (Collectable) entityFactory.createEntity("TREASURE", new Point(1, 1));
         Assert.assertEquals("TREASURE", entity.getSpriteName());
     }
 
-    @Test public void CollectableMethodGetPoint(){
+    @Test public void CollectableMethodGetPoint() {
         EntityFactory entityFactory = new EntityFactory();
         Collectable entity = (Collectable) entityFactory.createEntity("TREASURE", new Point(1, 1));
-        Assert.assertEquals(new Point(1,1), entity.getPoint());
+        Assert.assertEquals(new Point(1, 1), entity.getPoint());
     }
 
-    @Test public void CollectableMethodGetDepth(){
+    @Test public void CollectableMethodGetDepth() {
         EntityFactory entityFactory = new EntityFactory();
         Collectable entity = (Collectable) entityFactory.createEntity("TREASURE", new Point(1, 1));
         Assert.assertEquals(1, entity.getDepth());
     }
 
     /**
-     * Collectable Method Tests with invalid inputs
+     * Collectable Method Tests with invalid inputs.
      */
 
-    @Test public void CollectableMethodSetSoundEffectNull(){
+    @Test public void CollectableMethodSetSoundEffectNull() {
         EntityFactory entityFactory = new EntityFactory();
         Collectable entity = (Collectable) entityFactory.createEntity("TREASURE", new Point(1, 1));
         try {
             entity.setSoundEffect(null);
-        } catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assert true;
         }
     }
 
     /**
-     * Door Method Tests with valid inputs
+     * Door Method Tests with valid inputs.
      */
 
-    @Test public void DoorMethodSetSoundEffect(){
+    @Test public void DoorMethodSetSoundEffect() {
         EntityFactory entityFactory = new EntityFactory();
         Door entity = (Door) entityFactory.createEntity("DOOR_YELLOW", new Point(1, 1));
         entity.setSoundEffect(Audio.getSoundPlayer("DOOR"));
         assert entity.soundEffect != null;
     }
 
-    @Test public void DoorMethodGetSprite(){
+    @Test public void DoorMethodGetSprite() {
         EntityFactory entityFactory = new EntityFactory();
         Door entity = (Door) entityFactory.createEntity("DOOR_YELLOW", new Point(1, 1));
         Assert.assertEquals("DOOR_YELLOW", entity.getSpriteName());
     }
 
-    @Test public void DoorMethodGetPoint(){
+    @Test public void DoorMethodGetPoint() {
         EntityFactory entityFactory = new EntityFactory();
         Door entity = (Door) entityFactory.createEntity("DOOR_YELLOW", new Point(1, 1));
-        Assert.assertEquals(new Point(1,1), entity.getPoint());
+        Assert.assertEquals(new Point(1, 1), entity.getPoint());
     }
 
-    @Test public void DoorMethodGetDepth(){
+    @Test public void DoorMethodGetDepth() {
         EntityFactory entityFactory = new EntityFactory();
         Door entity = (Door) entityFactory.createEntity("DOOR_YELLOW", new Point(1, 1));
         Assert.assertEquals(1, entity.getDepth());
     }
 
     /**
-     * Collectable Method Tests with invalid inputs
+     * Collectable Method Tests with invalid inputs.
      */
 
-    @Test public void DoorMethodSetSoundEffectNull(){
+    @Test public void DoorMethodSetSoundEffectNull() {
         EntityFactory entityFactory = new EntityFactory();
         Door entity = (Door) entityFactory.createEntity("DOOR_YELLOW", new Point(1, 1));
         try {
             entity.setSoundEffect(null);
-        } catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assert true;
         }
     }
 
     /**
-     * Exit Method Tests with valid inputs
+     * Exit Method Tests with valid inputs.
      */
 
-    @Test public void ExitMethodSetSoundEffect(){
+    @Test public void ExitMethodSetSoundEffect() {
         EntityFactory entityFactory = new EntityFactory();
         Exit entity = (Exit) entityFactory.createEntity("EXIT", new Point(1, 1));
         entity.setSoundEffect(Audio.getSoundPlayer("EXIT"));
         assert entity.soundEffect != null;
     }
 
-    @Test public void ExitMethodGetSprite(){
+    @Test public void ExitMethodGetSprite() {
         EntityFactory entityFactory = new EntityFactory();
         Exit entity = (Exit) entityFactory.createEntity("EXIT", new Point(1, 1));
         Assert.assertEquals("EXIT", entity.getSpriteName());
     }
 
-    @Test public void ExitMethodGetPoint(){
+    @Test public void ExitMethodGetPoint() {
         EntityFactory entityFactory = new EntityFactory();
         Exit entity = (Exit) entityFactory.createEntity("EXIT", new Point(1, 1));
-        Assert.assertEquals(new Point(1,1), entity.getPoint());
+        Assert.assertEquals(new Point(1, 1), entity.getPoint());
     }
 
-    @Test public void ExitMethodGetDepth(){
+    @Test public void ExitMethodGetDepth() {
         EntityFactory entityFactory = new EntityFactory();
         Exit entity = (Exit) entityFactory.createEntity("EXIT", new Point(1, 1));
         Assert.assertEquals(1, entity.getDepth());
     }
 
     /**
-     * Collectable Method Tests with invalid inputs
+     * Collectable Method Tests with invalid inputs.
      */
 
-    @Test public void ExitMethodSetSoundEffectNull(){
+    @Test public void ExitMethodSetSoundEffectNull() {
         EntityFactory entityFactory = new EntityFactory();
         Exit entity = (Exit) entityFactory.createEntity("EXIT", new Point(1, 1));
         try {
             entity.setSoundEffect(null);
-        } catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assert true;
         }
     }
 
     /**
-     * InfoTile Method Tests with valid inputs
+     * InfoTile Method Tests with valid inputs.
      */
 
-    @Test public void InfoMethodSetSoundEffect(){
+    @Test public void InfoMethodSetSoundEffect() {
         EntityFactory entityFactory = new EntityFactory();
         InfoTile entity = (InfoTile) entityFactory.createEntity("INFO", new Point(1, 1));
         entity.setSoundEffect(Audio.getSoundPlayer("INFO"));
         assert entity.soundEffect != null;
     }
 
-    @Test public void InfoMethodGetSprite(){
+    @Test public void InfoMethodGetSprite() {
         EntityFactory entityFactory = new EntityFactory();
         InfoTile entity = (InfoTile) entityFactory.createEntity("INFO", new Point(1, 1));
         Assert.assertEquals("INFO", entity.getSpriteName());
     }
 
-    @Test public void InfoMethodGetPoint(){
+    @Test public void InfoMethodGetPoint() {
         EntityFactory entityFactory = new EntityFactory();
         InfoTile entity = (InfoTile) entityFactory.createEntity("INFO", new Point(1, 1));
-        Assert.assertEquals(new Point(1,1), entity.getPoint());
+        Assert.assertEquals(new Point(1, 1), entity.getPoint());
     }
 
-    @Test public void InfoMethodGetDepth(){
+    @Test public void InfoMethodGetDepth() {
         EntityFactory entityFactory = new EntityFactory();
         InfoTile entity = (InfoTile) entityFactory.createEntity("INFO", new Point(1, 1));
         Assert.assertEquals(1, entity.getDepth());
     }
 
-    @Test public void InfoMethodGetText(){
+    @Test public void InfoMethodGetText() {
         EntityFactory entityFactory = new EntityFactory();
         InfoTile entity = (InfoTile) entityFactory.createEntity("INFO", new Point(1, 1));
         entity.setText("Text");
@@ -415,50 +454,51 @@ public class TestDomain {
     }
 
     /**
-     * Collectable Method Tests with invalid inputs
+     * Collectable Method Tests with invalid inputs.
      */
 
-    @Test public void InfoMethodSetSoundEffectNull(){
+    @Test public void InfoMethodSetSoundEffectNull() {
         EntityFactory entityFactory = new EntityFactory();
         InfoTile entity = (InfoTile) entityFactory.createEntity("INFO", new Point(1, 1));
         try {
             entity.setSoundEffect(null);
-        } catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assert true;
         }
     }
 
-    @Test public void InfoMethodSetTextNull(){
+    @Test public void InfoMethodSetTextNull() {
         EntityFactory entityFactory = new EntityFactory();
         InfoTile entity = (InfoTile) entityFactory.createEntity("INFO", new Point(1, 1));
         try {
             entity.setText(null);
-        } catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assert true;
         }
     }
 
-    @Test public void InfoMethodSetTextEmpty(){
+    @Test public void InfoMethodSetTextEmpty() {
         EntityFactory entityFactory = new EntityFactory();
         InfoTile entity = (InfoTile) entityFactory.createEntity("INFO", new Point(1, 1));
         try {
             entity.setText("");
-        } catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assert true;
         }
     }
 
     /**
-     * Key Method Tests with valid inputs
+     * Key Method Tests with valid inputs.
      */
 
-    @Test public void KeyMethodEquals(){
+    @Test public void KeyMethodEquals() {
         EntityFactory entityFactory = new EntityFactory();
         Key entity = (Key) entityFactory.createEntity("KEY_YELLOW", new Point(1, 1));
         Key entity2 = (Key) entityFactory.createEntity("KEY_YELLOW", new Point(1, 1));
         Assert.assertTrue(entity.equals(entity2));
     }
-    @Test public void KeyMethodNotEquals(){
+
+    @Test public void KeyMethodNotEquals() {
         EntityFactory entityFactory = new EntityFactory();
         Key entity = (Key) entityFactory.createEntity("KEY_YELLOW", new Point(1, 1));
         Key entity2 = (Key) entityFactory.createEntity("KEY_BLUE", new Point(1, 1));
@@ -466,18 +506,18 @@ public class TestDomain {
     }
 
     /**
-     * Player Method Tests with valid inputs
+     * Player Method Tests with valid inputs.
      */
 
-    @Test public void PlayerMethodGetTreasure(){
+    @Test public void PlayerMethodGetTreasure() {
         EntityFactory entityFactory = new EntityFactory();
-        Player entity = (Player)entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
+        Player entity = (Player) entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
         Assert.assertEquals(0, entity.getTreasureCollected());
     }
 
-    @Test public void PlayerMethodKeys(){
+    @Test public void PlayerMethodKeys() {
         EntityFactory entityFactory = new EntityFactory();
-        Player entity = (Player)entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
+        Player entity = (Player) entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
         Key key1 = (Key) entityFactory.createEntity("KEY_YELLOW", new Point(1, 1));
         Key key2 = (Key) entityFactory.createEntity("KEY_BLUE", new Point(1, 1));
         List<Key> keys = Arrays.asList(key1, key2);
@@ -485,16 +525,16 @@ public class TestDomain {
         Assert.assertEquals(keys, entity.getKeys());
     }
 
-    @Test public void PlayerMethodTreasures(){
+    @Test public void PlayerMethodTreasures() {
         EntityFactory entityFactory = new EntityFactory();
-        Player entity = (Player)entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
+        Player entity = (Player) entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
         entity.setTreasureCollected(3);
         Assert.assertEquals(3, entity.getTreasureCollected());
     }
 
-    @Test public void ActorMethodGetMultipleSprites(){
+    @Test public void ActorMethodGetMultipleSprites() {
         EntityFactory entityFactory = new EntityFactory();
-        Player entity = (Player)entityFactory.createEntity("PLAYER_DOWN", new Point(1, 1));
+        Player entity = (Player) entityFactory.createEntity("PLAYER_DOWN", new Point(1, 1));
         Assert.assertEquals("PLAYER_DOWN", entity.getSpriteName());
         entity.setDirection(Direction.Up);
         Assert.assertEquals("PLAYER_UP", entity.getSpriteName());
@@ -507,34 +547,84 @@ public class TestDomain {
     }
 
     /**
-     * Player Method Tests with invalid inputs
+     * Player Method Tests with invalid inputs.
      */
 
     @Test public void PlayerMethodSetKeysNull(){
         EntityFactory entityFactory = new EntityFactory();
-        Player entity = (Player)entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
+        Player entity = (Player) entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
         try {
             entity.setKeys(null);
-        } catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assert true;
         }
     }
 
-    @Test public void PlayerMethodTreasuresNegative(){
+    @Test public void PlayerMethodTreasuresNegative() {
         EntityFactory entityFactory = new EntityFactory();
-        Player entity = (Player)entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
+        Player entity = (Player) entityFactory.createEntity("PLAYER_UP", new Point(1, 1));
         try {
             entity.setTreasureCollected(-1);
-        } catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assert true;
         }
     }
 
     /**
-     * Point Method Tests with valid inputs
+     * Robot Method Tests with valid inputs
      */
 
-    @Test public void PointMethodsTest(){
+    @Test public void RobotMethodSetSoundEffect() {
+        EntityFactory entityFactory = new EntityFactory();
+        Robot entity = (Robot) entityFactory.createEntity("ROBOT_LEFT", new Point(1, 1));
+        entity.setSoundEffect(Audio.getSoundPlayer("ROBOT"));
+        assert entity.soundEffect != null;
+    }
+
+    /**
+     * Robot Method Tests with invalid inputs.
+     */
+
+    @Test public void RobotMethodSetSoundEffectNull() {
+        EntityFactory entityFactory = new EntityFactory();
+        Robot entity = (Robot) entityFactory.createEntity("ROBOT_LEFT", new Point(1, 1));
+        try {
+            entity.setSoundEffect(null);
+        } catch (IllegalArgumentException e) {
+            assert true;
+        }
+    }
+
+    /**
+     * Sewage Method Tests with valid inputs.
+     */
+
+    @Test public void SewageMethodSetSoundEffect() {
+        EntityFactory entityFactory = new EntityFactory();
+        SewageTile entity = (SewageTile) entityFactory.createEntity("SEWAGE", new Point(1, 1));
+        entity.setSoundEffect(Audio.getSoundPlayer("SEWAGE"));
+        assert entity.soundEffect != null;
+    }
+
+    /**
+     * Sewage Method Tests with invalid inputs.
+     */
+
+    @Test public void SewageMethodSetSoundEffectNull() {
+        EntityFactory entityFactory = new EntityFactory();
+        SewageTile entity = (SewageTile) entityFactory.createEntity("SEWAGE", new Point(1, 1));
+        try {
+            entity.setSoundEffect(null);
+        } catch (IllegalArgumentException e) {
+            assert true;
+        }
+    }
+
+    /**
+     * Point Method Tests with valid inputs.
+     */
+
+    @Test public void PointMethodsTest() {
         Point point = new Point(1, 1);
         Point point2 = new Point(2, 2);
         Point point3 = point.add(point2);
@@ -542,32 +632,32 @@ public class TestDomain {
     }
 
     /**
-     * WallTile Method Tests with valid inputs
+     * WallTile Method Tests with valid inputs.
      */
 
-    @Test public void WallMethodSetSoundEffect(){
+    @Test public void WallMethodSetSoundEffect() {
         EntityFactory entityFactory = new EntityFactory();
         WallTile entity = (WallTile) entityFactory.createEntity("WALL", new Point(1, 1));
         entity.setSoundEffect(Audio.getSoundPlayer("WALL"));
         assert entity.soundEffect != null;
     }
 
-    @Test public void WallMethodGetDepth(){
+    @Test public void WallMethodGetDepth() {
         EntityFactory entityFactory = new EntityFactory();
         WallTile entity = (WallTile) entityFactory.createEntity("WALL", new Point(1, 1));
         entity.setSoundEffect(Audio.getSoundPlayer("WALL"));
     }
 
     /**
-     * WallTile Method Tests with invalid inputs
+     * WallTile Method Tests with invalid inputs.
      */
 
-    @Test public void WallMethodSetSoundEffectNull(){
+    @Test public void WallMethodSetSoundEffectNull() {
         EntityFactory entityFactory = new EntityFactory();
         WallTile entity = (WallTile) entityFactory.createEntity("WALL", new Point(1, 1));
         try {
             entity.setSoundEffect(null);
-        } catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assert true;
         }
     }
@@ -576,7 +666,7 @@ public class TestDomain {
      * Player ping method valid
      */
 
-    @Test public void PlayerPingMethodKey(){
+    @Test public void PlayerPingMethodKey() {
         EntityFactory entityFactory = new EntityFactory();
         Player player = (Player) entityFactory.createEntity("PLAYER_DOWN", new Point(1, 2));
         Key key = (Key) entityFactory.createEntity("KEY_YELLOW", new Point(1, 3));
@@ -585,10 +675,10 @@ public class TestDomain {
         List<Entity> GameEntities = Arrays.asList(key, player);
         Model m = makeModel(GameEntities);
         player.ping(m);
-        assert player.getPoint().equals(new Point(1,3));
+        assert player.getPoint().equals(new Point(1, 3));
     }
 
-    @Test public void PlayerPingMethodTreasure(){
+    @Test public void PlayerPingMethodTreasure() {
         EntityFactory entityFactory = new EntityFactory();
         Player player = (Player) entityFactory.createEntity("PLAYER_DOWN", new Point(1, 2));
         Treasure treasure = (Treasure) entityFactory.createEntity("TREASURE", new Point(1, 3));
@@ -597,10 +687,10 @@ public class TestDomain {
         List<Entity> GameEntities = Arrays.asList(treasure, player);
         Model m = makeModel(GameEntities);
         player.ping(m);
-        assert player.getPoint().equals(new Point(1,3));
+        assert player.getPoint().equals(new Point(1, 3));
     }
 
-    @Test public void PlayerPingMethodWall(){
+    @Test public void PlayerPingMethodWall() {
         EntityFactory entityFactory = new EntityFactory();
         Player player = (Player) entityFactory.createEntity("PLAYER_DOWN", new Point(1, 2));
         WallTile wall = (WallTile) entityFactory.createEntity("WALL", new Point(1, 3));
@@ -609,10 +699,10 @@ public class TestDomain {
         List<Entity> GameEntities = Arrays.asList(wall, player);
         Model m = makeModel(GameEntities);
         player.ping(m);
-        assert player.getPoint().equals(new Point(1,2));
+        assert player.getPoint().equals(new Point(1, 2));
     }
 
-    @Test public void PlayerPingMethodLockedDoor(){
+    @Test public void PlayerPingMethodLockedDoor() {
         EntityFactory entityFactory = new EntityFactory();
         Player player = (Player) entityFactory.createEntity("PLAYER_DOWN", new Point(1, 2));
         LockedDoor door = (LockedDoor) entityFactory.createEntity("DOOR_YELLOW", new Point(1, 3));
@@ -621,10 +711,10 @@ public class TestDomain {
         List<Entity> GameEntities = Arrays.asList(door, player);
         Model m = makeModel(GameEntities);
         player.ping(m);
-        assert player.getPoint().equals(new Point(1,2));
+        assert player.getPoint().equals(new Point(1, 2));
     }
 
-    @Test public void PlayerPingMethodLockedDoorOpen(){
+    @Test public void PlayerPingMethodLockedDoorOpen() {
         EntityFactory entityFactory = new EntityFactory();
         Player player = (Player) entityFactory.createEntity("PLAYER_DOWN", new Point(1, 2));
         LockedDoor door = (LockedDoor) entityFactory.createEntity("DOOR_YELLOW", new Point(1, 3));
@@ -638,12 +728,12 @@ public class TestDomain {
         List<Entity> GameEntities = Arrays.asList(door, player);
         Model m = makeModel(GameEntities);
         player.ping(m);
-        assert player.getPoint().equals(new Point(1,3));
+        assert player.getPoint().equals(new Point(1, 3));
         assert !m.entities().contains(door);
         assert !player.getKeys().contains(key);
     }
 
-    @Test public void PlayerPingMethodInfoTile(){
+    @Test public void PlayerPingMethodInfoTile() {
         EntityFactory entityFactory = new EntityFactory();
         Player player = (Player) entityFactory.createEntity("PLAYER_DOWN", new Point(1, 2));
         InfoTile info = (InfoTile) entityFactory.createEntity("INFO", new Point(1, 3));
@@ -653,10 +743,10 @@ public class TestDomain {
         List<Entity> GameEntities = Arrays.asList(info, player);
         Model m = makeModel(GameEntities);
         player.ping(m);
-        assert player.getPoint().equals(new Point(1,3));
+        assert player.getPoint().equals(new Point(1, 3));
     }
 
-    @Test public void PlayerPingMethodExit(){
+    @Test public void PlayerPingMethodExit() {
         EntityFactory entityFactory = new EntityFactory();
         Player player = (Player) entityFactory.createEntity("PLAYER_DOWN", new Point(1, 2));
         Exit exit = (Exit) entityFactory.createEntity("EXIT", new Point(1, 3));
@@ -666,10 +756,10 @@ public class TestDomain {
         List<Entity> GameEntities = Arrays.asList(exit, player);
         Model m = makeModel(GameEntities);
         player.ping(m);
-        assert player.getPoint().equals(new Point(1,3));
+        assert player.getPoint().equals(new Point(1, 3));
     }
 
-    @Test public void PlayerPingMethodExitDoor(){
+    @Test public void PlayerPingMethodExitDoor() {
         EntityFactory entityFactory = new EntityFactory();
         Player player = (Player) entityFactory.createEntity("PLAYER_DOWN", new Point(1, 2));
         ExitDoor exit = (ExitDoor) entityFactory.createEntity("DOOR_EXIT", new Point(1, 3));
@@ -679,14 +769,14 @@ public class TestDomain {
         List<Entity> GameEntities = Arrays.asList(exit, player);
         Model m = makeModel(GameEntities);
         player.ping(m);
-        assert player.getPoint().equals(new Point(1,3));
+        assert player.getPoint().equals(new Point(1, 3));
     }
 
     /**
-     * doAction methods invalid input
+     * doAction methods invalid input.
      */
 
-    @Test public void DoActionMethodExitDoor(){
+    @Test public void DoActionMethodExitDoor() {
         EntityFactory entityFactory = new EntityFactory();
         Player player = (Player) entityFactory.createEntity("PLAYER_DOWN", new Point(1, 2));
         ExitDoor exit = (ExitDoor) entityFactory.createEntity("DOOR_EXIT", new Point(1, 3));
@@ -697,10 +787,10 @@ public class TestDomain {
         List<Entity> GameEntities = Arrays.asList(exit, player, treasure);
         Model m = makeModel(GameEntities);
         player.ping(m);
-        assert player.getPoint().equals(new Point(1,2));
+        assert player.getPoint().equals(new Point(1, 2));
     }
 
-    @Test public void DoActionMethodExitDoorPoint(){
+    @Test public void DoActionMethodExitDoorPoint() {
         EntityFactory entityFactory = new EntityFactory();
         Player player = (Player) entityFactory.createEntity("PLAYER_DOWN", new Point(1, 2));
         ExitDoor exit = (ExitDoor) entityFactory.createEntity("DOOR_EXIT", new Point(1, 3));
@@ -710,12 +800,12 @@ public class TestDomain {
         Model m = makeModel(GameEntities);
         try {
             exit.doAction(m, player, new Point(3, 7));
-        }catch(IllegalArgumentException e){
+        }catch (IllegalArgumentException e) {
             assert true;
         }
     }
 
-    @Test public void DoActionMethodExit(){
+    @Test public void DoActionMethodExit() {
         EntityFactory entityFactory = new EntityFactory();
         Player player = (Player) entityFactory.createEntity("PLAYER_DOWN", new Point(1, 2));
         Exit exit = (Exit) entityFactory.createEntity("EXIT", new Point(1, 3));
@@ -727,12 +817,12 @@ public class TestDomain {
         Model m = makeModel(GameEntities);
         try {
             player.ping(m);
-        } catch(IllegalStateException e){
+        } catch (IllegalStateException e) {
             assert true;
         }
     }
 
-    @Test public void DoActionMethodExitPoint(){
+    @Test public void DoActionMethodExitPoint() {
         EntityFactory entityFactory = new EntityFactory();
         Player player = (Player) entityFactory.createEntity("PLAYER_DOWN", new Point(1, 2));
         Exit exit = (Exit) entityFactory.createEntity("EXIT", new Point(1, 3));
@@ -742,12 +832,12 @@ public class TestDomain {
         Model m = makeModel(GameEntities);
         try {
             exit.doAction(m, player, new Point(3, 7));
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assert true;
         }
     }
 
-    @Test public void DoActionMethodKeyPoint(){
+    @Test public void DoActionMethodKeyPoint() {
         EntityFactory entityFactory = new EntityFactory();
         Player player = (Player) entityFactory.createEntity("PLAYER_DOWN", new Point(1, 2));
         Key key = (Key) entityFactory.createEntity("KEY_YELLOW", new Point(1, 3));
@@ -757,12 +847,12 @@ public class TestDomain {
         Model m = makeModel(GameEntities);
         try {
             key.doAction(m, player, new Point(3, 7));
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assert true;
         }
     }
 
-    @Test public void DoActionMethodWallPoint(){
+    @Test public void DoActionMethodWallPoint() {
         EntityFactory entityFactory = new EntityFactory();
         Player player = (Player) entityFactory.createEntity("PLAYER_DOWN", new Point(1, 2));
         WallTile wall = (WallTile) entityFactory.createEntity("WALL", new Point(1, 3));
@@ -772,12 +862,12 @@ public class TestDomain {
         Model m = makeModel(GameEntities);
         try {
             wall.doAction(m, player, new Point(3, 7));
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assert true;
         }
     }
 
-    @Test public void DoActionMethodTreasurePoint(){
+    @Test public void DoActionMethodTreasurePoint() {
         EntityFactory entityFactory = new EntityFactory();
         Player player = (Player) entityFactory.createEntity("PLAYER_DOWN", new Point(1, 2));
         Treasure treasure = (Treasure) entityFactory.createEntity("TREASURE", new Point(1, 3));
@@ -787,7 +877,7 @@ public class TestDomain {
         Model m = makeModel(GameEntities);
         try {
             treasure.doAction(m, player, new Point(3, 7));
-        }catch(IllegalArgumentException e){
+        }catch (IllegalArgumentException e) {
             assert true;
         }
     }
@@ -795,7 +885,7 @@ public class TestDomain {
     /**
      * Robot ping method
      */
-    @Test public void RobotPingMethodWall(){
+    @Test public void RobotPingMethodWall() {
         EntityFactory entityFactory = new EntityFactory();
         Robot robot = (Robot) entityFactory.createEntity("ROBOT_RIGHT", new Point(1, 2));
         WallTile wall = (WallTile) entityFactory.createEntity("WALL", new Point(2, 2));
@@ -808,33 +898,56 @@ public class TestDomain {
         Assert.assertEquals(robot.getPoint(), new Point(1, 3));
     }
 
-    public Model makeModel(List<Entity> gameEntities){
+    /**
+     * Makes model for testing.
+     *
+     * @param gameEntities entities of test game
+     * @return model to test with
+     */
+    public Model makeModel(List<Entity> gameEntities) {
         var m = new Model() {
             List<Entity> entities = gameEntities;
+
             @Override
-            public int timeLeft() {return 30;}
+            public int timeLeft() {
+                return 30;
+            }
+
             @Override
             public void decrementTime() {}
+
             @Override
-            public Player player() {return null;}
+            public Player player() {
+                return null;
+            }
+
             @Override
             public List<Entity> entities() {
                 return entities;
             }
+
             @Override
-            public GameRecorder recorder() {return null;}
+            public GameRecorder recorder() {
+                return null;
+            }
+
             @Override
             public void remove(Entity e) {
                 entities = entities.stream()
                         .filter(ei -> !ei.equals(e))
                         .toList();
             }
+
             @Override
             public void onGameOver() {}
+
             @Override
             public void onNextLevel() {}
+
             @Override
-            public long totalTreasures() {return 10;}
+            public long totalTreasures() {
+                return 1;
+            }
 
             @Override
             public int levelNumber() {
@@ -843,6 +956,4 @@ public class TestDomain {
         };
         return m;
     }
-
-
 }

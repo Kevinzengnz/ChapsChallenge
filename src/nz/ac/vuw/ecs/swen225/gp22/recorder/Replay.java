@@ -22,7 +22,7 @@ import org.dom4j.Element;
 public class Replay {
   private static List<Action> actionList;
   private static int pings = 0;
-  private static double speed = 1;
+  private static int speed = 4;
   private static Timer timer = null;
   private static boolean isRunning = false;
   private static int endPing = 1;
@@ -78,16 +78,21 @@ public class Replay {
     }
     isRunning = true;
     RecTesting.log("Replay", "autoPlay", "Auto play started");
+    pc.setClockSpeed(speed);
     //Restart timer if it already exists and is paused.
     if (timer != null) {
       timer.restart();
+      pc.unPauseGame();
+      pc.getPhase().controller().pause();
       return;
     }
+    pc.unPauseGame();
+    pc.getPhase().controller().pause();
     //Otherwise create a new timer and start it.
     timer = new Timer(1000 / 30, x -> {
       assert SwingUtilities.isEventDispatchThread();
       frames++;
-      if (frames % (int) (4 / speed) == 0) {
+      if (frames % speed == 0) {
         pings++;
       }
       step();
@@ -102,6 +107,8 @@ public class Replay {
     if (!isRunning) {
       return;
     }
+    pc.pauseGame();
+    pc.setClockSpeed(4);
     isRunning = false;
     timer.stop();
   }
@@ -111,7 +118,7 @@ public class Replay {
    *
    * @param mul Speed multiplier for automatic playback of replay. Must be greater than 0.
    */
-  public static void setReplaySpeed(double mul) {
+  public static void setReplaySpeed(int mul) {
     speed = (mul > 0) ? mul : speed;
   }
 
@@ -163,6 +170,7 @@ public class Replay {
       if (timer != null) {
         timer.stop();
         pc.pauseGame();
+        pc.setClockSpeed(4);
       }
       controller.releaseDirection(KeyEvent.VK_W);
       RecTesting.log("Replay", "autoPlay", "Replay stopped at frame " + pings);
