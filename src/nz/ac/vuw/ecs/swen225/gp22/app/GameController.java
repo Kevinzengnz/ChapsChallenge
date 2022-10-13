@@ -23,7 +23,7 @@ public class GameController extends Keys {
     setAction(KeyEvent.VK_SPACE, () -> {
     }, c::pauseGame);
 
-    //ESC - close the “game is paused” dialog and resume the game
+    //ESC - close the "game is paused" dialog and resume the game
     setAction(KeyEvent.VK_ESCAPE, () -> {
     }, c::unPauseGame);
 
