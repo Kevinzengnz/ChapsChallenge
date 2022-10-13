@@ -356,6 +356,14 @@ public class ChapsChallenge extends JFrame {
     c.gridy = 11;
     buttonsPanel.add(replayNextTick, c);
 
+    var increaseReplaySpeed = new Button("Increase replay speed", e -> increaseReplaySpeed());
+    c.gridy = 12;
+    buttonsPanel.add(replayAutopause, c);
+
+    var decreaseReplaySpeed = new Button("Decrease replay speed", e -> decreaseReplaySpeed());
+    c.gridy = 13;
+    buttonsPanel.add(replayAutopause, c);
+
     add(BorderLayout.CENTER, renderer);
     add(BorderLayout.EAST, buttonsPanel);
     add(BorderLayout.WEST, infoPanel);
@@ -437,5 +445,19 @@ public class ChapsChallenge extends JFrame {
    */
   public void setClockSpeed(int c) {
     this.clockSpeed = c;
+  }
+
+  /**
+   * Increases the speed of the replay
+   */
+  public void increaseReplaySpeed() {
+    Replay.setReplaySpeed(2);
+  }
+
+  /**
+   * Decreases the speed of the replay
+   */
+  public void decreaseReplaySpeed() {
+    Replay.setReplaySpeed(1);
   }
 }
