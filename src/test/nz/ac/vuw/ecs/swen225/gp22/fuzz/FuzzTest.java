@@ -97,25 +97,40 @@ class FuzzTest {
    */
   @Test
   public void test1() {
-    //Call the creation of the level
+    //Call the creation of the game
     String[] s = {};
     Main.main(s);
     try {
-      Thread.sleep(1000);
+      Thread.sleep(2000);
     } catch (InterruptedException e1) {
       e1.printStackTrace();
     }
-
+    
     //Create Robot to apply clicks and key presses
     try {
       robot = new Robot();
     } catch (AWTException e) {
       e.printStackTrace();
     }
+    
+    //Load level 1
+    robot.keyPress(KeyEvent.VK_CONTROL);
+    robot.keyPress(KeyEvent.VK_1);
+    robot.keyRelease(KeyEvent.VK_1);
+    robot.keyRelease(KeyEvent.VK_CONTROL);
+    
+    try {
+        Thread.sleep(2000);
+      } catch (InterruptedException e1) {
+        e1.printStackTrace();
+      }
+    
 
-    //Random Key presses
+    //Generating randoms
     var events = genEvents(500);
     var clicks = genPoints(50);
+    
+    //Excecute fuzzes
     assertTimeout(Duration.ofMinutes(1), () -> {
       checkMovement(events);
       mouseClicks(clicks);
@@ -125,31 +140,46 @@ class FuzzTest {
   /**
    * test2() : fuzz tests for level 2.
    */
-  @Test
+//  @Test
   public void test2() {
-    //Call the creation of the level
+	//Call the creation of the game
     String[] s = {};
     Main.main(s);
     try {
-      Thread.sleep(1000);
+      Thread.sleep(2000);
     } catch (InterruptedException e1) {
       e1.printStackTrace();
     }
-
+    
     //Create Robot to apply clicks and key presses
     try {
       robot = new Robot();
     } catch (AWTException e) {
       e.printStackTrace();
     }
+    
+    //Load level 2
+    robot.keyPress(KeyEvent.VK_CONTROL);
+    robot.keyPress(KeyEvent.VK_2);
+    robot.keyRelease(KeyEvent.VK_2);
+    robot.keyRelease(KeyEvent.VK_CONTROL);
+    
+    try {
+        Thread.sleep(2000);
+      } catch (InterruptedException e1) {
+        e1.printStackTrace();
+      }
+    
 
-    //Random Key presses
+    //Generating randoms
     var events = genEvents(500);
     var clicks = genPoints(50);
-    assertTimeout(Duration.ofMinutes(1), () -> {
-      checkMovement(events);
-      mouseClicks(clicks);
-    });
+    
+    //Excecute fuzzes
+//    assertTimeout(Duration.ofMinutes(1), () -> {
+//      checkMovement(events);
+//      mouseClicks(clicks);
+//    });
   }
 
   /**
