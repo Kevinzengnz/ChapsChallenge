@@ -21,7 +21,7 @@ import org.dom4j.Element;
 public class GameRecorder implements Recorder {
   private boolean isRecording;
   private String replayFile;
-  private String level;
+  private int level;
   private List<Integer> actionHistory;
   private List<Integer> frameHistory;
   private int prevDir = -1;
@@ -45,7 +45,7 @@ public class GameRecorder implements Recorder {
       this.startFrame = this.frame;
       this.actionHistory = new ArrayList<>();
       this.frameHistory = new ArrayList<>();
-      this.level = "level_"+m.levelNumber();
+      this.level = m.levelNumber();
       this.replayFile = (replay.endsWith(".xml"))
           ? Arrays.stream(replay.split(".xml")).findFirst().orElse("default") : replay;
       setRecording(true);
@@ -117,7 +117,7 @@ public class GameRecorder implements Recorder {
     Document doc = DocumentHelper.createDocument();
     Element root = doc.addElement("root");
     //Level data element.
-    root.addElement("Level").addAttribute("name", this.level).addAttribute("time",
+    root.addElement("Level").addAttribute("name", String.valueOf(this.level)).addAttribute("time",
         String.valueOf(this.timeLeft));
     root.add(this.tiles);
     //Replay element.
