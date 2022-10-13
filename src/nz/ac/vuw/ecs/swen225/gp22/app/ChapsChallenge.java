@@ -184,7 +184,8 @@ public class ChapsChallenge extends JFrame {
     renderer.addKeyListener(p.controller());
     renderer.addKeyListener(gameController);
 
-    renderer.setLayout(new GridBagLayout());
+    JPanel infoPanel = new JPanel();
+    infoPanel.setLayout(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
     c.anchor = GridBagConstraints.FIRST_LINE_END;
     c.gridy = 0;
@@ -192,20 +193,21 @@ public class ChapsChallenge extends JFrame {
     JLabel level = new JLabel("Level: " + p.model().levelNumber());
     level.setFont(new Font("Verdana", Font.PLAIN, 20));
     level.setFocusable(false);
-    renderer.add(level, c);
+    infoPanel.add(level, c);
 
     c.gridy = 1;
     JLabel treasuresLeft = new JLabel("Treasures left: " + p.model().treasuresLeft());
     treasuresLeft.setFont(new Font("Verdana", Font.PLAIN, 20));
     treasuresLeft.setFocusable(false);
-    renderer.add(treasuresLeft, c);
+    infoPanel.add(treasuresLeft, c);
 
     c.gridy = 2;
     JLabel timeLeft = new JLabel("Time Left: " + p.model().timeLeft());
     timeLeft.setFont(new Font("Verdana", Font.PLAIN, 20));
     timeLeft.setFocusable(false);
-    renderer.add(timeLeft, c);
-    p.model().entities().forEach(e -> e.setSoundEffect(Audio.getSoundPlayer(e.getSprite())));
+    infoPanel.add(timeLeft, c);
+
+    p.model().entities().forEach(e -> e.setSoundEffect(Audio.getSoundPlayer(e.getSpriteName())));
     //Creates timer, so it runs in approximately 30 frames per second
     timer = new Timer(1000 / FRAME_RATE, unused -> {
       assert SwingUtilities.isEventDispatchThread();
@@ -282,31 +284,39 @@ public class ChapsChallenge extends JFrame {
     c.gridy = 0;
     c.anchor = GridBagConstraints.LAST_LINE_END;
 
-    //adds buttons to renderer
-    renderer.add(startRecording, c);
+    JPanel buttonsPanel = new JPanel();
+    buttonsPanel.setLayout(new GridBagLayout());
+
+    //adds buttons to buttonsPanel
+    buttonsPanel.add(startRecording, c);
     c.gridy = 1;
-    renderer.add(endRecording, c);
+    buttonsPanel.add(endRecording, c);
     c.gridy = 2;
-    renderer.add(pauseBtn, c);
+    buttonsPanel.add(pauseBtn, c);
     c.gridy = 3;
-    renderer.add(helpBtn, c);
+    buttonsPanel.add(helpBtn, c);
     c.gridy = 4;
-    renderer.add(saveBtn, c);
+    buttonsPanel.add(saveBtn, c);
     c.gridy = 5;
-    renderer.add(loadBtn, c);
+    buttonsPanel.add(loadBtn, c);
     c.gridy = 6;
-    renderer.add(exitBtn, c);
+    buttonsPanel.add(exitBtn, c);
 
     c.gridy = 8;
-    renderer.add(loadReplay, c);
+    buttonsPanel.add(loadReplay, c);
     c.gridy = 9;
-    renderer.add(replayAutoplay, c);
+    buttonsPanel.add(replayAutoplay, c);
     c.gridy = 10;
-    renderer.add(replayAutopause, c);
+    buttonsPanel.add(replayAutopause, c);
     c.gridy = 11;
-    renderer.add(replayNextTick, c);
+    buttonsPanel.add(replayNextTick, c);
 
     add(BorderLayout.CENTER, renderer);
+    add(BorderLayout.EAST, buttonsPanel);
+    add(BorderLayout.WEST, infoPanel);
+    buttonsPanel.setFocusable(false);
+    infoPanel.setFocusable(false);
+
     renderer.setFocusable(true);
     setPreferredSize(getSize()); //to keep the current size
     pack();                     //after pack
@@ -339,6 +349,7 @@ public class ChapsChallenge extends JFrame {
     if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
       String fileName = fileChooser.getSelectedFile().getPath();
       Replay.loadReplay(fileName, this);
+      setPhase(Phase.loadLevel(Replay.getTiles(),Replay.getTimeLeft(),Replay.getLevelNumber()));
     }
   }
 
