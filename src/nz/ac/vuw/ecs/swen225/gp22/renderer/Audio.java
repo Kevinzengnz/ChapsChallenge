@@ -37,9 +37,10 @@ public abstract class Audio {
     }
     if (name.startsWith("DOOR")) {
       name = "DOOR";
-    }
-    if (name.startsWith("KEY")) {
+    } else if (name.startsWith("KEY")) {
       name = "KEY";
+    } else if (name.startsWith("ROBOT")) {
+      name = "ROBOT";
     }
     return SoundEffect.valueOf(name.toUpperCase());
   }
