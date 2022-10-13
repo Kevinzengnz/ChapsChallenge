@@ -21,6 +21,12 @@ public class ChapsChallenge extends JFrame {
    * Frames per second that the game should run in.
    */
   private static final int FRAME_RATE = 30;
+
+  /**
+   * Speed for replays
+   */
+  private int clockSpeed = 4;
+
   /**
    * KeyListener for UI controls.
    */
@@ -135,6 +141,8 @@ public class ChapsChallenge extends JFrame {
     if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
       String fileName = fileChooser.getSelectedFile().getPath();
       setPhase(Phase.loadLevel(fileName));
+      unPauseGame();
+      setClockSpeed(4);
     }
   }
 
@@ -186,7 +194,8 @@ public class ChapsChallenge extends JFrame {
           + "ESC to pause, "
           + "SPACE to resume, "
           + "CTRL-1 to load level 1, "
-          + "CTRL-2 to load level 2");
+          + "CTRL-2 to load level 2. Use buttons on right side of screen"
+          + "for other commands. Press show/hide help to hide this popup.");
       helpDialogue = true;
     } else {
       currentPhase.renderer().hidePopup();
@@ -259,7 +268,7 @@ public class ChapsChallenge extends JFrame {
           p.model().player().getKeys());
       renderer.repaint();
       treasuresLeft.setText("Treasures left: " + p.model().treasuresLeft());
-      if (pings % FRAME_RATE == 0) {
+      if (pings % (int) (FRAME_RATE/(4.0/clockSpeed)) == 0) {
         p.model().decrementTime();
         timeLeft.setText("Time Left: " + p.model().timeLeft());
       }
@@ -354,6 +363,7 @@ public class ChapsChallenge extends JFrame {
       String fileName = fileChooser.getSelectedFile().getPath();
       Replay.loadReplay(fileName, this);
       setPhase(Phase.loadLevel(Replay.getTiles(),Replay.getTimeLeft(),Replay.getLevelNumber()));
+      pauseGame();
     }
   }
 
@@ -376,5 +386,23 @@ public class ChapsChallenge extends JFrame {
    */
   public void replayNextTick() {
     Replay.nextTick();
+  }
+
+  /**
+   * Gets the clock speed.
+   *
+   * @return clock speed of the game.
+   */
+  public int getClockSpeed() {
+    return clockSpeed;
+  }
+
+  /**
+   * Sets the clock speed.
+   *
+   * @param c clock speed to be set to
+   */
+  public void setClockSpeed(int c) {
+    this.clockSpeed = c;
   }
 }
