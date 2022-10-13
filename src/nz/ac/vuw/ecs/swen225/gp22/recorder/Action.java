@@ -3,6 +3,7 @@ package nz.ac.vuw.ecs.swen225.gp22.recorder;
 class Action {
   private final int dir;
   private final int frame;
+  private int endFrame = -1;
 
   /**
    * Constructor for action.
@@ -22,5 +23,13 @@ class Action {
 
   public int frame() {
     return this.frame;
+  }
+
+  public int endFrame() {
+    return  this.endFrame;
+  }
+
+  public void setEndFrame(int i) {
+    this.endFrame = i;
   }
 }
