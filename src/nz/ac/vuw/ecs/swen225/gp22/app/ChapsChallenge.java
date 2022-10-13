@@ -265,13 +265,17 @@ public class ChapsChallenge extends JFrame {
     loadReplay.addActionListener(e -> loadReplay());
     loadReplay.setFocusable(false);
 
-    var autoplayReplay = new JButton("Autoplay Replay");
-    autoplayReplay.addActionListener(e -> autoplayReplay());
-    autoplayReplay.setFocusable(false);
+    var replayAutoplay = new JButton("Autoplay Replay");
+    replayAutoplay.addActionListener(e -> replayAutoplay());
+    replayAutoplay.setFocusable(false);
 
-    var stopAutoplayReplay = new JButton("Stop Autoplay Replay");
-    stopAutoplayReplay.addActionListener(e -> stopAutoplayReplay());
-    stopAutoplayReplay.setFocusable(false);
+    var replayAutopause = new JButton("Stop Autoplay Replay");
+    replayAutopause.addActionListener(e -> replayAutopause());
+    replayAutopause.setFocusable(false);
+
+    var replayNextTick = new JButton("Next tick of Replay");
+    replayNextTick.addActionListener(e -> replayNextTick());
+    replayNextTick.setFocusable(false);
 
     c.gridx = 5;
     c.weightx = 0.5;
@@ -296,9 +300,11 @@ public class ChapsChallenge extends JFrame {
     c.gridy = 8;
     renderer.add(loadReplay, c);
     c.gridy = 9;
-    renderer.add(autoplayReplay, c);
+    renderer.add(replayAutoplay, c);
     c.gridy = 10;
-    renderer.add(stopAutoplayReplay, c);
+    renderer.add(replayAutopause, c);
+    c.gridy = 11;
+    renderer.add(replayNextTick, c);
 
     add(BorderLayout.CENTER, renderer);
     renderer.setFocusable(true);
@@ -307,18 +313,26 @@ public class ChapsChallenge extends JFrame {
     renderer.requestFocus();
   }
 
+  /**
+   * Starts the recording in the model.
+   */
   public void startRecording() {
     currentPhase.model().recorder()
         .startRecording(currentPhase.model(), "replay " +
             new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
-            .format(new java.util.Date()));
+                .format(new java.util.Date()));
   }
 
+  /**
+   * Ends the recording in the model.
+   */
   public void endRecording() {
     currentPhase.model().recorder().endRecording();
   }
 
-
+  /**
+   * Loads a replay from a file, which user chooses from file chooser.
+   */
   public void loadReplay() {
     JFileChooser fileChooser =
         new JFileChooser("Replays/");
@@ -328,11 +342,24 @@ public class ChapsChallenge extends JFrame {
     }
   }
 
-  public void autoplayReplay() {
+  /**
+   * Sets the loaded replay to autoplay.
+   */
+  public void replayAutoplay() {
     Replay.autoPlay();
   }
 
-  public void stopAutoplayReplay() {
+  /**
+   * Pauses autoplay on the loaded replay.
+   */
+  public void replayAutopause() {
     Replay.autoPause();
+  }
+
+  /**
+   * Move to the next tick of the game clock in the loaded replay.
+   */
+  public void replayNextTick() {
+    Replay.nextTick();
   }
 }
