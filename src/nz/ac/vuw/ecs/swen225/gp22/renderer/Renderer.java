@@ -1,6 +1,9 @@
 package nz.ac.vuw.ecs.swen225.gp22.renderer;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -8,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.swing.JPanel;
-
 import nz.ac.vuw.ecs.swen225.gp22.domain.Actor;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.InfoTile;
@@ -101,7 +103,7 @@ public class Renderer extends JPanel {
         if (actor.equals(entity) && !point.equals(entity.getPoint())) {
           if (actor instanceof Player) {
             addAnimation(new WalkAnimation(point, entity.getPoint(), 4, entity));
-          } else if(actor instanceof Robot && isEntityVisible(actor)) {
+          } else if (actor instanceof Robot && isEntityVisible(actor)) {
             addAnimation(new MoveAnimation(point, entity.getPoint(), 4, entity));
           }
         }
@@ -152,7 +154,8 @@ public class Renderer extends JPanel {
     g.setColor(Color.WHITE);
     g.drawRect(cellsLeft - 1, cellsTop - 1, camera.getVisionSize() * tileSize + 1,
             camera.getVisionSize() * tileSize + 1);
-    g.clipRect(cellsLeft, cellsTop, tileSize * camera.getVisionSize(), tileSize * camera.getVisionSize());
+    g.clipRect(cellsLeft, cellsTop, tileSize * camera.getVisionSize(),
+            tileSize * camera.getVisionSize());
     drawEntities(g, cellsLeft, cellsTop);
     drawAnimations(g, cellsLeft, cellsTop);
     g.setClip(null);
