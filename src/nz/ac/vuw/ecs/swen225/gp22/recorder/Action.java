@@ -16,7 +16,14 @@ class Action {
     this.frame = crntFrame;
   }
 
-  Action(final int direction, final int crntFrame, final int end){
+  /**
+   * Constructor for action.
+   *
+   * @param direction Direction player changed to
+   * @param crntFrame Frame number of direction changed
+   * @param end End frame of movement
+   */
+  Action(final int direction, final int crntFrame, final int end) {
     this.dir = direction;
     this.frame = crntFrame;
     this.endFrame = end;

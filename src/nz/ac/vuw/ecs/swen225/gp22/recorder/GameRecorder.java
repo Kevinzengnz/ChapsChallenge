@@ -45,8 +45,6 @@ public class GameRecorder implements Recorder {
       this.replayFile = (replay.endsWith(".xml"))
           ? Arrays.stream(replay.split(".xml")).findFirst().orElse("default") : replay;
       setRecording(true);
-      RecTesting.log("GameRecorder", "startRecording",
-          "Starting recording for " + this.level + " at Replays/" + this.replayFile);
     }
   }
 
@@ -86,18 +84,14 @@ public class GameRecorder implements Recorder {
       Action a = new Action(0, this.frame);
       a.setEndFrame(this.frame);
       this.movementHistory.add(a);
-      RecTesting.log("GameRecorder", "onAction", "Added stop");
       return;
     }
     if (this.prevDir == dir) {
       return;
     }
     this.prevDir = dir;
-    this.movementHistory.get(this.movementHistory.size() - 1).setEndFrame(this.frame-1);
-    RecTesting.log("GameRecorder", "onAction",
-        "Set action end frame to "+this.movementHistory.get(this.movementHistory.size()-1).endFrame());
+    this.movementHistory.get(this.movementHistory.size() - 1).setEndFrame(this.frame - 1);
     this.movementHistory.add(new Action(dir, this.frame));
-    RecTesting.log("GameRecorder", "onAction", "Added action " + dir);
   }
 
   /**
@@ -132,9 +126,8 @@ public class GameRecorder implements Recorder {
     //Write to replay file
     try {
       XmlParser.write(doc, this.replayFile, "Replays/");
-      RecTesting.log("GameRecorder", "saveRecording", "Saved replay to Replays/" + this.replayFile);
     } catch (IOException e) {
-      RecTesting.log("GameRecorder", "saveRecording", "IOException : " + e.getMessage());
+      System.out.println("Error saving replay to file");
     }
   }
 }
