@@ -128,13 +128,13 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
    * Loads a level from a given file.
    *
    * @param fileName file to load game state from
+   * @param next  runnable to perform after finishing this level
+   * @param first runnable to perform after failing this level
    * @return new phase created from given file
    */
-  static Phase loadLevel(String fileName) {
+  static Phase loadLevel(String fileName, Runnable next, Runnable first) {
     List<Entity> levelEntities = XmlParser.loadGame(fileName);
-    return newLevel(() -> {
-    }, () -> {
-    }, levelEntities, XmlParser.getTime(), XmlParser.getLevel());
+    return newLevel(next, first, levelEntities, XmlParser.getTime(), XmlParser.getLevel());
   }
 
   /**
@@ -143,12 +143,12 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
    * @param tiles       file to load game layout from
    * @param time        time left in save
    * @param levelNumber level number
+   * @param next  runnable to perform after finishing this level
+   * @param first runnable to perform after failing this level
    * @return new phase created from given file
    */
-  static Phase loadLevel(Element tiles, int time, int levelNumber) {
+  static Phase loadLevel(Element tiles, int time, int levelNumber, Runnable next, Runnable first) {
     List<Entity> levelEntities = XmlParser.loadTiles(tiles);
-    return newLevel(() -> {
-    }, () -> {
-    }, levelEntities, time, levelNumber);
+    return newLevel(next, first, levelEntities, time, levelNumber);
   }
 }
