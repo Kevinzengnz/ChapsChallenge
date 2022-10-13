@@ -127,6 +127,20 @@ public class ChapsChallenge extends JFrame {
   }
 
   /**
+   * Loads a game from a file, which user chooses from file chooser.
+   */
+  public void loadGame() {
+    JFileChooser fileChooser =
+        new JFileChooser("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/");
+    if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+      String fileName = fileChooser.getSelectedFile().getPath();
+      setPhase(Phase.loadLevel(fileName, this::victory, this::gameOver));
+      unPauseGame();
+      setClockSpeed(4);
+    }
+  }
+
+  /**
    * Victory screen.
    * Displays a popup over the renderer, and pauses the game.
    * User can resume afterwards by pressing a load keybinding, or pressing a button.
@@ -150,20 +164,6 @@ public class ChapsChallenge extends JFrame {
     timer.stop();
     timer = EMPTY_TIMER;
     helpDialogue = true;
-  }
-
-  /**
-   * Loads a game from a file, which user chooses from file chooser.
-   */
-  public void loadGame() {
-    JFileChooser fileChooser =
-        new JFileChooser("src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/");
-    if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-      String fileName = fileChooser.getSelectedFile().getPath();
-      setPhase(Phase.loadLevel(fileName));
-      unPauseGame();
-      setClockSpeed(4);
-    }
   }
 
   /**
@@ -382,7 +382,8 @@ public class ChapsChallenge extends JFrame {
     if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
       String fileName = fileChooser.getSelectedFile().getPath();
       Replay.loadReplay(fileName, this);
-      setPhase(Phase.loadLevel(Replay.getTiles(),Replay.getTimeLeft(),Replay.getLevelNumber()));
+      setPhase(Phase.loadLevel(Replay.getTiles(),Replay.getTimeLeft(),Replay.getLevelNumber(),
+          this::victory, this::gameOver));
       pauseGame();
     }
   }
