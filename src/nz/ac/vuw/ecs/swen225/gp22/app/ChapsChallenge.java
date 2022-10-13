@@ -358,11 +358,11 @@ public class ChapsChallenge extends JFrame {
 
     var increaseReplaySpeed = new Button("Increase replay speed", e -> increaseReplaySpeed());
     c.gridy = 12;
-    buttonsPanel.add(replayAutopause, c);
+    buttonsPanel.add(increaseReplaySpeed, c);
 
     var decreaseReplaySpeed = new Button("Decrease replay speed", e -> decreaseReplaySpeed());
     c.gridy = 13;
-    buttonsPanel.add(replayAutopause, c);
+    buttonsPanel.add(decreaseReplaySpeed, c);
 
     add(BorderLayout.CENTER, renderer);
     add(BorderLayout.EAST, buttonsPanel);
