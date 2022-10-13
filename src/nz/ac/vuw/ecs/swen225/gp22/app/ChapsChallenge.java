@@ -219,7 +219,7 @@ public class ChapsChallenge extends JFrame {
     JPanel infoPanel = new JPanel();
     infoPanel.setLayout(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
-    c.anchor = GridBagConstraints.FIRST_LINE_END;
+    c.anchor = GridBagConstraints.CENTER;
     c.gridy = 0;
 
     Label level = new Label("Level: " + p.model().levelNumber());
@@ -270,7 +270,7 @@ public class ChapsChallenge extends JFrame {
     c.gridx = 5;
     c.weightx = 0.5;
     c.gridy = 0;
-    c.anchor = GridBagConstraints.LAST_LINE_END;
+    c.anchor = GridBagConstraints.CENTER;
 
     JPanel buttonsPanel = new JPanel();
     buttonsPanel.setLayout(new GridBagLayout());
