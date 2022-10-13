@@ -11,9 +11,9 @@ public class Actor implements Entity{
      */
     private boolean moving = false;
     /**
-     * String of the sprite name
+     * String of the spriteName name
      */
-    protected String sprite;
+    protected String spriteName;
     /**
      * Point that Actor is currently at
      */
@@ -23,8 +23,18 @@ public class Actor implements Entity{
      * Initially set to Down
      */
     protected Direction direction = Direction.Down;
-    protected Actor(String sprite, Point point) {
-        this.sprite = sprite;
+    /**
+     * Boolean for if the Actor should currently be moving.
+     */
+    protected boolean moveValid = true;
+
+    /**
+     * Creates an Actor from the given spriteName and point
+     * @param spriteName Actors spriteName
+     * @param point Starting position of Actor
+     */
+    protected Actor(String spriteName, Point point) {
+        this.spriteName = spriteName;
         this.point = point;
     }
 
@@ -48,6 +58,14 @@ public class Actor implements Entity{
     }
 
     /**
+     * Sets spriteName name to given string
+     * @param spriteName name to be set
+     */
+    public void setSpriteName(String spriteName){
+        this.spriteName = spriteName;
+    }
+
+    /**
      * @return true if Actor is moving and false if they aren't
      */
     public boolean isMoving(){ return this.moving; }
@@ -57,7 +75,8 @@ public class Actor implements Entity{
      */
     public Direction getDirection(){ return direction; }
     @Override
-    public String getSprite() { return this.sprite; }
+    public String getSpriteName() { return this.spriteName; }
+
     @Override
     public Point getPoint() { return this.point; }
     @Override

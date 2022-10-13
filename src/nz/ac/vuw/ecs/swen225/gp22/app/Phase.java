@@ -1,20 +1,21 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
+import java.util.ArrayList;
+import java.util.List;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Treasure;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.XmlParser;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.GameRecorder;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
+import org.dom4j.Element;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Phase of Chaps Challenge.
  *
  * @author Kevin Zeng
- * ID: 300563468
+ *         ID: 300563468
  */
 public record Phase(Model model, PlayerController controller, Renderer renderer) {
 
@@ -25,9 +26,11 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
    * @param first         runnable to perform after failing this level
    * @param levelEntities list of entities in this level
    * @param time          amount of time allowed to complete level
+   * @param level         level number
    * @return new phase with the list of given entities
    */
-  static Phase newLevel(Runnable next, Runnable first, List<Entity> levelEntities, int time) {
+  static Phase newLevel(Runnable next, Runnable first,
+                        List<Entity> levelEntities, int time, int level) {
     Renderer renderer = new Renderer();
     GameRecorder recorder = new GameRecorder();
     Player p = levelEntities.stream().filter(a -> a instanceof Player).map(a -> (Player)
@@ -87,8 +90,7 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
 
       @Override
       public int levelNumber() {
-        //TODO: return level number from XML file.
-        return 1;
+        return level;
       }
     };
     return new Phase(m, new PlayerController(p), renderer);
@@ -105,7 +107,7 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
     String fileName = "src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/levelOne.xml";
     List<Entity> levelEntities = XmlParser
         .loadGame(fileName);
-    return newLevel(next, first, levelEntities, XmlParser.getTime());
+    return newLevel(next, first, levelEntities, XmlParser.getTime(), XmlParser.getLevel());
   }
 
   /**
@@ -119,7 +121,7 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
     String fileName = "src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/levelTwo.xml";
     List<Entity> levelEntities = XmlParser
         .loadGame(fileName);
-    return newLevel(next, first, levelEntities, XmlParser.getTime());
+    return newLevel(next, first, levelEntities, XmlParser.getTime(), XmlParser.getLevel());
   }
 
   /**
@@ -132,6 +134,21 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
     List<Entity> levelEntities = XmlParser.loadGame(fileName);
     return newLevel(() -> {
     }, () -> {
-    }, levelEntities, XmlParser.getTime());
+    }, levelEntities, XmlParser.getTime(), XmlParser.getLevel());
+  }
+
+  /**
+   * Loads a level from a given tiles elements, which has the list of entities.
+   *
+   * @param tiles       file to load game layout from
+   * @param time        time left in save
+   * @param levelNumber level number
+   * @return new phase created from given file
+   */
+  static Phase loadLevel(Element tiles, int time, int levelNumber) {
+    List<Entity> levelEntities = XmlParser.loadTiles(tiles);
+    return newLevel(() -> {
+    }, () -> {
+    }, levelEntities, time, levelNumber);
   }
 }

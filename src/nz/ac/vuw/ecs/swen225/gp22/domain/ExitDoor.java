@@ -13,15 +13,15 @@ public class ExitDoor extends Door {
      */
     protected ExitDoor(Point point) {
         super(point);
-        this.setSprite("DOOR_EXIT");
+        this.setSpriteName("DOOR_EXIT");
     }
     @Override
-    public void doAction(Model model, Player player, Point point) {
+    public void doAction(Model model, Actor actor, Point point) {
         if(!this.getPoint().equals(point)){
             throw new IllegalArgumentException("Player point does not equal ExitDoor Point");
         }
         if(model.treasuresLeft() != 0){
-            player.moveValid = false;
+            actor.moveValid = false;
         } else{
             soundEffect.run();
             model.remove(this);

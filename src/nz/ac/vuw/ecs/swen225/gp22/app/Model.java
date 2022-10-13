@@ -1,20 +1,19 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Treasure;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.XmlParser;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.GameRecorder;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.List;
-
 /**
  * Model class, which stores information on the game state.
  *
  * @author Kevin Zeng
- * ID: 300563468
+ *         ID: 300563468
  */
 public interface Model {
   /**
@@ -70,7 +69,7 @@ public interface Model {
   /**
    * Gets the total number of treasures at the start of the level.
    *
-   * @return nnumber of treasures that were at the start of the level
+   * @return number of treasures that were at the start of the level
    */
   long totalTreasures();
 
@@ -113,5 +112,8 @@ public interface Model {
   default void ping() {
     entities().forEach(a -> a.ping(this));
     recorder().ping(player().getDirection().ordinal(), player().isMoving());
+    if (timeLeft() <= 0) {
+      onGameOver();
+    }
   }
 }

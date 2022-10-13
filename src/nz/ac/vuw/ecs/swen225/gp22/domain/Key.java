@@ -22,7 +22,7 @@ public class Key extends Collectable{
     protected Key(Point point, String colourString) {
         super(point);
         colour = getColour(colourString);
-        this.setSprite(colour.key);
+        this.setSpriteName(colour.key);
     }
     /**
      * @return colour of key as a string
@@ -32,7 +32,8 @@ public class Key extends Collectable{
     }
 
     @Override
-    public void doAction(Model model, Player player, Point point) {
+    public void doAction(Model model, Actor actor, Point point) {
+        Player player = (Player) actor;
         if(!this.getPoint().equals(point)){
             throw new IllegalArgumentException("Player point does not equal Key Point");
         }

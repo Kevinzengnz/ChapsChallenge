@@ -1,16 +1,16 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
-import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.*;
 
 /**
  * Keys class, which implements KeyListener.
  *
  * @author Kevin Zeng
- * ID: 300563468
+ *         ID: 300563468
  */
 public class Keys implements KeyListener {
 
