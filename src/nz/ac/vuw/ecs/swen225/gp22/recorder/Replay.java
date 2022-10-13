@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.SwingUtilities;
@@ -21,31 +22,31 @@ import org.dom4j.Element;
  */
 public class Replay {
   private static List<Action> actionList;
-  private static int pings = 0;
-  private static int speed = 4;
   private static Timer timer = null;
   private static boolean isRunning = false;
+  private static int pings = 0;
   private static int endPing = 1;
   private static int frames = 0;
-  private static ChapsChallenge pc;
-  private static Element tiles;
+  private static int speed = 4;
   private static int timeLeft;
   private static int levelNumber;
+  private static ChapsChallenge pc;
+  private static Element tiles;
+
 
   /**
    * Loads replay file data into this replay instance.
    *
    * @param replayName File name of recording.
    */
-  public static void loadReplay(String replayName, ChapsChallenge game) {
+  public static void loadReplay(String replayName, ChapsChallenge game) throws IOException {
     cleanReplay();
     pc = game;
     Document replay;
     try {
       replay = XmlParser.parse(new File(replayName));
     } catch (DocumentException de) {
-      RecTesting.log("Replay", "loadReplay", "Error loading replay file");
-      return;
+      throw new IOException("Invalid replay file");
     }
     tiles = replay.getRootElement().element("Tiles");
     timeLeft = Integer.parseInt(replay.getRootElement().element("Level")
@@ -63,23 +64,20 @@ public class Replay {
           Integer.parseInt(action.attribute("end").getValue())));
     }
     actionList.remove(0);
-    RecTesting.log("Replay", "loadReplay", "Replay loaded");
   }
 
   /**
    * Plays through replay until the end automatically.
    */
   public static void autoPlay() {
-    if (isRunning || pc==null) {
+    if (isRunning || pc == null) {
       return;
     }
     //Check if there is anything to replay.
     if (actionList == null || actionList.isEmpty()) {
-      RecTesting.log("Replay", "autoPlay", "No actions to replay");
       return;
     }
     isRunning = true;
-    RecTesting.log("Replay", "autoPlay", "Auto play started");
     //Restart timer if it already exists and is paused.
     if (timer != null) {
       timer.restart();
@@ -92,7 +90,9 @@ public class Replay {
     //Otherwise create a new timer and start it.
     timer = new Timer(1000 / 30, x -> {
       assert SwingUtilities.isEventDispatchThread();
-      if(isRunning()){pc.setClockSpeed(speed);}
+      if (isRunning()) {
+        pc.setClockSpeed(speed);
+      }
       frames++;
       if (frames % speed == 0) {
         pings++;
@@ -116,22 +116,21 @@ public class Replay {
   }
 
   /**
-   * Sets playback speed multiplier for automatic playback of the replay.
-   *
-   * @param mul Speed multiplier for automatic playback of replay. Must be greater than 0.
+   * Increase replay speed to have one less frame per ping. Does not go lower than 2 frames per
+   * ping.
    */
-  public static void setReplaySpeed(int mul) {
-    speed = (mul > 0) ? mul : speed;
-  }
-
   public static void increaseSpeed() {
-    if(speed > 2){
+    if (speed > 2) {
       speed--;
     }
   }
 
+  /**
+   * Decrease replay speed to have one more frame per ping. Does not go higher than 8 frames per
+   * ping.
+   */
   public static void decreaseSpeed() {
-    if(speed < 8){
+    if (speed < 8) {
       speed++;
     }
   }
@@ -142,13 +141,13 @@ public class Replay {
    * Pauses automatic playback.
    */
   public static void nextTick() {
-    if(pc==null){
+    if (pc == null) {
       return;
     }
     autoPause();
     pc.unPauseGame();
     pc.getPhase().controller().unPause();
-    if(timer == null){
+    if (timer == null) {
       timer = new Timer(1000 / 30, x -> {
         assert SwingUtilities.isEventDispatchThread();
         frames++;
@@ -161,11 +160,11 @@ public class Replay {
     timer.start();
   }
 
-  public static Element getTiles(){
+  public static Element getTiles() {
     return tiles;
   }
 
-  public static int getTimeLeft(){
+  public static int getTimeLeft() {
     return timeLeft;
   }
 
@@ -194,13 +193,10 @@ public class Replay {
         pc.setClockSpeed(4);
       }
       controller.releaseDirection(KeyEvent.VK_W);
-      RecTesting.log("Replay", "step", "Replay stopped at frame " + pings);
       cleanReplay();
     }
     actionList.stream().filter(a -> a.frame() == pings).findFirst().ifPresentOrElse(
         (a) -> {
-          RecTesting.log("Replay", "step",
-              "Direction changed to: " + a.dir() + " at ping " + a.frame());
           switch (a.dir()) {
             case 0 -> controller.releaseDirection(KeyEvent.VK_W);
             case 1 -> controller.moveUp();
@@ -210,12 +206,10 @@ public class Replay {
             default -> {
             }
           }
-          RecTesting.log("Replay", "step", String.valueOf(a.endFrame()));
           if (!isRunning()) {
             if (a.endFrame() == pings) {
               controller.releaseDirection(KeyEvent.VK_W);
               timer.stop();
-              RecTesting.log("Replay", "step", "stop");
             }
           }
         },
@@ -237,5 +231,6 @@ public class Replay {
       timer = null;
     }
     frames = 0;
+    pc = null;
   }
 }
