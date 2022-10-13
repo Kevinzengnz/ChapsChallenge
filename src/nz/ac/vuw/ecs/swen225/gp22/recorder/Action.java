@@ -16,6 +16,12 @@ class Action {
     this.frame = crntFrame;
   }
 
+  Action(final int direction, final int crntFrame, final int end){
+    this.dir = direction;
+    this.frame = crntFrame;
+    this.endFrame = end;
+  }
+
   //GETTERS
   public int dir() {
     return this.dir;

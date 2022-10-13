@@ -93,7 +93,9 @@ public class GameRecorder implements Recorder {
       return;
     }
     this.prevDir = dir;
-    this.movementHistory.get(this.movementHistory.size() - 1).setEndFrame(this.frame);
+    this.movementHistory.get(this.movementHistory.size() - 1).setEndFrame(this.frame-1);
+    RecTesting.log("GameRecorder", "onAction",
+        "Set action end frame to "+this.movementHistory.get(this.movementHistory.size()-1).endFrame());
     this.movementHistory.add(new Action(dir, this.frame));
     RecTesting.log("GameRecorder", "onAction", "Added action " + dir);
   }

@@ -40,11 +40,12 @@ public class Replay {
   public static void loadReplay(String replayName, ChapsChallenge game) {
     cleanReplay();
     pc = game;
-    Document replay = null;
+    Document replay;
     try {
       replay = XmlParser.parse(new File(replayName));
     } catch (DocumentException de) {
       RecTesting.log("Replay", "loadReplay", "Error loading replay file");
+      return;
     }
     tiles = replay.getRootElement().element("Tiles");
     timeLeft = Integer.parseInt(replay.getRootElement().element("Level")
@@ -58,7 +59,8 @@ public class Replay {
     List<Element> actions = player.elements("action");
     for (Element action : actions) {
       actionList.add(new Action(Integer.parseInt(action.attribute("dir").getValue()),
-          Integer.parseInt(action.attribute("frame").getValue())));
+          Integer.parseInt(action.attribute("frame").getValue()),
+          Integer.parseInt(action.attribute("end").getValue())));
     }
     actionList.remove(0);
     RecTesting.log("Replay", "loadReplay", "Replay loaded");
@@ -68,7 +70,7 @@ public class Replay {
    * Plays through replay until the end automatically.
    */
   public static void autoPlay() {
-    if (isRunning) {
+    if (isRunning || pc==null) {
       return;
     }
     //Check if there is anything to replay.
@@ -128,9 +130,23 @@ public class Replay {
    * Pauses automatic playback.
    */
   public static void nextTick() {
+    if(pc==null){
+      return;
+    }
     autoPause();
-    pings++;
-    step();
+    pc.unPauseGame();
+    pc.getPhase().controller().unPause();
+    if(timer == null){
+      timer = new Timer(1000 / 30, x -> {
+        assert SwingUtilities.isEventDispatchThread();
+        frames++;
+        if (frames % speed == 0) {
+          pings++;
+        }
+        step();
+      });
+    }
+    timer.start();
   }
 
   public static Element getTiles(){
@@ -143,13 +159,6 @@ public class Replay {
 
   public static int getLevelNumber() {
     return levelNumber;
-  }
-
-  /**
-   * Move to previous game tick in replay. Pauses autoplay.
-   */
-  private void prevTick() {
-    autoPause();
   }
 
   /**
@@ -173,12 +182,12 @@ public class Replay {
         pc.setClockSpeed(4);
       }
       controller.releaseDirection(KeyEvent.VK_W);
-      RecTesting.log("Replay", "autoPlay", "Replay stopped at frame " + pings);
+      RecTesting.log("Replay", "step", "Replay stopped at frame " + pings);
       cleanReplay();
     }
     actionList.stream().filter(a -> a.frame() == pings).findFirst().ifPresentOrElse(
         (a) -> {
-          RecTesting.log("Replay", "autoPlay",
+          RecTesting.log("Replay", "step",
               "Direction changed to: " + a.dir() + " at ping " + a.frame());
           switch (a.dir()) {
             case 0 -> controller.releaseDirection(KeyEvent.VK_W);
@@ -187,6 +196,14 @@ public class Replay {
             case 3 -> controller.moveDown();
             case 4 -> controller.moveLeft();
             default -> {
+            }
+          }
+          RecTesting.log("Replay", "step", String.valueOf(a.endFrame()));
+          if (!isRunning()) {
+            if (a.endFrame() == pings) {
+              controller.releaseDirection(KeyEvent.VK_W);
+              timer.stop();
+              RecTesting.log("Replay", "step", "stop");
             }
           }
         },
