@@ -109,7 +109,7 @@ public class ChapsChallenge extends JFrame {
    * If the game is paused, unpauses it.
    */
   public void unPauseGame() {
-    currentPhase.controller().pause();
+    currentPhase.controller().unPause();
     paused = false;
     timer.start();
   }
