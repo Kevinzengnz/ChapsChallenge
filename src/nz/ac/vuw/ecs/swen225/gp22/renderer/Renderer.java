@@ -241,7 +241,6 @@ public class Renderer extends JPanel {
     int drawLeft = left + (camera.getVisionSize() * tileSize - bg.getWidth(null)) / 2;
     int drawTop = top + 20;
     g.drawImage(bg, drawLeft, drawTop, null);
-    ;
     for (int i = 0; i < list.size(); i++) {
       g.drawString(list.get(i), drawLeft + 10, drawTop + 20 * (i + 1));
     }
