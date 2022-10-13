@@ -15,10 +15,12 @@ import javax.sound.sampled.FloatControl;
 public enum SoundEffect {
   TREASURE("coin"),
   DOOR("unlock"),
-  EXIT("portal"),
+  EXIT("exit"),
   KEY("key"),
   WALL("wall"),
-  INFO("info");
+  INFO("info"),
+  ROBOT("robot"),
+  SEWAGE("splash");
 
   /**
    * The Clip of the SoundEffect. The actual object that plays the audio.
