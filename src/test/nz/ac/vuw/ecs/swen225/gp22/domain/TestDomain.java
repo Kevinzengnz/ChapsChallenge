@@ -819,6 +819,11 @@ public class TestDomain {
             public void onNextLevel() {}
             @Override
             public long totalTreasures() {return 10;}
+
+            @Override
+            public int levelNumber() {
+                return 0;
+            }
         };
         return m;
     }

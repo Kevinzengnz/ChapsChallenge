@@ -23,7 +23,7 @@ public class LockedDoor extends Door {
     protected LockedDoor(Point point, String colourString) {
         super(point);
         colour = getColour(colourString);
-        this.setSprite(colour.door);
+        this.setSpriteName(colour.door);
     }
     /**
      * @return colour of door
@@ -33,7 +33,8 @@ public class LockedDoor extends Door {
     }
 
     @Override
-    public void doAction(Model model, Player player, Point point) {
+    public void doAction(Model model, Actor actor, Point point) {
+        Player player = (Player) actor;
         if(!this.getPoint().equals(point)){
             throw new IllegalArgumentException("Player point does not equal LockedDoor Point");
         }

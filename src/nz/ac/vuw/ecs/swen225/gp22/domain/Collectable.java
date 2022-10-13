@@ -6,9 +6,9 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
  */
 public class Collectable implements Entity{
     /**
-     * String of the sprite name
+     * String of the spriteName name
      */
-    private String sprite;
+    private String spriteName;
     /**
      * Point that Collectable is currently at
      */
@@ -19,12 +19,12 @@ public class Collectable implements Entity{
     public Runnable soundEffect;
 
     /**
-     * Creates a Collectable using given sprite and point
-     * @param sprite String name of the sprite
+     * Creates a Collectable using given spriteName and point
+     * @param spriteName String name of the spriteName
      * @param point point where the collectable is
      */
-    protected Collectable(String sprite, Point point) {
-        this.sprite = sprite;
+    protected Collectable(String spriteName, Point point) {
+        this.spriteName = spriteName;
         this.point = point;
     }
     /**
@@ -43,14 +43,14 @@ public class Collectable implements Entity{
     }
 
     /**
-     * Sets the sprite with the given string
-     * @param sprite String name of sprite
+     * Sets the spriteName with the given string
+     * @param spriteName String name of spriteName
      */
-    protected void setSprite(String sprite){
-        if(sprite == null){
+    protected void setSpriteName(String spriteName){
+        if(spriteName == null){
             throw new IllegalArgumentException("Collectable Sprite is null");
         }
-        this.sprite = sprite;
+        this.spriteName = spriteName;
     }
 
     /**
@@ -65,7 +65,7 @@ public class Collectable implements Entity{
     }
 
     @Override
-    public String getSprite() { return this.sprite; }
+    public String getSpriteName() { return this.spriteName; }
 
     @Override
     public Point getPoint() {

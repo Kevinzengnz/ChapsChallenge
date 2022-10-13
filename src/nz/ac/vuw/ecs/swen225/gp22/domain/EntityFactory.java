@@ -51,6 +51,8 @@ public class EntityFactory {
                 return new ExitDoor(point);
             case "EXIT":
                 return new Exit(point);
+            case "SEWAGE":
+                return new SewageTile(point);
         }
         throw new IllegalArgumentException("Invalid Entity Type");
     }
