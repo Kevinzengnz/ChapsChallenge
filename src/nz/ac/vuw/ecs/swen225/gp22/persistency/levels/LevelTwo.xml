@@ -619,36 +619,36 @@
         <DOOR_BLUE x="10" y="17"/>
         <DOOR_EXIT x="10" y="18"/>
         <EXIT x="10" y="19"/>
-        <SEWAGE x="4" y="5"/>
-        <SEWAGE x="5" y="5"/>
-        <SEWAGE x="6" y="5"/>
-        <SEWAGE x="7" y="5"/>
-        <SEWAGE x="8" y="5"/>
-        <SEWAGE x="9" y="5"/>
-        <SEWAGE x="10" y="5"/>
-        <SEWAGE x="11" y="5"/>
-        <SEWAGE x="12" y="5"/>
-        <SEWAGE x="13" y="5"/>
-        <SEWAGE x="14" y="5"/>
-        <SEWAGE x="15" y="5"/>
+        <LAVA x="4" y="5"/>
+        <LAVA x="5" y="5"/>
+        <LAVA x="6" y="5"/>
+        <LAVA x="7" y="5"/>
+        <LAVA x="8" y="5"/>
+        <LAVA x="9" y="5"/>
+        <LAVA x="10" y="5"/>
+        <LAVA x="11" y="5"/>
+        <LAVA x="12" y="5"/>
+        <LAVA x="13" y="5"/>
+        <LAVA x="14" y="5"/>
+        <LAVA x="15" y="5"/>
 
-        <SEWAGE x="8" y="9"/>
-        <SEWAGE x="9" y="9"/>
-        <SEWAGE x="10" y="9"/>
-        <SEWAGE x="11" y="9"/>
-        <SEWAGE x="12" y="9"/>
+        <LAVA x="8" y="9"/>
+        <LAVA x="9" y="9"/>
+        <LAVA x="10" y="9"/>
+        <LAVA x="11" y="9"/>
+        <LAVA x="12" y="9"/>
 
-        <SEWAGE x="5" y="13"/>
-        <SEWAGE x="6" y="13"/>
+        <LAVA x="5" y="13"/>
+        <LAVA x="6" y="13"/>
 
-        <SEWAGE x="14" y="13"/>
-        <SEWAGE x="15" y="13"/>
-        <SEWAGE x="16" y="13"/>
-        <SEWAGE x="15" y="7"/>
-        <SEWAGE x="15" y="8"/>
-        <SEWAGE x="15" y="9"/>
-        <SEWAGE x="15" y="10"/>
-        <SEWAGE x="15" y="11"/>
+        <LAVA x="14" y="13"/>
+        <LAVA x="15" y="13"/>
+        <LAVA x="16" y="13"/>
+        <LAVA x="15" y="7"/>
+        <LAVA x="15" y="8"/>
+        <LAVA x="15" y="9"/>
+        <LAVA x="15" y="10"/>
+        <LAVA x="15" y="11"/>
         <KEY_BLUE x="4" y="4"/>
         <KEY_GREEN x="16" y="11"/>
         <DOOR_GREEN x="14" y="7"/>
