@@ -507,6 +507,18 @@
         <WALL x="7" y="10"/>
         <WALL x="13" y="8"/>
         <WALL x="13" y="10"/>
+        <KEY_BLUE x="8" y="8"/>
+        <KEY_BLUE x="8" y="10"/>
+        <DOOR_BLUE x="7" y="7"/>
+        <DOOR_BLUE x="13" y="11"/>
+        <KEY_RED x="12" y="8"/>
+        <KEY_RED x="12" y="10"/>
+        <DOOR_RED x="7" y="11"/>
+        <DOOR_RED x="13" y="7"/>
+        <DOOR_YELLOW x="9" y="12"/>
+        <DOOR_YELLOW x="11" y="12"/>
+        <KEY_YELLOW x="5" y="7"/>
+        <KEY_YELLOW x="15" y="7"/>
         <TREASURE x="8" y="9"/>
         <TREASURE x="12" y="9"/>
         <TREASURE x="10" y="11"/>
@@ -518,6 +530,10 @@
         <TREASURE x="15" y="10"/>
         <TREASURE x="7" y="5"/>
         <TREASURE x="13" y="5"/>
+        <DOOR_GREEN x="8" y="6"/>
+        <DOOR_GREEN x="12" y="6"/>
+        <KEY_GREEN x="11" y="15"/>
+        <KEY_GREEN x="9" y="15"/>
         <DOOR_EXIT x="10" y="6"/>
         <EXIT x="10" y="5"/>
     </Tiles>

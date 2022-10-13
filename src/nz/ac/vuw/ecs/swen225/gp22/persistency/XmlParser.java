@@ -118,7 +118,7 @@ public class XmlParser {
                     ArrayList<Key> keyList = new ArrayList<>();
 
                     //check if there is any key in the inventory
-                    if (keys.length >= 1 &&!keys[0].equals("")) {
+                    if (!keys[0].equals("")) {
                         for (String key : keys) {
                             keyList.add((Key) factory.createEntity(key, new Point(0, 0)));
                         }
