@@ -113,5 +113,8 @@ public interface Model {
   default void ping() {
     entities().forEach(a -> a.ping(this));
     recorder().ping(player().getDirection().ordinal(), player().isMoving());
+    if(timeLeft() <= 0) {
+      onGameOver();
+    }
   }
 }
