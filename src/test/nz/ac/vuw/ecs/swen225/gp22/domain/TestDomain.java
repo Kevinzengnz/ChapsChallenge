@@ -792,6 +792,22 @@ public class TestDomain {
         }
     }
 
+    /**
+     * Robot ping method
+     */
+    @Test public void RobotPingMethodWall(){
+        EntityFactory entityFactory = new EntityFactory();
+        Robot robot = (Robot) entityFactory.createEntity("ROBOT_RIGHT", new Point(1, 2));
+        WallTile wall = (WallTile) entityFactory.createEntity("WALL", new Point(2, 2));
+        wall.setSoundEffect(Audio.getSoundPlayer("WALL"));
+        robot.setMoving(true);
+        List<Entity> GameEntities = Arrays.asList(wall, robot);
+        Model m = makeModel(GameEntities);
+        robot.ping(m);
+        robot.ping(m);
+        Assert.assertEquals(robot.getPoint(), new Point(1, 3));
+    }
+
     public Model makeModel(List<Entity> gameEntities){
         var m = new Model() {
             List<Entity> entities = gameEntities;

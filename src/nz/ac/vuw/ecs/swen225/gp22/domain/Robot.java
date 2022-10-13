@@ -21,6 +21,7 @@ public class Robot extends Actor{
 
     @Override
     public void ping(Model m) {
+        moveValid = true;
         Point newPoint = point.add(direction.arrow);
         m.entities().stream()
                 .filter(entity -> (entity instanceof WallTile)
