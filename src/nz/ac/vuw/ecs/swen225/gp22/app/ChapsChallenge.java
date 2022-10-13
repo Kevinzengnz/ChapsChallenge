@@ -28,7 +28,8 @@ public class ChapsChallenge extends JFrame {
   /**
    * Runs when game is closed.
    */
-  private Runnable closePhase = () -> System.exit(0);
+  private Runnable closePhase = () -> {
+  };
   /**
    * Number of frames ran from start of game.
    */
@@ -63,11 +64,38 @@ public class ChapsChallenge extends JFrame {
       @Override
       public void windowClosed(WindowEvent e) {
         closePhase.run();
+        System.exit(0);
       }
     });
     gameController = new GameController(this);
 
-    levelOne();
+    levelStartMenu();
+    setVisible(true);
+  }
+
+  public void levelStartMenu() {
+    var welcome=new JLabel("Chap's challenge. ");
+    JPanel panel = new JPanel();
+    var levelOne =new Button("Level 1", e->levelOne());
+    var levelTwo =new Button("Level 2", e->levelTwo());
+    closePhase.run();
+    closePhase=()->{
+      remove(welcome);
+      remove(panel);
+    };
+
+    var exitBtn = new Button("Exit", e -> exitGame());
+    var loadBtn = new Button("Load game", e -> loadGame());
+
+    panel.add(levelOne);
+    panel.add(levelTwo);
+    panel.add(loadBtn);
+    panel.add(exitBtn);
+    add(BorderLayout.CENTER,welcome);
+    add(BorderLayout.SOUTH,panel);
+
+    setPreferredSize(getSize());
+    pack();
   }
 
   /**
@@ -109,7 +137,7 @@ public class ChapsChallenge extends JFrame {
    * If the game is paused, unpauses it.
    */
   public void unPauseGame() {
-    currentPhase.controller().pause();
+    currentPhase.controller().unPause();
     paused = false;
     timer.start();
   }
@@ -134,6 +162,7 @@ public class ChapsChallenge extends JFrame {
    */
   public void exitGame() {
     closePhase.run();
+    System.exit(0);
   }
 
   /**
@@ -169,9 +198,9 @@ public class ChapsChallenge extends JFrame {
    */
   private void setPhase(Phase p) {
     currentPhase = p;
+    closePhase.run();//close phase before adding any element of the new phase
     closePhase = () -> {
       p.model().recorder().endRecording();
-      System.exit(0);
     };
     setVisible(true);
 
@@ -228,56 +257,19 @@ public class ChapsChallenge extends JFrame {
     timer.start();
 
     //Initialises buttons
-    var startRecording = new JButton("Start recording");
-    var endRecording = new JButton("End recording");
-    startRecording.addActionListener(e -> startRecording());
-    endRecording.addActionListener(e -> endRecording());
-    startRecording.setFocusable(false);
-    endRecording.setFocusable(false);
+    var startRecording = new Button("Start recording", e -> startRecording());
+    var endRecording = new Button("End recording", e -> endRecording());
 
-    var pauseBtn = new JButton("Pause");
-    pauseBtn.addActionListener(e -> {
-      if (!paused) {
-        pauseGame();
-        pauseBtn.setText("Resume");
-      } else {
-        unPauseGame();
-        pauseBtn.setText("Pause");
-      }
-    });
-    pauseBtn.setFocusable(false);
-
-    var exitBtn = new JButton("Exit game");
-    exitBtn.addActionListener(e -> exitGame());
-    exitBtn.setFocusable(false);
-
-    var saveBtn = new JButton("Save game");
-    saveBtn.addActionListener(e -> saveGame());
-    saveBtn.setFocusable(false);
-
-    var loadBtn = new JButton("Load game");
-    loadBtn.addActionListener(e -> loadGame());
-    loadBtn.setFocusable(false);
-
-    var helpBtn = new JButton("Show/Hide Help");
-    helpBtn.addActionListener(e -> showHelp());
-    helpBtn.setFocusable(false);
-
-    var loadReplay = new JButton("Load Replay");
-    loadReplay.addActionListener(e -> loadReplay());
-    loadReplay.setFocusable(false);
-
-    var replayAutoplay = new JButton("Autoplay Replay");
-    replayAutoplay.addActionListener(e -> replayAutoplay());
-    replayAutoplay.setFocusable(false);
-
-    var replayAutopause = new JButton("Stop Autoplay Replay");
-    replayAutopause.addActionListener(e -> replayAutopause());
-    replayAutopause.setFocusable(false);
-
-    var replayNextTick = new JButton("Next tick of Replay");
-    replayNextTick.addActionListener(e -> replayNextTick());
-    replayNextTick.setFocusable(false);
+    var pauseBtn = new Button("Pause", e -> pauseGame());
+    var resumeBtn = new Button("Resume", e -> unPauseGame());
+    var exitBtn = new Button("Exit game", e -> exitGame());
+    var saveBtn = new Button("Save game", e -> saveGame());
+    var loadBtn = new Button("Load game", e -> loadGame());
+    var helpBtn = new Button("Show/Hide Help", e -> showHelp());
+    var loadReplay = new Button("Load Replay", e -> loadReplay());
+    var replayAutoplay = new Button("Autoplay Replay", e -> replayAutoplay());
+    var replayAutopause = new Button("Stop Autoplay Replay", e -> replayAutopause());
+    var replayNextTick = new Button("Next tick of Replay", e -> replayNextTick());
 
     c.gridx = 5;
     c.weightx = 0.5;
@@ -294,12 +286,14 @@ public class ChapsChallenge extends JFrame {
     c.gridy = 2;
     buttonsPanel.add(pauseBtn, c);
     c.gridy = 3;
-    buttonsPanel.add(helpBtn, c);
+    buttonsPanel.add(resumeBtn, c);
     c.gridy = 4;
-    buttonsPanel.add(saveBtn, c);
+    buttonsPanel.add(helpBtn, c);
     c.gridy = 5;
-    buttonsPanel.add(loadBtn, c);
+    buttonsPanel.add(saveBtn, c);
     c.gridy = 6;
+    buttonsPanel.add(loadBtn, c);
+    c.gridy = 7;
     buttonsPanel.add(exitBtn, c);
 
     c.gridy = 8;
