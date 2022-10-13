@@ -207,7 +207,7 @@ public class ChapsChallenge extends JFrame {
     timeLeft.setFocusable(false);
     infoPanel.add(timeLeft, c);
 
-    p.model().entities().forEach(e -> e.setSoundEffect(Audio.getSoundPlayer(e.getSprite())));
+    p.model().entities().forEach(e -> e.setSoundEffect(Audio.getSoundPlayer(e.getSpriteName())));
     //Creates timer, so it runs in approximately 30 frames per second
     timer = new Timer(1000 / FRAME_RATE, unused -> {
       assert SwingUtilities.isEventDispatchThread();
