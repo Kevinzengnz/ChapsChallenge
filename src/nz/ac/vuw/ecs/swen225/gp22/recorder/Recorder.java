@@ -4,6 +4,9 @@ import nz.ac.vuw.ecs.swen225.gp22.app.Model;
 
 /**
  * Interface for recorder that can record gameplay.
+ *
+ * @author Sankeerth Alookaran Jivan
+ *     ID: 300565439
  */
 public interface Recorder {
   /**

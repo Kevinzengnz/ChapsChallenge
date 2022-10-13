@@ -1,5 +1,11 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
+/**
+ * Action class used for storing movement in replay files.
+ *
+ * @author Sankeerth Alookaran Jivan
+ *     ID: 300565439
+ */
 class Action {
   private final int dir;
   private final int frame;
