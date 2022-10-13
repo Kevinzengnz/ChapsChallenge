@@ -118,6 +118,7 @@ public class Player extends Actor {
         if(!point.equals(this.getPoint())){
             throw new IllegalArgumentException("Player point does not equal Robot point");
         }
+        robot.soundEffect.run();
         model.onGameOver();
     }
 
