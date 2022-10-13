@@ -1,16 +1,15 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
-import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
-
 import java.awt.event.KeyEvent;
 import java.util.LinkedHashSet;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
 
 /**
  * PlayerController class, which has key controls for moving the player.
  *
  * @author Kevin Zeng
- * ID: 300563468
+ *         ID: 300563468
  */
 public class PlayerController extends Keys {
   /**

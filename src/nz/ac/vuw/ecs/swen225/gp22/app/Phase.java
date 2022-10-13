@@ -1,5 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
+import java.util.ArrayList;
+import java.util.List;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Treasure;
@@ -8,14 +10,12 @@ import nz.ac.vuw.ecs.swen225.gp22.recorder.GameRecorder;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
 import org.dom4j.Element;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Phase of Chaps Challenge.
  *
  * @author Kevin Zeng
- * ID: 300563468
+ *         ID: 300563468
  */
 public record Phase(Model model, PlayerController controller, Renderer renderer) {
 
@@ -29,7 +29,8 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
    * @param level         level number
    * @return new phase with the list of given entities
    */
-  static Phase newLevel(Runnable next, Runnable first, List<Entity> levelEntities, int time, int level) {
+  static Phase newLevel(Runnable next, Runnable first,
+                        List<Entity> levelEntities, int time, int level) {
     Renderer renderer = new Renderer();
     GameRecorder recorder = new GameRecorder();
     Player p = levelEntities.stream().filter(a -> a instanceof Player).map(a -> (Player)

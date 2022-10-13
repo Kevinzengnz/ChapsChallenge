@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
  * Chap's Challenge.
  *
  * @author Kevin Zeng
- * ID: 300563468
+ *         ID: 300563468
  */
 public class ChapsChallenge extends JFrame {
   /**
@@ -75,24 +75,24 @@ public class ChapsChallenge extends JFrame {
 
   public void levelStartMenu() {
     var welcome=new JLabel("Chap's challenge. ");
-    JPanel panel = new JPanel();
-    var levelOne =new Button("Level 1", e->levelOne());
-    var levelTwo =new Button("Level 2", e->levelTwo());
+    JPanel bottomPanel = new JPanel();
+    addKeyListener(gameController);
     closePhase.run();
     closePhase=()->{
       remove(welcome);
-      remove(panel);
+      remove(bottomPanel);
     };
 
+    var levelOne =new Button("Level 1", e->levelOne());
+    var levelTwo =new Button("Level 2", e->levelTwo());
     var exitBtn = new Button("Exit", e -> exitGame());
     var loadBtn = new Button("Load game", e -> loadGame());
-
-    panel.add(levelOne);
-    panel.add(levelTwo);
-    panel.add(loadBtn);
-    panel.add(exitBtn);
+    bottomPanel.add(levelOne);
+    bottomPanel.add(levelTwo);
+    bottomPanel.add(loadBtn);
+    bottomPanel.add(exitBtn);
     add(BorderLayout.CENTER,welcome);
-    add(BorderLayout.SOUTH,panel);
+    add(BorderLayout.SOUTH,bottomPanel);
 
     setPreferredSize(getSize());
     pack();
@@ -199,9 +199,7 @@ public class ChapsChallenge extends JFrame {
   private void setPhase(Phase p) {
     currentPhase = p;
     closePhase.run();//close phase before adding any element of the new phase
-    closePhase = () -> {
-      p.model().recorder().endRecording();
-    };
+    closePhase = () -> p.model().recorder().endRecording();
     setVisible(true);
 
     if (timer != null) {
