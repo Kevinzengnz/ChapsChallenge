@@ -64,7 +64,7 @@ public class Robot extends Actor {
     @Override
     public void doAction(Model model, Player player, Point point) {
         if (!this.getPoint().equals(point)) {
-            throw new IllegalArgumentException("Player point does not equal SewageTile Point");
+            throw new IllegalArgumentException("Player point does not equal Robot Point");
         }
         soundEffect.run();
         model.onGameOver();

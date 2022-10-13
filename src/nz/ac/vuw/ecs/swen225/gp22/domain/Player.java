@@ -115,7 +115,7 @@ public class Player extends Actor {
 
     @Override
     public void checkRobotMove(Model model, Robot robot, Point point) {
-        if(point.equals(this.getPoint())){
+        if(!point.equals(this.getPoint())){
             throw new IllegalArgumentException("Player point does not equal Robot point");
         }
         model.onGameOver();
