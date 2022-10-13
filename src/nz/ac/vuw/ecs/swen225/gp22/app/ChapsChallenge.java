@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.SimpleDateFormat;
 
 /**
  * Chap's Challenge.
@@ -227,10 +228,8 @@ public class ChapsChallenge extends JFrame {
     //Initialises buttons
     var startRecording = new JButton("Start recording");
     var endRecording = new JButton("End recording");
-    startRecording.addActionListener(e ->
-        p.model().recorder().startRecording(p.model(), "default"));
-    endRecording.addActionListener(e ->
-        p.model().recorder().endRecording());
+    startRecording.addActionListener(e -> startRecording());
+    endRecording.addActionListener(e -> endRecording());
     startRecording.setFocusable(false);
     endRecording.setFocusable(false);
 
@@ -306,6 +305,17 @@ public class ChapsChallenge extends JFrame {
     setPreferredSize(getSize()); //to keep the current size
     pack();                     //after pack
     renderer.requestFocus();
+  }
+
+  public void startRecording() {
+    currentPhase.model().recorder()
+        .startRecording(currentPhase.model(), "replay " +
+            new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
+            .format(new java.util.Date()));
+  }
+
+  public void endRecording() {
+    currentPhase.model().recorder().endRecording();
   }
 
 
