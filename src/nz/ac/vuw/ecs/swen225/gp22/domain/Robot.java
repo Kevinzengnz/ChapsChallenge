@@ -45,7 +45,7 @@ public class Robot extends Actor {
         Point newPoint = point.add(direction.arrow);
         m.entities().stream()
                 .filter(entity -> (entity instanceof WallTile
-                        || entity instanceof Door || entity instanceof SewageTile
+                        || entity instanceof Door
                         || entity instanceof Player)
                         && entity.getPoint().equals(newPoint))
                 .forEach(entity -> entity.checkRobotMove(m, this, newPoint));
