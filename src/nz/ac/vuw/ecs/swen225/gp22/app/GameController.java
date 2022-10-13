@@ -19,7 +19,7 @@ public class GameController extends Keys {
    * @param c instance of ChapsChallenge
    */
   GameController(ChapsChallenge c) {
-    //SPACE - pause the game and display a “game is paused” dialog
+    //SPACE - pause the game and display a "game is paused" dialog
     setAction(KeyEvent.VK_SPACE, () -> {
     }, c::pauseGame);
 
