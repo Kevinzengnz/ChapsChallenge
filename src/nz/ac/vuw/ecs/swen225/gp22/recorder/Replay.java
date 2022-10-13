@@ -42,7 +42,7 @@ public class Replay {
     pc = game;
     Document replay = null;
     try {
-      replay = XmlParser.parse(new File("Replays/" + replayName + ".xml"));
+      replay = XmlParser.parse(new File(replayName));
     } catch (DocumentException de) {
       RecTesting.log("Replay", "loadReplay", "Error loading replay file");
     }
