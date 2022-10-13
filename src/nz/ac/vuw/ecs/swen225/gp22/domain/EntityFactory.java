@@ -53,6 +53,11 @@ public class EntityFactory {
                 return new Exit(point);
             case "SEWAGE":
                 return new SewageTile(point);
+            case "ROBOT_UP":
+            case "ROBOT_DOWN":
+            case "ROBOT_LEFT":
+            case "ROBOT_RIGHT":
+                return new Robot(point);
         }
         throw new IllegalArgumentException("Invalid Entity Type");
     }
