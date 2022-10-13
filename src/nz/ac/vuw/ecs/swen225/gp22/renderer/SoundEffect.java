@@ -20,7 +20,7 @@ public enum SoundEffect {
   WALL("wall"),
   INFO("info"),
   ROBOT("robot"),
-  SEWAGE("splash");
+  LAVA("splash");
 
   /**
    * The Clip of the SoundEffect. The actual object that plays the audio.
