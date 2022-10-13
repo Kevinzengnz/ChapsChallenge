@@ -30,6 +30,7 @@ public class Replay {
   private ChapsChallenge pc;
   private Element tiles;
   private int timeLeft;
+  private int levelNumber;
 
   /**
    * Loads replay file data into this replay instance.
@@ -48,6 +49,8 @@ public class Replay {
     this.tiles = replay.getRootElement().element("Tiles");
     this.timeLeft = Integer.parseInt(replay.getRootElement().element("Level")
         .attribute("time").getValue());
+    this.levelNumber =
+        Integer.parseInt(replay.getRootElement().element("Level").attribute("name").getValue());
     Element replayElem = replay.getRootElement().element("Replay");
     Element player = replayElem.element("Player");
     this.endPing = Integer.parseInt(replayElem.attribute("end").getValue());
@@ -129,6 +132,10 @@ public class Replay {
 
   public int getTimeLeft(){
     return this.timeLeft;
+  }
+
+  public int getLevelNumber() {
+    return this.levelNumber;
   }
 
   /**
