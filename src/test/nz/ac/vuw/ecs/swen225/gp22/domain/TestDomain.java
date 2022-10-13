@@ -220,7 +220,7 @@ public class TestDomain {
     @Test public void ActorMethodGetSprite(){
         EntityFactory entityFactory = new EntityFactory();
         Actor entity = (Actor)entityFactory.createEntity("PLAYER_DOWN", new Point(1, 1));
-        Assert.assertEquals("PLAYER_DOWN", entity.getSprite());
+        Assert.assertEquals("PLAYER_DOWN", entity.getSpriteName());
     }
 
     @Test public void ActorMethodGetPoint(){
@@ -263,7 +263,7 @@ public class TestDomain {
     @Test public void CollectableMethodGetSprite(){
         EntityFactory entityFactory = new EntityFactory();
         Collectable entity = (Collectable) entityFactory.createEntity("TREASURE", new Point(1, 1));
-        Assert.assertEquals("TREASURE", entity.getSprite());
+        Assert.assertEquals("TREASURE", entity.getSpriteName());
     }
 
     @Test public void CollectableMethodGetPoint(){
@@ -306,7 +306,7 @@ public class TestDomain {
     @Test public void DoorMethodGetSprite(){
         EntityFactory entityFactory = new EntityFactory();
         Door entity = (Door) entityFactory.createEntity("DOOR_YELLOW", new Point(1, 1));
-        Assert.assertEquals("DOOR_YELLOW", entity.getSprite());
+        Assert.assertEquals("DOOR_YELLOW", entity.getSpriteName());
     }
 
     @Test public void DoorMethodGetPoint(){
@@ -349,7 +349,7 @@ public class TestDomain {
     @Test public void ExitMethodGetSprite(){
         EntityFactory entityFactory = new EntityFactory();
         Exit entity = (Exit) entityFactory.createEntity("EXIT", new Point(1, 1));
-        Assert.assertEquals("EXIT", entity.getSprite());
+        Assert.assertEquals("EXIT", entity.getSpriteName());
     }
 
     @Test public void ExitMethodGetPoint(){
@@ -392,7 +392,7 @@ public class TestDomain {
     @Test public void InfoMethodGetSprite(){
         EntityFactory entityFactory = new EntityFactory();
         InfoTile entity = (InfoTile) entityFactory.createEntity("INFO", new Point(1, 1));
-        Assert.assertEquals("INFO", entity.getSprite());
+        Assert.assertEquals("INFO", entity.getSpriteName());
     }
 
     @Test public void InfoMethodGetPoint(){
@@ -495,15 +495,15 @@ public class TestDomain {
     @Test public void ActorMethodGetMultipleSprites(){
         EntityFactory entityFactory = new EntityFactory();
         Player entity = (Player)entityFactory.createEntity("PLAYER_DOWN", new Point(1, 1));
-        Assert.assertEquals("PLAYER_DOWN", entity.getSprite());
+        Assert.assertEquals("PLAYER_DOWN", entity.getSpriteName());
         entity.setDirection(Direction.Up);
-        Assert.assertEquals("PLAYER_UP", entity.getSprite());
+        Assert.assertEquals("PLAYER_UP", entity.getSpriteName());
         entity.setDirection(Direction.Left);
-        Assert.assertEquals("PLAYER_LEFT", entity.getSprite());
+        Assert.assertEquals("PLAYER_LEFT", entity.getSpriteName());
         entity.setDirection(Direction.Right);
-        Assert.assertEquals("PLAYER_RIGHT", entity.getSprite());
+        Assert.assertEquals("PLAYER_RIGHT", entity.getSpriteName());
         entity.setDirection(Direction.None);
-        Assert.assertEquals("PLAYER_RIGHT", entity.getSprite());
+        Assert.assertEquals("PLAYER_RIGHT", entity.getSpriteName());
     }
 
     /**
@@ -819,6 +819,11 @@ public class TestDomain {
             public void onNextLevel() {}
             @Override
             public long totalTreasures() {return 10;}
+
+            @Override
+            public int levelNumber() {
+                return 0;
+            }
         };
         return m;
     }

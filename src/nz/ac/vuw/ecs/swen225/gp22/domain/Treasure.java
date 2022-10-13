@@ -14,7 +14,8 @@ public class Treasure extends Collectable{
         super("TREASURE", point);
     }
     @Override
-    public void doAction(Model model, Player player, Point point) {
+    public void doAction(Model model, Actor actor, Point point) {
+        Player player = (Player) actor;
         if(!this.getPoint().equals(point)){
             throw new IllegalArgumentException("Player point does not equal Treasure Point");
         }
