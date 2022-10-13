@@ -183,18 +183,4 @@ public class XmlParser {
         return timeLeft;
     }
 
-    public static void main(String[] args){
-        ServiceLoader<ExtraActor> loader = ServiceLoader.load(ExtraActor.class);
-
-        Iterator<ExtraActor> iterator = loader.iterator();
-
-
-
-        HashMap<String, ExtraActor> services = new HashMap<>();
-        for (ExtraActor service : loader) {
-            System.out.println(service.getClass().getName());
-            services.put(service.getClass().getName(), service);
-        }
-        System.out.println("Services " + services.size());
-    }
 }
