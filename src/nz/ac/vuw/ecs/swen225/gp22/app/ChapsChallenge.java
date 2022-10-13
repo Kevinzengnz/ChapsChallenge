@@ -38,10 +38,16 @@ public class ChapsChallenge extends JFrame {
    * Current phase of the game.
    */
   private Phase currentPhase;
+
+  /**
+   * A default timer object that performs no actions
+   */
+  private static final Timer EMPTY_TIMER = new Timer(0, e -> {});
+
   /**
    * Timer that performs certain actions every frame.
    */
-  private Timer timer;
+  private Timer timer = EMPTY_TIMER;
 
   /**
    * Boolean for whether the help dialogue is currently shown.
@@ -115,7 +121,8 @@ public class ChapsChallenge extends JFrame {
   public void gameOver() {
     currentPhase.renderer().showPopup("You Died! Click a button to load a new level.");
     currentPhase.renderer().removeKeyListener(currentPhase.controller());
-    pauseGame();
+    timer.stop();
+    timer = EMPTY_TIMER;
     helpDialogue = true;
   }
 
@@ -202,24 +209,30 @@ public class ChapsChallenge extends JFrame {
    * @param p Phase
    */
   private void setPhase(Phase p) {
+    JPanel infoPanel = new JPanel();
+    JPanel buttonsPanel = new JPanel();
     currentPhase = p;
     closePhase.run();//close phase before adding any element of the new phase
-    closePhase = () -> p.model().recorder().endRecording();
+    closePhase = () -> {
+      p.model().recorder().endRecording();
+      helpDialogue = false;
+      remove(p.renderer());
+      remove(infoPanel);
+      remove(buttonsPanel);
+    };
     setVisible(true);
 
-    if (timer != null) {
-      timer.stop();
-    }
+    timer.stop();
     pings = 0;
 
     Renderer renderer = p.renderer();
     renderer.addKeyListener(p.controller());
     renderer.addKeyListener(gameController);
 
-    JPanel infoPanel = new JPanel();
+    infoPanel.setBackground(Color.BLACK);
     infoPanel.setLayout(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
-    c.anchor = GridBagConstraints.FIRST_LINE_END;
+    c.anchor = GridBagConstraints.CENTER;
     c.gridy = 0;
 
     Label level = new Label("Level: " + p.model().levelNumber());
@@ -268,12 +281,13 @@ public class ChapsChallenge extends JFrame {
     var replayNextTick = new Button("Next tick of Replay", e -> replayNextTick());
 
     c.gridx = 5;
-    c.weightx = 0.5;
     c.gridy = 0;
-    c.anchor = GridBagConstraints.LAST_LINE_END;
+    c.weightx = 0.5;
+    c.weighty = 0.;
+    c.anchor = GridBagConstraints.LINE_END;
 
-    JPanel buttonsPanel = new JPanel();
     buttonsPanel.setLayout(new GridBagLayout());
+    buttonsPanel.setBackground(Color.BLACK);
 
     //adds buttons to buttonsPanel
     buttonsPanel.add(startRecording, c);

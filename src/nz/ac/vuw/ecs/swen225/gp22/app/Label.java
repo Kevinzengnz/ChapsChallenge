@@ -20,7 +20,7 @@ public class Label extends JLabel {
    * @param font   desired font for this component
    */
   public Label(String text, Font font) {
-    super(text);
+    super(text, SwingConstants.CENTER);
     setFont(font);
     setFocusable(false);
   }
@@ -33,7 +33,7 @@ public class Label extends JLabel {
    * @param text   text to be displayed on the label
    */
   public Label(String text) {
-    super(text);
+    super(text, SwingConstants.CENTER);
     setFont(DEFAULT_FONT);
     setFocusable(false);
   }
