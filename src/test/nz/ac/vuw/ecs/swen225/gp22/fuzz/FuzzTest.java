@@ -40,7 +40,32 @@ class FuzzTest {
       KeyEvent.VK_DOWN, KeyEvent.VK_S, 
       KeyEvent.VK_LEFT, KeyEvent.VK_A,
       KeyEvent.VK_RIGHT, KeyEvent.VK_D);
+  
+  /**
+   * List of random clicks that can be made
+   */
+  private Pair startR = new Pair(1250, 235);
+  private Pair endR = new Pair(1250, 260);
+  private Pair pause = new Pair(1250, 285);
+  private Pair resume = new Pair(1250, 310);
+  private Pair help = new Pair(1250, 340);
+  private Pair save = new Pair(1250, 365);
+  private Pair load = new Pair(1250, 390);
+  private Pair exit = new Pair(1250, 415);
+  private Pair loadR = new Pair(1250, 440);
+  private Pair autoR = new Pair(1250, 465);
+  private Pair stopAR = new Pair(1250, 490);
+  private Pair nextTR = new Pair(1250, 415);
+  private List<Pair> clickList = List.of(startR, endR, pause, resume, help,
+      save, load, exit, loadR, autoR, stopAR, nextTR
+		  );
 
+  /**
+   * Clicks that can be made after loads
+   */
+  private Pair open = new Pair(750, 500);
+  private List<Pair> loadList = List.of(new Pair(500, 315));
+  
   /**
    * Simple record which acts as a x and y point for clicks.
    *
@@ -85,9 +110,16 @@ class FuzzTest {
    * @return List
    */
   private List<Pair> genPoints(int size) {
+    Pair next = null;
     List<Pair> es = new ArrayList<Pair>();
-    for (int i = 0; i < size; i++) {
-      es.add(new Pair(random.nextInt(1000) + 100, random.nextInt(400) + 100));
+    while (es.size() < size) {
+      next = clickList.get(random.nextInt(clickList.size()));
+      es.add(next);
+      if (next == load || next == loadR) {
+    	  next = loadList.get(random.nextInt(loadList.size()));
+    	  es.add(next);
+    	  es.add(open);
+      }
     }
     return es;
   }
@@ -125,14 +157,21 @@ class FuzzTest {
         e1.printStackTrace();
       }
     
-
+    robot.mouseMove(750, 500);
+    
+    try {
+        Thread.sleep(2000);
+      } catch (InterruptedException e1) {
+        e1.printStackTrace();
+      }
+    
     //Generating randoms
     var events = genEvents(500);
     var clicks = genPoints(50);
     
     //Excecute fuzzes
     assertTimeout(Duration.ofMinutes(1), () -> {
-      checkMovement(events);
+//      checkMovement(events);
       mouseClicks(clicks);
     });
   }
@@ -211,9 +250,11 @@ class FuzzTest {
     clicks.stream()
         .forEach(p -> {
           robot.mouseMove(p.x(), p.y());
-          robot.delay(10);
+          robot.delay(1000);
           robot.mousePress(MouseEvent.BUTTON1_DOWN_MASK);
+          robot.delay(20);
           robot.mouseRelease(MouseEvent.BUTTON1_DOWN_MASK);
+          if(p == exit) {return;}
           }
         );
   }
