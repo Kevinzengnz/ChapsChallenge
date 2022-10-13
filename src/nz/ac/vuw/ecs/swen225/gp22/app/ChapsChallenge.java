@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
+import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Audio;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
 
@@ -261,9 +262,17 @@ public class ChapsChallenge extends JFrame {
     helpBtn.addActionListener(e -> showHelp());
     helpBtn.setFocusable(false);
 
-    var startStopReplay = new JButton("Start/Stop Replay");
-    startStopReplay.addActionListener(e -> {});
-    startStopReplay.setFocusable(false);
+    var loadReplay = new JButton("Load Replay");
+    loadReplay.addActionListener(e -> loadReplay());
+    loadReplay.setFocusable(false);
+
+    var autoplayReplay = new JButton("Autoplay Replay");
+    autoplayReplay.addActionListener(e -> autoplayReplay());
+    autoplayReplay.setFocusable(false);
+
+    var stopAutoplayReplay = new JButton("Stop Autoplay Replay");
+    stopAutoplayReplay.addActionListener(e -> stopAutoplayReplay());
+    stopAutoplayReplay.setFocusable(false);
 
     c.gridx = 5;
     c.weightx = 0.5;
@@ -285,6 +294,12 @@ public class ChapsChallenge extends JFrame {
     c.gridy = 6;
     renderer.add(exitBtn, c);
 
+    c.gridy = 8;
+    renderer.add(loadReplay, c);
+    c.gridy = 9;
+    renderer.add(autoplayReplay, c);
+    c.gridy = 10;
+    renderer.add(stopAutoplayReplay, c);
 
     add(BorderLayout.CENTER, renderer);
     renderer.setFocusable(true);
@@ -293,4 +308,21 @@ public class ChapsChallenge extends JFrame {
     renderer.requestFocus();
   }
 
+
+  public void loadReplay() {
+    JFileChooser fileChooser =
+        new JFileChooser("Replays/");
+    if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+      String fileName = fileChooser.getSelectedFile().getPath();
+      Replay.loadReplay(fileName, this);
+    }
+  }
+
+  public void autoplayReplay() {
+    Replay.autoPlay();
+  }
+
+  public void stopAutoplayReplay() {
+    Replay.autoPause();
+  }
 }
