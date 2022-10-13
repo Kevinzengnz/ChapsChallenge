@@ -284,7 +284,7 @@ public class ChapsChallenge extends JFrame {
     timer = new Timer(1000 / FRAME_RATE, unused -> {
       assert SwingUtilities.isEventDispatchThread();
       pings++;
-      if (pings % 4 == 0) {
+      if (pings % clockSpeed == 0) {
         p.model().ping();
       }
       renderer.ping(p.model().player().getPoint(),
