@@ -42,7 +42,7 @@ class FuzzTest {
       KeyEvent.VK_RIGHT, KeyEvent.VK_D);
   
   /**
-   * List of random clicks that can be made
+   * List of random clicks that can be made.
    */
   private Pair startR = new Pair(1250, 235);
   private Pair endR = new Pair(1250, 260);
@@ -54,17 +54,16 @@ class FuzzTest {
   private Pair exit = new Pair(1250, 415);
   private Pair loadR = new Pair(1250, 440);
   private Pair autoR = new Pair(1250, 465);
-  private Pair stopAR = new Pair(1250, 490);
-  private Pair nextTR = new Pair(1250, 415);
+  private Pair stopA = new Pair(1250, 490);
+  private Pair nextT = new Pair(1250, 515);
   private List<Pair> clickList = List.of(startR, endR, pause, resume, help,
-      save, load, exit, loadR, autoR, stopAR, nextTR
-		  );
+      save, load, loadR, autoR, stopA, nextT);
 
   /**
-   * Clicks that can be made after loads
+   * Clicks that can be made after loads.
    */
   private Pair open = new Pair(750, 500);
-  private List<Pair> loadList = List.of(new Pair(500, 315));
+  private List<Pair> loadList = List.of(new Pair(450, 250));
   
   /**
    * Simple record which acts as a x and y point for clicks.
@@ -116,9 +115,9 @@ class FuzzTest {
       next = clickList.get(random.nextInt(clickList.size()));
       es.add(next);
       if (next == load || next == loadR) {
-    	  next = loadList.get(random.nextInt(loadList.size()));
-    	  es.add(next);
-    	  es.add(open);
+        next = loadList.get(random.nextInt(loadList.size()));
+        es.add(next);
+        es.add(open);
       }
     }
     return es;
@@ -156,22 +155,14 @@ class FuzzTest {
       } catch (InterruptedException e1) {
         e1.printStackTrace();
       }
-    
-    robot.mouseMove(750, 500);
-    
-    try {
-        Thread.sleep(2000);
-      } catch (InterruptedException e1) {
-        e1.printStackTrace();
-      }
-    
+
     //Generating randoms
-    var events = genEvents(500);
-    var clicks = genPoints(50);
+    var events = genEvents(400);
+    var clicks = genPoints(30);
     
     //Excecute fuzzes
     assertTimeout(Duration.ofMinutes(1), () -> {
-//      checkMovement(events);
+      checkMovement(events);
       mouseClicks(clicks);
     });
   }
@@ -179,7 +170,7 @@ class FuzzTest {
   /**
    * test2() : fuzz tests for level 2.
    */
-//  @Test
+  @Test
   public void test2() {
 	//Call the creation of the game
     String[] s = {};
@@ -209,16 +200,15 @@ class FuzzTest {
         e1.printStackTrace();
       }
     
-
     //Generating randoms
-    var events = genEvents(500);
-    var clicks = genPoints(50);
+    var events = genEvents(400);
+    var clicks = genPoints(30);
     
     //Excecute fuzzes
-//    assertTimeout(Duration.ofMinutes(1), () -> {
-//      checkMovement(events);
-//      mouseClicks(clicks);
-//    });
+    assertTimeout(Duration.ofMinutes(1), () -> {
+      checkMovement(events);
+      mouseClicks(clicks);
+    });
   }
 
   /**
@@ -254,7 +244,7 @@ class FuzzTest {
           robot.mousePress(MouseEvent.BUTTON1_DOWN_MASK);
           robot.delay(20);
           robot.mouseRelease(MouseEvent.BUTTON1_DOWN_MASK);
-          if(p == exit) {return;}
+          robot.delay(200);
           }
         );
   }
