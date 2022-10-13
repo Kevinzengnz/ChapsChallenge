@@ -39,7 +39,7 @@ public class XmlParser {
     public static Element getTilesElement(Model m){
         Element Tiles = DocumentHelper.createElement("Tiles");
         for (Entity e : m.entities()) {
-            String name = e.getSprite();
+            String name = e.getSpriteName();
             if (e instanceof InfoTile) {
                 Tiles.addElement(name)
                         .addAttribute("x", String.valueOf(e.getPoint().x()))
@@ -48,7 +48,7 @@ public class XmlParser {
             } else if (e instanceof Player) {
                 ArrayList<String> inventory = new ArrayList<>();
                 for (Key item : ((Player) e).getKeys()) {
-                    inventory.add(item.getSprite());
+                    inventory.add(item.getSpriteName());
                 }
 
                 Tiles.addElement(name)
