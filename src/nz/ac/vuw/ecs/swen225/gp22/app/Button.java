@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
+import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
@@ -22,5 +23,7 @@ public class Button extends JButton {
     super(text);
     addActionListener(action);
     setFocusable(false);
+    setBackground(Color.BLACK);
+    setForeground(Color.WHITE);
   }
 }

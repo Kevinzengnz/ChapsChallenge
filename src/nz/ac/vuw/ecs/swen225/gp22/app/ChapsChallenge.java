@@ -81,12 +81,17 @@ public class ChapsChallenge extends JFrame {
   }
 
   public void levelStartMenu() {
+    setBackground(Color.BLACK);
+    JPanel centerPanel = new JPanel();
+    centerPanel.setBackground(Color.BLACK);
     var welcome=new Label("Chap's challenge. ");
+    centerPanel.add(welcome);
     JPanel bottomPanel = new JPanel();
+    bottomPanel.setBackground(Color.BLACK);
     addKeyListener(gameController);
     closePhase.run();
     closePhase=()->{
-      remove(welcome);
+      remove(centerPanel);
       remove(bottomPanel);
     };
 
@@ -98,7 +103,7 @@ public class ChapsChallenge extends JFrame {
     bottomPanel.add(levelTwo);
     bottomPanel.add(loadBtn);
     bottomPanel.add(exitBtn);
-    add(BorderLayout.CENTER,welcome);
+    add(BorderLayout.CENTER,centerPanel);
     add(BorderLayout.SOUTH,bottomPanel);
 
     setPreferredSize(getSize());

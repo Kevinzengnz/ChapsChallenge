@@ -13,19 +13,6 @@ public class Label extends JLabel {
   private static final Font DEFAULT_FONT = new Font("Verdana", Font.PLAIN, 20);
 
   /**
-   * Constructor takes in a text field, and a font.
-   * Labels are by default set to not focusable.
-   *
-   * @param text   text to be displayed on the label
-   * @param font   desired font for this component
-   */
-  public Label(String text, Font font) {
-    super(text, SwingConstants.CENTER);
-    setFont(font);
-    setFocusable(false);
-  }
-
-  /**
    * Constructor that takes in just a text field.
    * Font is set to the DEFAULT_FONT.
    * Labels are by default set to not focusable.
@@ -35,6 +22,8 @@ public class Label extends JLabel {
   public Label(String text) {
     super(text, SwingConstants.CENTER);
     setFont(DEFAULT_FONT);
+    setBackground(Color.BLACK);
+    setForeground(Color.WHITE);
     setFocusable(false);
   }
 }
