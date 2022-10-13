@@ -19,6 +19,7 @@ import java.util.*;
 /**
  * @author Leon Zhou
  * 300578231
+ * This class is used to parse the xml file for loading and saving the game
  */
 public class XmlParser {
 
@@ -30,13 +31,21 @@ public class XmlParser {
      *
      * @param url the xml file to be parsed
      * @return the document of the xml file
+     * @Author Leon Zhou 300578231
      */
     public static Document parse(File url) throws DocumentException {
         SAXReader reader = new SAXReader();
         return reader.read(url);
     }
 
-    public static Element getTilesElement(Model m){
+    /**
+     * This function gets the tiles element from the model
+     *
+     * @param m
+     * @return the tiles element
+     * @Author Leon Zhou 300578231
+     */
+    public static Element getTilesElement(Model m) {
         Element Tiles = DocumentHelper.createElement("Tiles");
         for (Entity e : m.entities()) {
             String name = e.getSpriteName();
@@ -67,7 +76,9 @@ public class XmlParser {
 
     /**
      * This function saves the current game to a xml file
+     *
      * @param m Current model
+     * @Author Leon Zhou 300578231
      */
     public static void saveGame(Model m, String levelName) throws IOException {
         //print the list of entities
@@ -87,12 +98,12 @@ public class XmlParser {
         write(document, levelName, "src/nz/ac/vuw/ecs/swen225/gp22/persistency/levels/");
     }
 
-
     /**
      * This function saves the document to a xml file
+     *
      * @param document the document to be saved
      * @param fileName the name of the file
-     * @param path the path of the file
+     * @param path     the path of the file
      */
     public static void write(Document document, String fileName, String path) throws IOException {
         // write to a file
@@ -101,7 +112,13 @@ public class XmlParser {
         out.close();
     }
 
-    public static List<Entity> loadTiles(Element Tiles){
+    /**
+     * This function returns the list of entities from the Tiles element
+     *
+     * @param Tiles the Tiles element
+     * @return the list of entities
+     */
+    public static List<Entity> loadTiles(Element Tiles) {
         List<Entity> entities = new ArrayList<>();
         EntityFactory factory = new EntityFactory();
         for (Element e : Tiles.elements()) {
@@ -110,7 +127,7 @@ public class XmlParser {
                         new Point(Integer.parseInt(e.attributeValue("x")), Integer.parseInt(e.attributeValue("y"))));
                 ((InfoTile) IT).setText(e.attributeValue("text"));
                 entities.add(IT);
-            } else if(e.getName().equals("PLAYER_UP") ||e.getName().equals("PLAYER_DOWN") || e.getName().equals("PLAYER_RIGHT") ||e.getName().equals("PLAYER_LEFT") ){
+            } else if (e.getName().equals("PLAYER_UP") || e.getName().equals("PLAYER_DOWN") || e.getName().equals("PLAYER_RIGHT") || e.getName().equals("PLAYER_LEFT")) {
                 Entity player = factory.createEntity(e.getName(),
                         new Point(Integer.parseInt(e.attributeValue("x")), Integer.parseInt(e.attributeValue("y"))));
                 if (e.attributeValue("inventory") != null) {
@@ -127,8 +144,7 @@ public class XmlParser {
                     ((Player) player).setTreasureCollected(Integer.parseInt(e.attributeValue("treasure")));
                 }
                 entities.add(player);
-            }
-            else {
+            } else {
                 entities.add(factory.createEntity(e.getName(),
                         new Point(Integer.parseInt(e.attributeValue("x")), Integer.parseInt(e.attributeValue("y")))));
             }
@@ -138,8 +154,10 @@ public class XmlParser {
 
     /**
      * Load game from xml file
+     *
      * @param path
      * @return the list of entities in the xml file
+     * @Author Leon Zhou 300578231
      */
     public static List<Entity> loadGame(String path) {
         //load file from path
@@ -169,7 +187,9 @@ public class XmlParser {
 
     /**
      * This function returns the level number
+     *
      * @return the level number
+     * @Author Leon Zhou 300578231
      */
     public static int getLevel() {
         return levelNumber;
@@ -177,7 +197,9 @@ public class XmlParser {
 
     /**
      * This function returns the time
+     *
      * @return the time
+     * @Author Leon Zhou 300578231
      */
     public static int getTime() {
         return timeLeft;
