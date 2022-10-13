@@ -451,13 +451,13 @@ public class ChapsChallenge extends JFrame {
    * Increases the speed of the replay
    */
   public void increaseReplaySpeed() {
-    Replay.setReplaySpeed(2);
+    Replay.increaseSpeed();
   }
 
   /**
    * Decreases the speed of the replay
    */
   public void decreaseReplaySpeed() {
-    Replay.setReplaySpeed(1);
+    Replay.decreaseSpeed();
   }
 }
