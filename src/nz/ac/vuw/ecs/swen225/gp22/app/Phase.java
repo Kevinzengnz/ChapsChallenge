@@ -6,6 +6,7 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Treasure;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.XmlParser;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.GameRecorder;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
+import org.dom4j.Element;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -133,5 +134,20 @@ public record Phase(Model model, PlayerController controller, Renderer renderer)
     return newLevel(() -> {
     }, () -> {
     }, levelEntities, XmlParser.getTime(), XmlParser.getLevel());
+  }
+
+  /**
+   * Loads a level from a given tiles elements, which has the list of entities.
+   *
+   * @param tiles       file to load game layout from
+   * @param time        time left in save
+   * @param levelNumber level number
+   * @return new phase created from given file
+   */
+  static Phase loadLevel(Element tiles, int time, int levelNumber) {
+    List<Entity> levelEntities = XmlParser.loadTiles(tiles);
+    return newLevel(() -> {
+    }, () -> {
+    }, levelEntities, time, levelNumber);
   }
 }
