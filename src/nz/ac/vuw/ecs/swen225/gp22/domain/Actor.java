@@ -1,29 +1,26 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
 /**
- * Represents Actors in the game.
- * Actors are able to move around.
- *
+ * Represents Actors in the game
+ * Actors are able to move around
  * @author Alicia Robinson - 300560663
  */
-
-public class Actor implements Entity {
-
+public class Actor implements Entity{
     /**
-     * Boolean to tell if the Actor should be moving.
+     * boolean to tell if the Actor should be moving
      */
     private boolean moving = false;
     /**
-     * String of the spriteName name.
+     * String of the spriteName name
      */
     protected String spriteName;
     /**
-     * Point that Actor is currently at.
+     * Point that Actor is currently at
      */
     protected Point point;
     /**
-     * Direction Actor is facing.
-     * Initially set to Down.
+     * direction Actor is facing
+     * Initially set to Down
      */
     protected Direction direction = Direction.Down;
     /**
@@ -32,8 +29,7 @@ public class Actor implements Entity {
     protected boolean moveValid = true;
 
     /**
-     * Creates an Actor from the given spriteName and point.
-     *
+     * Creates an Actor from the given spriteName and point
      * @param spriteName Actors spriteName
      * @param point Starting position of Actor
      */
@@ -43,66 +39,47 @@ public class Actor implements Entity {
     }
 
     /**
-     * Sets moving to true or false.
-     *
+     * Sets moving to true or false
      * @param moving boolean for if the Actor should be moving
      */
-    public void setMoving(boolean moving) {
+    public void setMoving(boolean moving){
         this.moving = moving;
     }
 
     /**
-     * Sets the Actors direction.
-     *
+     * Sets the Actors direction
      * @param direction direction that Actor is facing
      */
-    public void setDirection(Direction direction) {
-        if (direction == null) {
+    public void setDirection(Direction direction){
+        if(direction == null){
             throw new IllegalArgumentException("direction is null");
         }
         this.direction = direction;
     }
 
     /**
-     * Sets spriteName name to given string.
-     *
+     * Sets spriteName name to given string
      * @param spriteName name to be set
      */
-    public void setSpriteName(String spriteName) {
+    public void setSpriteName(String spriteName){
         this.spriteName = spriteName;
     }
 
     /**
-     * Tells if the Actor is currently moving.
-     *
      * @return true if Actor is moving and false if they aren't
      */
-    public boolean isMoving() {
-        return this.moving;
-    }
+    public boolean isMoving(){ return this.moving; }
 
     /**
-     * Gets direction Actor is facing.
-     *
      * @return direction that Actor is facing
      */
-    public Direction getDirection() {
-        return direction;
-    }
+    public Direction getDirection(){ return direction; }
+    @Override
+    public String getSpriteName() { return this.spriteName; }
 
     @Override
-    public String getSpriteName() {
-        return this.spriteName;
-    }
-
+    public Point getPoint() { return this.point; }
     @Override
-    public Point getPoint() {
-        return this.point;
-    }
-
-    @Override
-    public int getDepth() {
-        return 2;
-    }
+    public int getDepth() { return 2; }
 }
 
