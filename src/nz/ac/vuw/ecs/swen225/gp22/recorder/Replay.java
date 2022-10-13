@@ -92,7 +92,7 @@ public class Replay {
     //Otherwise create a new timer and start it.
     timer = new Timer(1000 / 30, x -> {
       assert SwingUtilities.isEventDispatchThread();
-      if(isRunning){pc.setClockSpeed(speed);}
+      if(isRunning()){pc.setClockSpeed(speed);}
       frames++;
       if (frames % speed == 0) {
         pings++;
@@ -125,11 +125,15 @@ public class Replay {
   }
 
   public static void increaseSpeed() {
-    speed = (speed == 2) ? speed-1 : speed;
+    if(speed > 2){
+      speed--;
+    }
   }
 
   public static void decreaseSpeed() {
-    speed = (speed == 8) ? speed+1 : speed;
+    if(speed < 8){
+      speed++;
+    }
   }
 
   /**
