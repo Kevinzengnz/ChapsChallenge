@@ -1,29 +1,26 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
-
+import nz.ac.vuw.ecs.swen225.gp22.app.Model;
+import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import nz.ac.vuw.ecs.swen225.gp22.app.Model;
-
 /**
  * Represents the Player in the game.
  * Player can move around and interact with other Entities.
- *
  * @author Alicia Robinson - 300560663
  */
-public class Player extends Actor {
+public class Player extends Actor{
     /**
-     * Number of Treasures Player has collected.
+     * Number of Treasures Player has collected
      */
     private int treasureCollected = 0;
     /**
-     * Keys Player has collected.
+     * Keys Player has collected
      */
     List<Key> keys = new ArrayList<>();
 
     /**
      * Creates Player using given point and sprite.
-     *
      * @param point position of Player
      * @param sprite Player sprite
      */
@@ -32,72 +29,59 @@ public class Player extends Actor {
     }
 
     /**
-     * Adds given key to the players key list.
-     *
+     * Adds given key to the players key list
      * @param key key that player has picked up
      */
-    protected void addKey(Key key) {
+    protected void addKey(Key key){
         keys.add(key);
     }
 
     /**
-     * Increases treasureCollected by 1.
+     * Increases treasureCollected by 1
      */
-    protected void addTreasure() {
-        treasureCollected += 1;
-    }
+    protected void addTreasure(){ treasureCollected += 1; }
 
     /**
-     * Gets number of treasures collected.
-     *
-     * @return number of treasures player has collected.
+     * @return number of treasures player has collected
      */
     public int getTreasureCollected() {
         return treasureCollected;
     }
 
     /**
-     * Gets unmodifiable list of keys.
-     *
      * @return players keys list
      */
-    public List<Key> getKeys() {
+    public List<Key> getKeys(){
         return Collections.unmodifiableList(keys);
     }
 
     /**
-     * Removes given key from players keys list.
-     *
+     * Removes given key from players keys list
      * @param key to be removed
      */
-    public void removeKey(Key key) {
-        this.keys.remove(key);
-    }
+    public void removeKey(Key key){this.keys.remove(key);}
 
     /**
-     * sets keys list to given list.
-     *
+     * sets keys list to given list
      * @param keys list of keys
      */
-    public void setKeys(List<Key> keys) {
-        if (keys == null) {
+    public void setKeys(List<Key> keys){
+        if(keys == null){
             throw new IllegalArgumentException("Keys list is null");
         }
-        this.keys.addAll(keys);
+        this.keys = keys;
     }
 
     /**
-     * Sets treasureCollected.
-     *
+     * Sets treasureCollected
      * @param treasureCollected number to set treasure collected to
      */
-    public void setTreasureCollected(int treasureCollected) {
-        if (treasureCollected < 0) {
+    public void setTreasureCollected(int treasureCollected){
+        if(treasureCollected < 0){
             throw new IllegalArgumentException("Collected treasures cannot be less than 0");
         }
         this.treasureCollected = treasureCollected;
     }
-
     @Override
     public void ping(Model m) {
         if (isMoving()) {
@@ -112,7 +96,6 @@ public class Player extends Actor {
             }
         }
     }
-
     @Override
     public String getSpriteName() {
         return switch (getDirection()) {
