@@ -208,9 +208,16 @@ public class ChapsChallenge extends JFrame {
    * @param p Phase
    */
   private void setPhase(Phase p) {
+    JPanel infoPanel = new JPanel();
+    JPanel buttonsPanel = new JPanel();
     currentPhase = p;
     closePhase.run();//close phase before adding any element of the new phase
-    closePhase = () -> p.model().recorder().endRecording();
+    closePhase = () -> {
+      p.model().recorder().endRecording();
+      remove(p.renderer());
+      remove(infoPanel);
+      remove(buttonsPanel);
+    };
     setVisible(true);
 
     timer.stop();
@@ -220,7 +227,6 @@ public class ChapsChallenge extends JFrame {
     renderer.addKeyListener(p.controller());
     renderer.addKeyListener(gameController);
 
-    JPanel infoPanel = new JPanel();
     infoPanel.setBackground(Color.BLACK);
     infoPanel.setLayout(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
@@ -275,9 +281,8 @@ public class ChapsChallenge extends JFrame {
     c.gridx = 5;
     c.weightx = 0.5;
     c.gridy = 0;
-    c.anchor = GridBagConstraints.CENTER;
+    c.anchor = GridBagConstraints.LINE_END;
 
-    JPanel buttonsPanel = new JPanel();
     buttonsPanel.setLayout(new GridBagLayout());
     buttonsPanel.setBackground(Color.BLACK);
 
