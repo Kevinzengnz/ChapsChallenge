@@ -33,14 +33,6 @@ public class SewageTile extends Tile {
     }
 
     @Override
-    public void checkRobotMove(Model model, Robot robot, Point point) {
-        if (!point.equals(this.getPoint())) {
-            throw new IllegalArgumentException("Robot point does not match SewageTile point");
-        }
-        robot.moveValid = false;
-    }
-
-    @Override
     public void setSoundEffect(Runnable soundEffect) {
         if (soundEffect == null) {
             throw new IllegalArgumentException("Sound Effect is Null");
