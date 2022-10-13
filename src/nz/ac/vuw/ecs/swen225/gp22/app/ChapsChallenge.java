@@ -28,7 +28,8 @@ public class ChapsChallenge extends JFrame {
   /**
    * Runs when game is closed.
    */
-  private Runnable closePhase = () -> System.exit(0);
+  private Runnable closePhase = () -> {
+  };
   /**
    * Number of frames ran from start of game.
    */
@@ -63,11 +64,29 @@ public class ChapsChallenge extends JFrame {
       @Override
       public void windowClosed(WindowEvent e) {
         closePhase.run();
+        System.exit(0);
       }
     });
     gameController = new GameController(this);
 
-    levelOne();
+    levelStartMenu();
+    setVisible(true);
+  }
+
+  public void levelStartMenu() {
+    var welcome=new JLabel("Chap's challenge. Press start to start from level 1");
+    var start=new JButton("Start!");
+    closePhase.run();
+    closePhase=()->{
+      remove(welcome);
+      remove(start);
+    };
+    add(BorderLayout.CENTER,welcome);
+    add(BorderLayout.SOUTH,start);
+    start.addActionListener(e->levelOne());
+
+    setPreferredSize(getSize());
+    pack();
   }
 
   /**
@@ -169,9 +188,9 @@ public class ChapsChallenge extends JFrame {
    */
   private void setPhase(Phase p) {
     currentPhase = p;
+    closePhase.run();//close phase before adding any element of the new phase
     closePhase = () -> {
       p.model().recorder().endRecording();
-      System.exit(0);
     };
     setVisible(true);
 
