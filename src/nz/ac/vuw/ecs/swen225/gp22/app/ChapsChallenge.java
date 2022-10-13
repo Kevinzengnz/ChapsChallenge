@@ -349,6 +349,7 @@ public class ChapsChallenge extends JFrame {
     if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
       String fileName = fileChooser.getSelectedFile().getPath();
       Replay.loadReplay(fileName, this);
+      setPhase(Phase.loadLevel(Replay.getTiles(),Replay.getTimeLeft(),Replay.getLevelNumber()));
     }
   }
 
