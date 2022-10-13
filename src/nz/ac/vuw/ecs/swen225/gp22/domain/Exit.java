@@ -11,7 +11,7 @@ public class Exit implements Entity{
      * String of the sprite name
      * Only one type of Exit so name cannot be changed
      */
-    private final String sprite = "EXIT";
+    private final String spriteName = "EXIT";
     /**
      * Point that Exit is at
      */
@@ -39,7 +39,7 @@ public class Exit implements Entity{
 
 
     @Override
-    public String getSprite() { return this.sprite; }
+    public String getSpriteName() { return this.spriteName; }
 
 
     @Override
@@ -54,13 +54,13 @@ public class Exit implements Entity{
     }
 
     @Override
-    public void doAction(Model model, Player player, Point point) {
+    public void doAction(Model model, Actor actor, Point point) {
         //TODO pre condition checks needed
         if(!this.getPoint().equals(point)){
             throw new IllegalArgumentException("Player point does not equal Exit Point");
         }
         if(model.treasuresLeft() != 0){
-            player.moveValid = false;
+            actor.moveValid = false;
             throw new IllegalStateException("All treasures have not been collected, Exit should not be accessible");
         }
         soundEffect.run();

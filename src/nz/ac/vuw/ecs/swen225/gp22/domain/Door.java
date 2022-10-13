@@ -5,7 +5,7 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
  * @author Alicia Robinson - 300560663
  */
 public class Door implements Entity{
-    private String sprite;
+    private String spriteName;
     private final Point point;
     public Runnable soundEffect;
 
@@ -27,18 +27,18 @@ public class Door implements Entity{
 
     /**
      * Sets the sprite with the given string
-     * @param sprite String name of sprite
+     * @param spriteName String name of sprite
      */
-    public void setSprite(String sprite){
-        if(sprite == null){
-            throw new IllegalArgumentException("Door Sprite is null");
+    public void setSpriteName(String spriteName){
+        if(spriteName == null){
+            throw new IllegalArgumentException("Door Sprite Name is null");
         }
-        this.sprite = sprite;
+        this.spriteName = spriteName;
     }
 
     @Override
-    public String getSprite() {
-        return this.sprite;
+    public String getSpriteName() {
+        return this.spriteName;
     }
 
     @Override

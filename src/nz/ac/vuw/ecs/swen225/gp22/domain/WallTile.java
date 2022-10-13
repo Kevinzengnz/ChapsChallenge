@@ -24,11 +24,13 @@ public class WallTile extends Tile{
     }
 
     @Override
-    public void doAction(Model model, Player player, Point point) {
-        if(!this.getPoint().equals(point)){
-            throw new IllegalArgumentException("Player point does not equal WallTile Point");
+    public void doAction(Model model, Actor actor, Point point) {
+        if(actor instanceof Player){
+            if(!this.getPoint().equals(point)){
+                throw new IllegalArgumentException("Player point does not equal WallTile Point");
+            }
+            soundEffect.run();
         }
-        soundEffect.run();
-        player.moveValid = false;
+        actor.moveValid = false;
     }
 }
