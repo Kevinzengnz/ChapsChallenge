@@ -3,6 +3,7 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import javax.swing.*;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
@@ -401,7 +402,12 @@ public class ChapsChallenge extends JFrame {
         new JFileChooser("Replays/");
     if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
       String fileName = fileChooser.getSelectedFile().getPath();
-      Replay.loadReplay(fileName, this);
+      try {
+        Replay.loadReplay(fileName, this);
+      } catch (IOException e) {
+        System.out.println(e.getMessage());
+        return;
+      }
       setPhase(Phase.loadLevel(Replay.getTiles(), Replay.getTimeLeft(), Replay.getLevelNumber(),
           this::victory, this::gameOver));
       pauseGame();
