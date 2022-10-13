@@ -18,7 +18,9 @@ public enum SoundEffect {
   EXIT("portal"),
   KEY("key"),
   WALL("wall"),
-  INFO("info");
+  INFO("info"),
+  ROBOT("robot"),
+  SEWAGE("splash");
 
   /**
    * The Clip of the SoundEffect. The actual object that plays the audio.
