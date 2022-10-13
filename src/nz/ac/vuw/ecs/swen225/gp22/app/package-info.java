@@ -10,7 +10,7 @@
  * 4. CTRL-1 - start a new game at level 1
  * 5. CTRL-2 - start a new game at level 2
  * 6. SPACE - pause the game and display a “game is paused” dialog
- * 7. ESC - close the “game is paused” dialog and resume the game
+ * 7. ESC - close the "game is paused" dialog and resume the game
  * 8. UP, DOWN, LEFT, RIGHT ARROWS -- move Chap within the maze
  * The application window should display the time left to play, the current level, keys collected, and
  * the number of treasures that still need to be collected. It should also offer buttons and menu
