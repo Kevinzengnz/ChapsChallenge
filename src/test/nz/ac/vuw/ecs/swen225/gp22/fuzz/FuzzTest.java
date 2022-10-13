@@ -44,20 +44,21 @@ class FuzzTest {
   /**
    * List of random clicks that can be made.
    */
-  private Pair startR = new Pair(1250, 235);
-  private Pair endR = new Pair(1250, 260);
-  private Pair pause = new Pair(1250, 285);
-  private Pair resume = new Pair(1250, 310);
-  private Pair help = new Pair(1250, 340);
-  private Pair save = new Pair(1250, 365);
-  private Pair load = new Pair(1250, 390);
-  private Pair exit = new Pair(1250, 415);
-  private Pair loadR = new Pair(1250, 440);
-  private Pair autoR = new Pair(1250, 465);
-  private Pair stopA = new Pair(1250, 490);
-  private Pair nextT = new Pair(1250, 515);
+  private Pair startR = new Pair(1250, 210);
+  private Pair endR = new Pair(1250, 235);
+  private Pair pause = new Pair(1250, 260);
+  private Pair resume = new Pair(1250, 285);
+  private Pair help = new Pair(1250, 310);
+  private Pair save = new Pair(1250, 335);
+  private Pair load = new Pair(1250, 360);
+  private Pair loadR = new Pair(1250, 420);
+  private Pair autoR = new Pair(1250, 445);
+  private Pair stopA = new Pair(1250, 470);
+  private Pair nextT = new Pair(1250, 495);
+  private Pair incS = new Pair(1250, 520);
+  private Pair decS = new Pair(1250, 545);
   private List<Pair> clickList = List.of(startR, endR, pause, resume, help,
-      save, load, loadR, autoR, stopA, nextT);
+      save, load, loadR, autoR, stopA, nextT, incS, decS);
 
   /**
    * Clicks that can be made after loads.
