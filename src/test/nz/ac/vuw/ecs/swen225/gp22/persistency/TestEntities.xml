@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <LEVEL level="1"/>
+    <TIME time="100"/>
+    <Tiles>
+        <PLAYER_DOWN x="10" y="9"/>
+        <INFO x="10" y="8" text="GET TREASURES TO OPEN THE EXIT DOOR. COLLECT KEYS TO OPEN LOCKED DOORS."/>
+        <FLOOR x="0" y="0"/>
+    </Tiles>
+</root>
