@@ -121,6 +121,7 @@ public class ChapsChallenge extends JFrame {
   public void gameOver() {
     currentPhase.renderer().showPopup("You Died! Click a button to load a new level.");
     currentPhase.renderer().removeKeyListener(currentPhase.controller());
+    timer.stop();
     timer = EMPTY_TIMER;
     helpDialogue = true;
   }
@@ -214,6 +215,7 @@ public class ChapsChallenge extends JFrame {
     closePhase.run();//close phase before adding any element of the new phase
     closePhase = () -> {
       p.model().recorder().endRecording();
+      helpDialogue = false;
       remove(p.renderer());
       remove(infoPanel);
       remove(buttonsPanel);
@@ -279,8 +281,9 @@ public class ChapsChallenge extends JFrame {
     var replayNextTick = new Button("Next tick of Replay", e -> replayNextTick());
 
     c.gridx = 5;
-    c.weightx = 0.5;
     c.gridy = 0;
+    c.weightx = 0.5;
+    c.weighty = 0.;
     c.anchor = GridBagConstraints.LINE_END;
 
     buttonsPanel.setLayout(new GridBagLayout());
