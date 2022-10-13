@@ -1,14 +1,14 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
-import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
-import nz.ac.vuw.ecs.swen225.gp22.renderer.Audio;
-import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
+import javax.swing.*;
+import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
+import nz.ac.vuw.ecs.swen225.gp22.renderer.Audio;
+import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
+
 
 /**
  * Chap's Challenge.
@@ -23,7 +23,7 @@ public class ChapsChallenge extends JFrame {
   private static final int FRAME_RATE = 30;
 
   /**
-   * Speed for replays
+   * Speed for replays.
    */
   private int clockSpeed = 4;
 
@@ -46,7 +46,7 @@ public class ChapsChallenge extends JFrame {
   private Phase currentPhase;
 
   /**
-   * A default timer object that performs no actions
+   * A default timer object that performs no actions.
    */
   private static final Timer EMPTY_TIMER = new Timer(0, e -> {});
 
@@ -80,33 +80,36 @@ public class ChapsChallenge extends JFrame {
     setVisible(true);
   }
 
+  /**
+   * Starts up the start menu.
+   */
   public void levelStartMenu() {
     setBackground(Color.BLACK);
     JPanel centerPanel = new JPanel();
     centerPanel.setBackground(Color.BLACK);
     centerPanel.setLayout(new GridBagLayout());
-    var welcome=new Label("Chap's challenge. \n" +
-        "Press a button to load a level.");
+    var welcome = new Label("Chap's challenge."
+        + "Press a button to load a level.");
     centerPanel.add(welcome);
     JPanel bottomPanel = new JPanel();
     bottomPanel.setBackground(Color.BLACK);
     addKeyListener(gameController);
     closePhase.run();
-    closePhase=()->{
+    closePhase = () -> {
       remove(centerPanel);
       remove(bottomPanel);
     };
 
-    var levelOne =new Button("Level 1", e->levelOne());
-    var levelTwo =new Button("Level 2", e->levelTwo());
+    var levelOne = new Button("Level 1", e -> levelOne());
+    var levelTwo = new Button("Level 2", e -> levelTwo());
     var exitBtn = new Button("Exit", e -> exitGame());
     var loadBtn = new Button("Load game", e -> loadGame());
     bottomPanel.add(levelOne);
     bottomPanel.add(levelTwo);
     bottomPanel.add(loadBtn);
     bottomPanel.add(exitBtn);
-    add(BorderLayout.CENTER,centerPanel);
-    add(BorderLayout.SOUTH,bottomPanel);
+    add(BorderLayout.CENTER, centerPanel);
+    add(BorderLayout.SOUTH, bottomPanel);
 
     setPreferredSize(getSize());
     pack();
@@ -146,7 +149,8 @@ public class ChapsChallenge extends JFrame {
    * User can resume afterwards by pressing a load keybinding, or pressing a button.
    */
   public void victory() {
-    currentPhase.renderer().showPopup("You completed the level! Click a button to load a new level.");
+    currentPhase.renderer()
+        .showPopup("You completed the level! Click a button to load a new level.");
     currentPhase.renderer().removeKeyListener(currentPhase.controller());
     timer.stop();
     timer = EMPTY_TIMER;
@@ -241,7 +245,7 @@ public class ChapsChallenge extends JFrame {
     JPanel infoPanel = new JPanel();
     JPanel buttonsPanel = new JPanel();
     currentPhase = p;
-    closePhase.run();//close phase before adding any element of the new phase
+    closePhase.run(); //close phase before adding any element of the new phase
     closePhase = () -> {
       p.model().recorder().endRecording();
       helpDialogue = false;
@@ -288,59 +292,67 @@ public class ChapsChallenge extends JFrame {
           p.model().player().getKeys());
       renderer.repaint();
       treasuresLeft.setText("Treasures left: " + p.model().treasuresLeft());
-      if (pings % (int) (FRAME_RATE/(4.0/clockSpeed)) == 0) {
+      if (pings % (int) (FRAME_RATE / (4.0 / clockSpeed)) == 0) {
         p.model().decrementTime();
         timeLeft.setText("Time Left: " + p.model().timeLeft());
       }
     });
     timer.start();
 
-    //Initialises buttons
-    var startRecording = new Button("Start recording", e -> startRecording());
-    var endRecording = new Button("End recording", e -> endRecording());
-    var pauseBtn = new Button("Pause", e -> pauseGame());
-    var resumeBtn = new Button("Resume", e -> unPauseGame());
-    var exitBtn = new Button("Exit game", e -> exitGame());
-    var saveBtn = new Button("Save game", e -> saveGame());
-    var loadBtn = new Button("Load game", e -> loadGame());
-    var helpBtn = new Button("Show/Hide Help", e -> showHelp());
-    var loadReplay = new Button("Load Replay", e -> loadReplay());
-    var replayAutoplay = new Button("Autoplay Replay", e -> replayAutoplay());
-    var replayAutopause = new Button("Stop Autoplay Replay", e -> replayAutopause());
-    var replayNextTick = new Button("Next tick of Replay", e -> replayNextTick());
-
     c.gridx = 5;
     c.gridy = 0;
     c.weightx = 0.5;
     c.weighty = 0.;
     c.anchor = GridBagConstraints.LINE_END;
-
     buttonsPanel.setLayout(new GridBagLayout());
     buttonsPanel.setBackground(Color.BLACK);
 
-    //adds buttons to buttonsPanel
+    //Initialises and adds buttons
+
+    var startRecording = new Button("Start recording", e -> startRecording());
     buttonsPanel.add(startRecording, c);
+
+    var endRecording = new Button("End recording", e -> endRecording());
     c.gridy = 1;
     buttonsPanel.add(endRecording, c);
+
+    var pauseBtn = new Button("Pause", e -> pauseGame());
     c.gridy = 2;
     buttonsPanel.add(pauseBtn, c);
+
+    var resumeBtn = new Button("Resume", e -> unPauseGame());
     c.gridy = 3;
     buttonsPanel.add(resumeBtn, c);
+
+    var helpBtn = new Button("Show/Hide Help", e -> showHelp());
     c.gridy = 4;
     buttonsPanel.add(helpBtn, c);
+
+    var saveBtn = new Button("Save game", e -> saveGame());
     c.gridy = 5;
     buttonsPanel.add(saveBtn, c);
+
+    var loadBtn = new Button("Load game", e -> loadGame());
     c.gridy = 6;
     buttonsPanel.add(loadBtn, c);
+
+    var exitBtn = new Button("Exit game", e -> exitGame());
     c.gridy = 7;
     buttonsPanel.add(exitBtn, c);
 
+    var loadReplay = new Button("Load Replay", e -> loadReplay());
     c.gridy = 8;
     buttonsPanel.add(loadReplay, c);
+
+    var replayAutoplay = new Button("Autoplay Replay", e -> replayAutoplay());
     c.gridy = 9;
     buttonsPanel.add(replayAutoplay, c);
+
+    var replayAutopause = new Button("Stop Autoplay Replay", e -> replayAutopause());
     c.gridy = 10;
     buttonsPanel.add(replayAutopause, c);
+
+    var replayNextTick = new Button("Next tick of Replay", e -> replayNextTick());
     c.gridy = 11;
     buttonsPanel.add(replayNextTick, c);
 
@@ -361,8 +373,8 @@ public class ChapsChallenge extends JFrame {
    */
   public void startRecording() {
     currentPhase.model().recorder()
-        .startRecording(currentPhase.model(), "replay " +
-            new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
+        .startRecording(currentPhase.model(), "replay "
+            + new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
                 .format(new java.util.Date()));
   }
 
@@ -382,7 +394,7 @@ public class ChapsChallenge extends JFrame {
     if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
       String fileName = fileChooser.getSelectedFile().getPath();
       Replay.loadReplay(fileName, this);
-      setPhase(Phase.loadLevel(Replay.getTiles(),Replay.getTimeLeft(),Replay.getLevelNumber(),
+      setPhase(Phase.loadLevel(Replay.getTiles(), Replay.getTimeLeft(), Replay.getLevelNumber(),
           this::victory, this::gameOver));
       pauseGame();
     }
