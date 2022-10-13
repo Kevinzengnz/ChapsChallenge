@@ -97,14 +97,26 @@ public class ChapsChallenge extends JFrame {
    * Starts up level one.
    */
   public void levelOne() {
-    setPhase(Phase.level1(this::levelOne, this::levelOne));
+    setPhase(Phase.level1(this::levelOne, this::gameOver));
   }
 
   /**
    * Starts up level two.
    */
   public void levelTwo() {
-    setPhase(Phase.level2(this::levelTwo, this::levelTwo));
+    setPhase(Phase.level2(this::levelTwo, this::gameOver));
+  }
+
+  /**
+   * Game over screen.
+   * Displays a popup over the renderer, and pauses the game.
+   * User can resume afterwards by pressing a load keybinding, or pressing a button.
+   */
+  public void gameOver() {
+    currentPhase.renderer().showPopup("You Died! Click a button to load a new level.");
+    currentPhase.renderer().removeKeyListener(currentPhase.controller());
+    pauseGame();
+    helpDialogue = true;
   }
 
   /**
