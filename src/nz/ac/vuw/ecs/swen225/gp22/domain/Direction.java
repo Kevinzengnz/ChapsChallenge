@@ -7,24 +7,24 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
  */
 
 public enum Direction {
-    None(0, 0),
-    Up(0, -1),
-    Right(+1, 0),
-    Down(0, +1),
-    Left(-1, 0);
+  None(0, 0),
+  Up(0, -1),
+  Right(+1, 0),
+  Down(0, +1),
+  Left(-1, 0);
 
-    /**
-     * Direction to move in.
-     */
-    public final Point arrow;
+  /**
+   * Direction to move in.
+   */
+  public final Point arrow;
 
-    /**
-     * Creates new Direction with given x and y position.
-     *
-     * @param x x position
-     * @param y y position
-     */
-    Direction(int x, int y) {
-        arrow = new Point(x, y);
-    }
+  /**
+   * Creates new Direction with given x and y position.
+   *
+   * @param x x position
+   * @param y y position
+   */
+  Direction(int x, int y) {
+    arrow = new Point(x, y);
+  }
 }

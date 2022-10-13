@@ -10,50 +10,50 @@ import nz.ac.vuw.ecs.swen225.gp22.app.Model;
  * @author Alicia Robinson - 300560663
  */
 public class LockedDoor extends Door {
-    /**
-     * Colour of door.
-     */
-    private final Colours colour;
+  /**
+   * Colour of door.
+   */
+  private final Colours colour;
 
-    /**
-     * Creates a LockedDoor Object with given point and colour.
-     *
-     * @param point position of LockedDoor
-     * @param colourString colour of LockedDoor
-     */
-    protected LockedDoor(Point point, String colourString) {
-        super(point);
-        colour = getColour(colourString);
-        this.setSpriteName(colour.door);
-    }
+  /**
+   * Creates a LockedDoor Object with given point and colour.
+   *
+   * @param point        position of LockedDoor
+   * @param colourString colour of LockedDoor
+   */
+  protected LockedDoor(Point point, String colourString) {
+    super(point);
+    colour = getColour(colourString);
+    this.setSpriteName(colour.door);
+  }
 
-    /**
-     * Gets LockedDoor colour.
-     *
-     * @return colour of door
-     */
-    public String getColour() {
-        return this.colour.getName();
-    }
+  /**
+   * Gets LockedDoor colour.
+   *
+   * @return colour of door
+   */
+  public String getColour() {
+    return this.colour.getName();
+  }
 
-    @Override
-    public void doAction(Model model, Player player, Point point) {
-        if (!this.getPoint().equals(point)) {
-            throw new IllegalArgumentException("Player point does not equal LockedDoor Point");
-        }
-        try {
-            Key key = player.keys.stream()
-                    .filter(k -> k.getColour().equals(this.colour.getName()))
-                    .findFirst()
-                    .get();
-            soundEffect.run();
-            model.remove(this);
-            player.removeKey(key);
-            assert !player.keys.contains(key);
-            assert !model.entities().contains(this);
-        } catch (NoSuchElementException e) {
-            player.moveValid = false;
-        }
+  @Override
+  public void doAction(Model model, Player player, Point point) {
+    if (!this.getPoint().equals(point)) {
+      throw new IllegalArgumentException("Player point does not equal LockedDoor Point");
     }
+    try {
+      Key key = player.keys.stream()
+              .filter(k -> k.getColour().equals(this.colour.getName()))
+              .findFirst()
+              .get();
+      soundEffect.run();
+      model.remove(this);
+      player.removeKey(key);
+      assert !player.keys.contains(key);
+      assert !model.entities().contains(this);
+    } catch (NoSuchElementException e) {
+      player.moveValid = false;
+    }
+  }
 
 }
