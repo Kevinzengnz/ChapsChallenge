@@ -42,7 +42,7 @@ class FuzzTest {
       KeyEvent.VK_RIGHT, KeyEvent.VK_D);
   
   /**
-   * List of random clicks that can be made
+   * List of random clicks that can be made.
    */
   private Pair startR = new Pair(1250, 235);
   private Pair endR = new Pair(1250, 260);
@@ -54,32 +54,27 @@ class FuzzTest {
   private Pair exit = new Pair(1250, 415);
   private Pair loadR = new Pair(1250, 440);
   private Pair autoR = new Pair(1250, 465);
-  private Pair stopAR = new Pair(1250, 490);
-  private Pair nextTR = new Pair(1250, 415);
+  private Pair stopA = new Pair(1250, 490);
+  private Pair nextT = new Pair(1250, 515);
   private List<Pair> clickList = List.of(startR, endR, pause, resume, help,
-      save, load, exit, loadR, autoR, stopAR, nextTR
-		  );
+      save, load, loadR, autoR, stopA, nextT);
 
   /**
-   * Clicks that can be made after loads
+   * Clicks that can be made after loads.
    */
   private Pair open = new Pair(750, 500);
-  private List<Pair> loadList = List.of(new Pair(500, 315));
+  private List<Pair> loadList = List.of(new Pair(450, 250));
   
   /**
    * Simple record which acts as a x and y point for clicks.
-   *
-   * @author Hayden Curtis
-   *
    */
   record Pair(int x, int y) {}
 
   /**
    * Generates a list of random integers each corresponding to key inputs.
    *
-   * @param size
-   *       Size of the list
-   * @return List
+   * @param size of the list
+   * @return List of pairs
    */
   private List<Integer> genEvents(int size) {
     int next = 0;
@@ -105,9 +100,8 @@ class FuzzTest {
   /**
    * Generates a list of Pairs which contain an x and y point.
    *
-   * @param size
-   *       size of the generated list
-   * @return List
+   * @param size of the generated list
+   * @return List of pairs
    */
   private List<Pair> genPoints(int size) {
     Pair next = null;
@@ -116,9 +110,9 @@ class FuzzTest {
       next = clickList.get(random.nextInt(clickList.size()));
       es.add(next);
       if (next == load || next == loadR) {
-    	  next = loadList.get(random.nextInt(loadList.size()));
-    	  es.add(next);
-    	  es.add(open);
+        next = loadList.get(random.nextInt(loadList.size()));
+        es.add(next);
+        es.add(open);
       }
     }
     return es;
@@ -132,11 +126,7 @@ class FuzzTest {
     //Call the creation of the game
     String[] s = {};
     Main.main(s);
-    try {
-      Thread.sleep(2000);
-    } catch (InterruptedException e1) {
-      e1.printStackTrace();
-    }
+    sleep(2000);
     
     //Create Robot to apply clicks and key presses
     try {
@@ -144,34 +134,19 @@ class FuzzTest {
     } catch (AWTException e) {
       e.printStackTrace();
     }
-    
     //Load level 1
     robot.keyPress(KeyEvent.VK_CONTROL);
     robot.keyPress(KeyEvent.VK_1);
     robot.keyRelease(KeyEvent.VK_1);
     robot.keyRelease(KeyEvent.VK_CONTROL);
     
-    try {
-        Thread.sleep(2000);
-      } catch (InterruptedException e1) {
-        e1.printStackTrace();
-      }
-    
-    robot.mouseMove(750, 500);
-    
-    try {
-        Thread.sleep(2000);
-      } catch (InterruptedException e1) {
-        e1.printStackTrace();
-      }
-    
+    sleep(2000);
     //Generating randoms
-    var events = genEvents(500);
-    var clicks = genPoints(50);
-    
+    var events = genEvents(400);
+    var clicks = genPoints(30);
     //Excecute fuzzes
     assertTimeout(Duration.ofMinutes(1), () -> {
-//      checkMovement(events);
+      checkMovement(events);
       mouseClicks(clicks);
     });
   }
@@ -179,16 +154,12 @@ class FuzzTest {
   /**
    * test2() : fuzz tests for level 2.
    */
-//  @Test
+  @Test
   public void test2() {
-	//Call the creation of the game
+    //Call the creation of the game
     String[] s = {};
     Main.main(s);
-    try {
-      Thread.sleep(2000);
-    } catch (InterruptedException e1) {
-      e1.printStackTrace();
-    }
+    sleep(2000);
     
     //Create Robot to apply clicks and key presses
     try {
@@ -196,36 +167,27 @@ class FuzzTest {
     } catch (AWTException e) {
       e.printStackTrace();
     }
-    
     //Load level 2
     robot.keyPress(KeyEvent.VK_CONTROL);
     robot.keyPress(KeyEvent.VK_2);
     robot.keyRelease(KeyEvent.VK_2);
     robot.keyRelease(KeyEvent.VK_CONTROL);
     
-    try {
-        Thread.sleep(2000);
-      } catch (InterruptedException e1) {
-        e1.printStackTrace();
-      }
-    
-
+    sleep(2000);    
     //Generating randoms
-    var events = genEvents(500);
-    var clicks = genPoints(50);
-    
+    var events = genEvents(400);
+    var clicks = genPoints(30);
     //Excecute fuzzes
-//    assertTimeout(Duration.ofMinutes(1), () -> {
-//      checkMovement(events);
-//      mouseClicks(clicks);
-//    });
+    assertTimeout(Duration.ofMinutes(1), () -> {
+      checkMovement(events);
+      mouseClicks(clicks);
+    });
   }
 
   /**
    * Method used to ensure all Key inputs are working.
    *
-   * @param events 
-   *     List of random keys which will be pressed
+   * @param events List of random keys which will be pressed
    */
   void checkMovement(List<Integer> events) {
     events.stream()
@@ -243,8 +205,7 @@ class FuzzTest {
   /**
    * Simulated the mouse clicks with a robot.
    *
-   * @param clicks
-   *     List of pairs which provide x and y coords.
+   * @param clicks List of pairs which provide x and y coords.
    */
   private void mouseClicks(List<Pair> clicks) {
     clicks.stream()
@@ -254,8 +215,21 @@ class FuzzTest {
           robot.mousePress(MouseEvent.BUTTON1_DOWN_MASK);
           robot.delay(20);
           robot.mouseRelease(MouseEvent.BUTTON1_DOWN_MASK);
-          if(p == exit) {return;}
+          robot.delay(200);
           }
         );
+  }
+  
+  /**
+   * Helper method so that i don't have this chunk of code making things messy.
+   *
+   * @param i Number of milliseconds to sleep.
+   */
+  private void sleep(int i) {
+    try {
+      Thread.sleep(i);
+    } catch (InterruptedException e1) {
+      e1.printStackTrace();
+    }
   }
 }
