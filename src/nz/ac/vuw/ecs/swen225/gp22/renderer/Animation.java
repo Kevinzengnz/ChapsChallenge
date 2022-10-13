@@ -88,7 +88,7 @@ public abstract class Animation {
    * @return the Sprite
    */
   Sprite getSprite() {
-    return Sprite.valueOf(entity.getSprite());
+    return Sprite.valueOf(entity.getSpriteName());
   }
 
   /**
