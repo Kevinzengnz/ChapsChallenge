@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
  * Chap's Challenge.
  *
  * @author Kevin Zeng
- * ID: 300563468
+ *         ID: 300563468
  */
 public class ChapsChallenge extends JFrame {
   /**
@@ -76,17 +76,16 @@ public class ChapsChallenge extends JFrame {
   public void levelStartMenu() {
     var welcome=new JLabel("Chap's challenge. ");
     JPanel panel = new JPanel();
-    var levelOne =new Button("Level 1", e->levelOne());
-    var levelTwo =new Button("Level 2", e->levelTwo());
     closePhase.run();
     closePhase=()->{
       remove(welcome);
       remove(panel);
     };
 
+    var levelOne =new Button("Level 1", e->levelOne());
+    var levelTwo =new Button("Level 2", e->levelTwo());
     var exitBtn = new Button("Exit", e -> exitGame());
     var loadBtn = new Button("Load game", e -> loadGame());
-
     panel.add(levelOne);
     panel.add(levelTwo);
     panel.add(loadBtn);
