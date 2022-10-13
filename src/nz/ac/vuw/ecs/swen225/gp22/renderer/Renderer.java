@@ -15,6 +15,7 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.InfoTile;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Key;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Player;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Point;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Robot;
 
 
 /**
@@ -100,7 +101,7 @@ public class Renderer extends JPanel {
         if (actor.equals(entity) && !point.equals(entity.getPoint())) {
           if (actor instanceof Player) {
             addAnimation(new WalkAnimation(point, entity.getPoint(), 4, entity));
-          } else {
+          } else if(actor instanceof Robot && isEntityVisible(actor)) {
             addAnimation(new MoveAnimation(point, entity.getPoint(), 4, entity));
           }
         }
@@ -151,8 +152,10 @@ public class Renderer extends JPanel {
     g.setColor(Color.WHITE);
     g.drawRect(cellsLeft - 1, cellsTop - 1, camera.getVisionSize() * tileSize + 1,
             camera.getVisionSize() * tileSize + 1);
+    g.clipRect(cellsLeft, cellsTop, tileSize * camera.getVisionSize(), tileSize * camera.getVisionSize());
     drawEntities(g, cellsLeft, cellsTop);
     drawAnimations(g, cellsLeft, cellsTop);
+    g.setClip(null);
     drawInventory(g, cellsTop);
 
     List<InfoTile> infoTiles = entities.stream()
@@ -175,13 +178,11 @@ public class Renderer extends JPanel {
    * @param top  the top of the game board
    */
   private void drawEntities(Graphics g, int left, int top) {
-    g.clipRect(left, top, tileSize * camera.getVisionSize(), tileSize * camera.getVisionSize());
     for (Entity entity : entities) {
       Sprite sprite = Sprite.valueOf(entity.getSpriteName());
       Point screenPos = worldToScreen(entity.getPoint());
       g.drawImage(sprite.image, left + screenPos.x(), top + screenPos.y(), null);
     }
-    g.setClip(null);
   }
 
   /**

@@ -46,6 +46,9 @@ public class MoveAnimation extends Animation {
    */
   public MoveAnimation(Point startTile, Point endTile, int length, Entity entity) {
     super(startTile, length, entity);
+    this.count = length;
+    this.posX = tile.x() * tileSize;
+    this.posY = tile.y() * tileSize;
     if (startTile.x() > endTile.x()) {
       direction = Direction.Left;
     } else if (startTile.x() < endTile.x()) {
