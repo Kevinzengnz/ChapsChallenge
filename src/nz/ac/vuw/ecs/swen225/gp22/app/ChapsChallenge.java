@@ -84,7 +84,9 @@ public class ChapsChallenge extends JFrame {
     setBackground(Color.BLACK);
     JPanel centerPanel = new JPanel();
     centerPanel.setBackground(Color.BLACK);
-    var welcome=new Label("Chap's challenge. ");
+    centerPanel.setLayout(new GridBagLayout());
+    var welcome=new Label("Chap's challenge. \n" +
+        "Press a button to load a level.");
     centerPanel.add(welcome);
     JPanel bottomPanel = new JPanel();
     bottomPanel.setBackground(Color.BLACK);
