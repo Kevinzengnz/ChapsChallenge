@@ -98,7 +98,7 @@ public interface Model {
     try {
       String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
           .format(new java.util.Date());
-      XmlParser.saveGame(entities(), "saveGame" + timeStamp, timeLeft());
+      XmlParser.saveGame(this, "SaveGameLvl " + levelNumber() + " - " + timeStamp);
       recorder().endRecording();
     } catch (IOException e) {
       System.out.println("Error saving game");
@@ -113,5 +113,8 @@ public interface Model {
   default void ping() {
     entities().forEach(a -> a.ping(this));
     recorder().ping(player().getDirection().ordinal(), player().isMoving());
+    if(timeLeft() <= 0) {
+      onGameOver();
+    }
   }
 }

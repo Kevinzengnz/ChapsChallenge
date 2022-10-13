@@ -50,9 +50,8 @@ public class InfoTile extends Tile{
     }
 
     @Override
-    public void doAction(Model model, Player player, Point point) {
+    public void doAction(Model model, Actor actor, Point point) {
         soundEffect.run();
-        //TODO InfoTile doAction
     }
 
     @Override

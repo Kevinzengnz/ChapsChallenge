@@ -8,7 +8,7 @@ public class Tile implements Entity{
     /**
      * String of the sprite name
      */
-    private final String sprite;
+    private final String spriteName;
     /**
      * Point that Tile is at
      */
@@ -16,17 +16,17 @@ public class Tile implements Entity{
 
     /**
      * Creates new Tile with given sprite and point
-     * @param sprite name of Tiles sprite
+     * @param spriteName name of Tiles sprite
      * @param point position of Tile
      */
-    public Tile(String sprite, Point point) {
-        this.sprite = sprite;
+    public Tile(String spriteName, Point point) {
+        this.spriteName = spriteName;
         this.point = point;
     }
 
     @Override
-    public String getSprite() {
-        return this.sprite;
+    public String getSpriteName() {
+        return this.spriteName;
     }
 
     @Override

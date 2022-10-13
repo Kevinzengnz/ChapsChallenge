@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
 import nz.ac.vuw.ecs.swen225.gp22.app.Model;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Sprite;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 /**
  * Represents the Player in the game.
@@ -17,10 +18,6 @@ public class Player extends Actor{
      * Keys Player has collected
      */
     List<Key> keys = new ArrayList<>();
-    /**
-     * Boolean for if the player should currently be moving.
-     */
-    protected boolean moveValid = true;
 
     /**
      * Creates Player using given point and sprite.
@@ -55,7 +52,7 @@ public class Player extends Actor{
      * @return players keys list
      */
     public List<Key> getKeys(){
-        return keys;
+        return Collections.unmodifiableList(keys);
     }
 
     /**
@@ -100,13 +97,13 @@ public class Player extends Actor{
         }
     }
     @Override
-    public String getSprite() {
+    public String getSpriteName() {
         return switch (getDirection()) {
-            case None  -> this.sprite;
-            case Up    -> this.sprite = "PLAYER_UP";
-            case Right -> this.sprite = "PLAYER_RIGHT";
-            case Down  -> this.sprite = "PLAYER_DOWN";
-            case Left  -> this.sprite = "PLAYER_LEFT";
+            case None  -> this.spriteName;
+            case Up    -> this.spriteName = "PLAYER_UP";
+            case Right -> this.spriteName = "PLAYER_RIGHT";
+            case Down  -> this.spriteName = "PLAYER_DOWN";
+            case Left  -> this.spriteName = "PLAYER_LEFT";
         };
     }
 }

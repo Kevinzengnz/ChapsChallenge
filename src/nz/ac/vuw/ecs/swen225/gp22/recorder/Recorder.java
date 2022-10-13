@@ -1,5 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
+import nz.ac.vuw.ecs.swen225.gp22.app.Model;
+
 /**
  * Interface for recorder that can record gameplay.
  */
@@ -8,9 +10,9 @@ public interface Recorder {
    * Start recording the current game into the specified save file path.
    *
    * @param replayFile File to save recording into.
-   * @param level      Name of current level to be recorded.
+   * @param model      Current game Model.
    */
-  void startRecording(String replayFile, String level);
+  void startRecording(Model model, String replayFile);
 
   /**
    * Ends the recording of the game.

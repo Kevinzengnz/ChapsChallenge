@@ -18,7 +18,7 @@ public interface Entity {
     /**
      * @return Entities sprite
      */
-    String getSprite();
+    String getSpriteName();
 
     /**
      * @return Entities current point
@@ -33,10 +33,10 @@ public interface Entity {
     /**
      * Allows Player to interact with other Entities
      * @param model model of game
-     * @param player Player object
+     * @param actor Player object
      * @param point point that player wants to move to
      */
-    default void doAction(Model model, Player player, Point point){}
+    default void doAction(Model model, Actor actor, Point point){}
 
     /**
      * Sets the Entities sound effect

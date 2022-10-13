@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
+import nz.ac.vuw.ecs.swen225.gp22.recorder.Replay;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Audio;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
 
@@ -7,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.SimpleDateFormat;
 
 /**
  * Chap's Challenge.
@@ -187,8 +189,7 @@ public class ChapsChallenge extends JFrame {
     c.anchor = GridBagConstraints.FIRST_LINE_END;
     c.gridy = 0;
 
-    //TODO: get level from model once implemented
-    JLabel level = new JLabel("Level: ");
+    JLabel level = new JLabel("Level: " + p.model().levelNumber());
     level.setFont(new Font("Verdana", Font.PLAIN, 20));
     level.setFocusable(false);
     renderer.add(level, c);
@@ -227,10 +228,8 @@ public class ChapsChallenge extends JFrame {
     //Initialises buttons
     var startRecording = new JButton("Start recording");
     var endRecording = new JButton("End recording");
-    startRecording.addActionListener(e ->
-        p.model().recorder().startRecording("default.xml", "level 1"));
-    endRecording.addActionListener(e ->
-        p.model().recorder().endRecording());
+    startRecording.addActionListener(e -> startRecording());
+    endRecording.addActionListener(e -> endRecording());
     startRecording.setFocusable(false);
     endRecording.setFocusable(false);
 
@@ -262,9 +261,21 @@ public class ChapsChallenge extends JFrame {
     helpBtn.addActionListener(e -> showHelp());
     helpBtn.setFocusable(false);
 
-    var startStopReplay = new JButton("Start/Stop Replay");
-    helpBtn.addActionListener(e -> currentPhase.model());
-    helpBtn.setFocusable(false);
+    var loadReplay = new JButton("Load Replay");
+    loadReplay.addActionListener(e -> loadReplay());
+    loadReplay.setFocusable(false);
+
+    var replayAutoplay = new JButton("Autoplay Replay");
+    replayAutoplay.addActionListener(e -> replayAutoplay());
+    replayAutoplay.setFocusable(false);
+
+    var replayAutopause = new JButton("Stop Autoplay Replay");
+    replayAutopause.addActionListener(e -> replayAutopause());
+    replayAutopause.setFocusable(false);
+
+    var replayNextTick = new JButton("Next tick of Replay");
+    replayNextTick.addActionListener(e -> replayNextTick());
+    replayNextTick.setFocusable(false);
 
     c.gridx = 5;
     c.weightx = 0.5;
@@ -286,6 +297,14 @@ public class ChapsChallenge extends JFrame {
     c.gridy = 6;
     renderer.add(exitBtn, c);
 
+    c.gridy = 8;
+    renderer.add(loadReplay, c);
+    c.gridy = 9;
+    renderer.add(replayAutoplay, c);
+    c.gridy = 10;
+    renderer.add(replayAutopause, c);
+    c.gridy = 11;
+    renderer.add(replayNextTick, c);
 
     add(BorderLayout.CENTER, renderer);
     renderer.setFocusable(true);
@@ -294,4 +313,53 @@ public class ChapsChallenge extends JFrame {
     renderer.requestFocus();
   }
 
+  /**
+   * Starts the recording in the model.
+   */
+  public void startRecording() {
+    currentPhase.model().recorder()
+        .startRecording(currentPhase.model(), "replay " +
+            new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
+                .format(new java.util.Date()));
+  }
+
+  /**
+   * Ends the recording in the model.
+   */
+  public void endRecording() {
+    currentPhase.model().recorder().endRecording();
+  }
+
+  /**
+   * Loads a replay from a file, which user chooses from file chooser.
+   */
+  public void loadReplay() {
+    JFileChooser fileChooser =
+        new JFileChooser("Replays/");
+    if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+      String fileName = fileChooser.getSelectedFile().getPath();
+      Replay.loadReplay(fileName, this);
+    }
+  }
+
+  /**
+   * Sets the loaded replay to autoplay.
+   */
+  public void replayAutoplay() {
+    Replay.autoPlay();
+  }
+
+  /**
+   * Pauses autoplay on the loaded replay.
+   */
+  public void replayAutopause() {
+    Replay.autoPause();
+  }
+
+  /**
+   * Move to the next tick of the game clock in the loaded replay.
+   */
+  public void replayNextTick() {
+    Replay.nextTick();
+  }
 }

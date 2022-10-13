@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 //XML
+import nz.ac.vuw.ecs.swen225.gp22.app.Model;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.XmlParser;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -20,27 +21,31 @@ import org.dom4j.Element;
 public class GameRecorder implements Recorder {
   private boolean isRecording;
   private String replayFile;
-  private String level;
+  private int level;
   private List<Integer> actionHistory;
   private List<Integer> frameHistory;
   private int prevDir = -1;
   private int frame = 0;
   private int startFrame = 0;
   private int endFrame = 0;
+  private int timeLeft = -1;
+  private Element tiles;
 
   /**
    * Start recording the current game into the specified save file path.
    *
-   * @param replay File to save recording into.
-   * @param lvl    Name of current level to be recorded.
+   * @param m         Current game Model.
+   * @param replay    Name of replay file to be recorded.
    */
   @Override
-  public void startRecording(final String replay, final String lvl) {
+  public void startRecording(final Model m, final String replay) {
     if (!this.isRecording) {
+      this.tiles = XmlParser.getTilesElement(m);
+      this.timeLeft = m.timeLeft();
       this.startFrame = this.frame;
       this.actionHistory = new ArrayList<>();
       this.frameHistory = new ArrayList<>();
-      this.level = String.join("_", lvl.split(" "));
+      this.level = m.levelNumber();
       this.replayFile = (replay.endsWith(".xml"))
           ? Arrays.stream(replay.split(".xml")).findFirst().orElse("default") : replay;
       setRecording(true);
@@ -112,7 +117,9 @@ public class GameRecorder implements Recorder {
     Document doc = DocumentHelper.createDocument();
     Element root = doc.addElement("root");
     //Level data element.
-    root.addElement("Level").addAttribute("name", this.level);
+    root.addElement("Level").addAttribute("name", String.valueOf(this.level)).addAttribute("time",
+        String.valueOf(this.timeLeft));
+    root.add(this.tiles);
     //Replay element.
     Element replay = root.addElement("Replay")
         .addAttribute("start", String.valueOf(this.startFrame))
