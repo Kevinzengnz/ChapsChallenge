@@ -39,7 +39,7 @@ public class XmlParser {
     public static Element getTilesElement(Model m){
         Element Tiles = DocumentHelper.createElement("Tiles");
         for (Entity e : m.entities()) {
-            String name = e.getSprite();
+            String name = e.getSpriteName();
             if (e instanceof InfoTile) {
                 Tiles.addElement(name)
                         .addAttribute("x", String.valueOf(e.getPoint().x()))
@@ -48,7 +48,7 @@ public class XmlParser {
             } else if (e instanceof Player) {
                 ArrayList<String> inventory = new ArrayList<>();
                 for (Key item : ((Player) e).getKeys()) {
-                    inventory.add(item.getSprite());
+                    inventory.add(item.getSpriteName());
                 }
 
                 Tiles.addElement(name)
@@ -181,5 +181,20 @@ public class XmlParser {
      */
     public static int getTime() {
         return timeLeft;
+    }
+
+    public static void main(String[] args){
+        ServiceLoader<ExtraEntity> loader = ServiceLoader.load(ExtraEntity.class);
+
+        Iterator<ExtraEntity> iterator = loader.iterator();
+
+
+
+        HashMap<String, ExtraEntity> services = new HashMap<>();
+        for (ExtraEntity service : loader) {
+            System.out.println(service.getClass().getName());
+            services.put(service.getClass().getName(), service);
+        }
+        System.out.println("Services " + services.size());
     }
 }
