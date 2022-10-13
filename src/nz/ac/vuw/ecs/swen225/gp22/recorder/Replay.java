@@ -80,7 +80,6 @@ public class Replay {
     }
     isRunning = true;
     RecTesting.log("Replay", "autoPlay", "Auto play started");
-    pc.setClockSpeed(speed);
     //Restart timer if it already exists and is paused.
     if (timer != null) {
       timer.restart();
@@ -93,6 +92,7 @@ public class Replay {
     //Otherwise create a new timer and start it.
     timer = new Timer(1000 / 30, x -> {
       assert SwingUtilities.isEventDispatchThread();
+      if(isRunning){pc.setClockSpeed(speed);}
       frames++;
       if (frames % speed == 0) {
         pings++;
@@ -122,6 +122,14 @@ public class Replay {
    */
   public static void setReplaySpeed(int mul) {
     speed = (mul > 0) ? mul : speed;
+  }
+
+  public static void increaseSpeed() {
+    speed = (speed == 2) ? speed-1 : speed;
+  }
+
+  public static void decreaseSpeed() {
+    speed = (speed == 8) ? speed+1 : speed;
   }
 
   /**
