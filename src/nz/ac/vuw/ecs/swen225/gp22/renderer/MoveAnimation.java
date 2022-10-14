@@ -86,6 +86,7 @@ public class MoveAnimation extends Animation {
       case Up -> posY -= moveAmount;
       case Down -> posY += moveAmount;
       case default -> throw new IllegalStateException("MoveAnimation must have valid direction");
+      // If you don't have default enabled use case None -> ... instead
     }
     count--;
   }
