@@ -17,52 +17,28 @@ public class EntityFactory {
     if (point == null || type == null || type.isEmpty()) {
       throw new IllegalArgumentException("Type or Point are null");
     }
-    switch (type) {
-      case "PLAYER_UP":
-        return new Player(point, "PLAYER_UP");
-      case "PLAYER_DOWN":
-        return new Player(point, "PLAYER_DOWN");
-      case "PLAYER_LEFT":
-        return new Player(point, "PLAYER_LEFT");
-      case "PLAYER_RIGHT":
-        return new Player(point, "PLAYER_RIGHT");
-      case "WALL":
-        return new WallTile(point);
-      case "FLOOR":
-        return new FloorTile(point);
-      case "INFO":
-        return new InfoTile(point);
-      case "KEY_YELLOW":
-        return new Key(point, "YELLOW");
-      case "KEY_GREEN":
-        return new Key(point, "GREEN");
-      case "KEY_BLUE":
-        return new Key(point, "BLUE");
-      case "KEY_RED":
-        return new Key(point, "RED");
-      case "DOOR_YELLOW":
-        return new LockedDoor(point, "YELLOW");
-      case "DOOR_GREEN":
-        return new LockedDoor(point, "GREEN");
-      case "DOOR_BLUE":
-        return new LockedDoor(point, "BLUE");
-      case "DOOR_RED":
-        return new LockedDoor(point, "RED");
-      case "TREASURE":
-        return new Treasure(point);
-      case "DOOR_EXIT":
-        return new ExitDoor(point);
-      case "EXIT":
-        return new Exit(point);
-      case "LAVA":
-        return new LavaTile(point);
-      case "ROBOT_UP":
-      case "ROBOT_DOWN":
-      case "ROBOT_LEFT":
-      case "ROBOT_RIGHT":
-        return new Robot(point);
-      default:
-        throw new IllegalArgumentException("Invalid Entity Type");
-    }
+    return switch (type) {
+      case "PLAYER_UP" -> new Player(point, "PLAYER_UP");
+      case "PLAYER_DOWN" -> new Player(point, "PLAYER_DOWN");
+      case "PLAYER_LEFT" -> new Player(point, "PLAYER_LEFT");
+      case "PLAYER_RIGHT" -> new Player(point, "PLAYER_RIGHT");
+      case "WALL" -> new WallTile(point);
+      case "FLOOR" -> new FloorTile(point);
+      case "INFO" -> new InfoTile(point);
+      case "KEY_YELLOW" -> new Key(point, "YELLOW");
+      case "KEY_GREEN" -> new Key(point, "GREEN");
+      case "KEY_BLUE" -> new Key(point, "BLUE");
+      case "KEY_RED" -> new Key(point, "RED");
+      case "DOOR_YELLOW" -> new LockedDoor(point, "YELLOW");
+      case "DOOR_GREEN" -> new LockedDoor(point, "GREEN");
+      case "DOOR_BLUE" -> new LockedDoor(point, "BLUE");
+      case "DOOR_RED" -> new LockedDoor(point, "RED");
+      case "TREASURE" -> new Treasure(point);
+      case "DOOR_EXIT" -> new ExitDoor(point);
+      case "EXIT" -> new Exit(point);
+      case "LAVA" -> new LavaTile(point);
+      case "ROBOT_UP", "ROBOT_DOWN", "ROBOT_LEFT", "ROBOT_RIGHT" -> new Robot(point);
+      default -> throw new IllegalArgumentException("Invalid Entity Type");
+    };
   }
 }
