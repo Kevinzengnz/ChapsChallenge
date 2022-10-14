@@ -39,6 +39,7 @@ public class EntityFactory {
       case "LAVA" -> new LavaTile(point);
       case "ROBOT_UP", "ROBOT_DOWN", "ROBOT_LEFT", "ROBOT_RIGHT" -> new Robot(point);
       default -> throw new IllegalArgumentException("Invalid Entity Type");
+      //If Default not enabled remove the above line.
     };
   }
 }
