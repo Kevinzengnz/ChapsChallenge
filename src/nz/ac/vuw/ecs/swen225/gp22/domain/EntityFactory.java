@@ -17,29 +17,55 @@ public class EntityFactory {
     if (point == null || type == null || type.isEmpty()) {
       throw new IllegalArgumentException("Type or Point are null");
     }
-    return switch (type) {
-      case "PLAYER_UP" -> new Player(point, "PLAYER_UP");
-      case "PLAYER_DOWN" -> new Player(point, "PLAYER_DOWN");
-      case "PLAYER_LEFT" -> new Player(point, "PLAYER_LEFT");
-      case "PLAYER_RIGHT" -> new Player(point, "PLAYER_RIGHT");
-      case "WALL" -> new WallTile(point);
-      case "FLOOR" -> new FloorTile(point);
-      case "INFO" -> new InfoTile(point);
-      case "KEY_YELLOW" -> new Key(point, "YELLOW");
-      case "KEY_GREEN" -> new Key(point, "GREEN");
-      case "KEY_BLUE" -> new Key(point, "BLUE");
-      case "KEY_RED" -> new Key(point, "RED");
-      case "DOOR_YELLOW" -> new LockedDoor(point, "YELLOW");
-      case "DOOR_GREEN" -> new LockedDoor(point, "GREEN");
-      case "DOOR_BLUE" -> new LockedDoor(point, "BLUE");
-      case "DOOR_RED" -> new LockedDoor(point, "RED");
-      case "TREASURE" -> new Treasure(point);
-      case "DOOR_EXIT" -> new ExitDoor(point);
-      case "EXIT" -> new Exit(point);
-      case "LAVA" -> new LavaTile(point);
-      case "ROBOT_UP", "ROBOT_DOWN", "ROBOT_LEFT", "ROBOT_RIGHT" -> new Robot(point);
-      default -> throw new IllegalArgumentException("Invalid Entity Type");
-      //If Default not enabled remove the above line.
-    };
+
+    if(type.equalsIgnoreCase("PLAYER_UP")){
+      return new Player(point, "PLAYER_UP");
+    } else if (type.equalsIgnoreCase("PLAYER_DOWN")) {
+      return new Player(point, "PLAYER_DOWN");
+    } else if (type.equalsIgnoreCase("PLAYER_LEFT")) {
+      return new Player(point, "PLAYER_LEFT");
+    } else if (type.equalsIgnoreCase("PLAYER_RIGHT")) {
+      return new Player(point, "PLAYER_RIGHT");
+    } else if (type.equalsIgnoreCase("WALL")) {
+      return new WallTile(point);
+    } else if (type.equalsIgnoreCase("FLOOR")) {
+      return new FloorTile(point);
+    } else if (type.equalsIgnoreCase("INFO")) {
+      return new InfoTile(point);
+    } else if (type.equalsIgnoreCase("KEY_YELLOW")) {
+      return new Key(point, "YELLOW");
+    } else if (type.equalsIgnoreCase("KEY_GREEN")) {
+      return new Key(point, "GREEN");
+    } else if (type.equalsIgnoreCase("KEY_BLUE")) {
+      return new Key(point, "BLUE");
+    } else if (type.equalsIgnoreCase("KEY_RED")) {
+      return new Key(point, "RED");
+    } else if (type.equalsIgnoreCase("DOOR_YELLOW")) {
+      return new LockedDoor(point, "YELLOW");
+    } else if (type.equalsIgnoreCase("DOOR_GREEN")) {
+      return new LockedDoor(point, "GREEN");
+    } else if (type.equalsIgnoreCase("DOOR_BLUE")) {
+      return new LockedDoor(point, "BLUE");
+    } else if (type.equalsIgnoreCase("DOOR_RED")) {
+      return new LockedDoor(point, "RED");
+    } else if (type.equalsIgnoreCase("TREASURE")) {
+      return new Treasure(point);
+    } else if (type.equalsIgnoreCase("DOOR_EXIT")) {
+      return new ExitDoor(point);
+    } else if (type.equalsIgnoreCase("EXIT")) {
+      return new Exit(point);
+    } else if (type.equalsIgnoreCase("LAVA")) {
+      return new LavaTile(point);
+    } else if (type.equalsIgnoreCase("ROBOT_UP")) {
+      return new Robot(point, "ROBOT_UP");
+    } else if (type.equalsIgnoreCase("ROBOT_DOWN")) {
+      return new Robot(point, "ROBOT_DOWN");
+    } else if (type.equalsIgnoreCase("ROBOT_LEFT")) {
+      return new Robot(point, "ROBOT_LEFT");
+    } else if (type.equalsIgnoreCase("ROBOT_RIGHT")) {
+      return new Robot(point, "ROBOT_RIGHT");
+    } else{
+      throw new IllegalArgumentException("Entity Type not Valid");
+    }
   }
 }
