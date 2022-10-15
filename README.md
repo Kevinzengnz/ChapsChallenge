@@ -1,8 +1,8 @@
 # Chaps Challenge
 Import project to Eclipse.  
 Select Java 17 as the JDK   
-Add Junit 4 to the classpath  
-Add Junit 5 to the classpath  
+Right click on project -> Build Path -> Add Libraries -> JUnit -> JUnit 4  
+Right click on project -> Build Path -> Add Libraries -> JUnit -> JUnit 5
 
 Start the game by running nz.ac.vuw.ecs.swen225.gp22.app.Main
 
