@@ -34,8 +34,8 @@ public class Robot extends Actor {
    *
    * @param point Starting position of Robot
    */
-  protected Robot(Point point) {
-    super("ROBOT_RIGHT", point);
+  protected Robot(Point point, String spriteName) {
+    super(spriteName, point);
     setDirection(directions.get(movementIndex));
   }
 
