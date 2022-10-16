@@ -36,6 +36,7 @@ public class Robot extends Actor {
    */
   protected Robot(Point point, String spriteName) {
     super(spriteName, point);
+    movementIndex = sprites.indexOf(spriteName);
     setDirection(directions.get(movementIndex));
   }
 
