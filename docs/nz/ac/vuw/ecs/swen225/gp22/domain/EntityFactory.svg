@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="100px" preserveAspectRatio="none" style="width:252px;height:100px;background:#FFFFFF;" version="1.1" viewBox="0 0 252 100" width="252px" zoomAndPan="magnify"><defs/><g><!--MD5=[6dd87d02f61e10cf4cc7300cbd5686ce]
+class nz.ac.vuw.ecs.swen225.gp22.domain.EntityFactory--><a href="EntityFactory.html" target="_top" title="EntityFactory.html" xlink:actuate="onRequest" xlink:href="EntityFactory.html" xlink:show="new" xlink:title="EntityFactory.html" xlink:type="simple"><g id="elem_nz.ac.vuw.ecs.swen225.gp22.domain.EntityFactory"><rect codeLine="5" fill="#F1F1F1" height="65.7969" id="nz.ac.vuw.ecs.swen225.gp22.domain.EntityFactory" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="231" x="7" y="7"/><ellipse cx="32.35" cy="27.0938" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M35.1156,22.9688 Q35.2719,22.75 35.4594,22.6406 Q35.6469,22.5313 35.8656,22.5313 Q36.2406,22.5313 36.475,22.7969 Q36.7094,23.0469 36.7094,23.6563 L36.7094,25.1094 Q36.7094,25.7188 36.475,25.9844 Q36.2406,26.25 35.8656,26.25 Q35.5219,26.25 35.3188,26.0469 Q35.1156,25.8594 35.0063,25.3438 Q34.9594,24.9844 34.7719,24.7969 Q34.4438,24.4219 33.8344,24.2031 Q33.225,23.9844 32.6,23.9844 Q31.8344,23.9844 31.1938,24.3125 Q30.5688,24.6406 30.0688,25.3906 Q29.5844,26.1406 29.5844,27.1719 L29.5844,28.2656 Q29.5844,29.5 30.475,30.3281 Q31.3656,31.1406 32.9594,31.1406 Q33.8969,31.1406 34.5531,30.8906 Q34.9438,30.7344 35.3656,30.2969 Q35.6313,30.0313 35.7719,29.9531 Q35.9281,29.875 36.1313,29.875 Q36.4594,29.875 36.7094,30.1406 Q36.975,30.3906 36.975,30.7344 Q36.975,31.0781 36.6313,31.4844 Q36.1313,32.0625 35.3344,32.3906 Q34.2563,32.8438 32.9594,32.8438 Q31.4438,32.8438 30.2406,32.2188 Q29.2563,31.7188 28.5688,30.6563 Q27.8813,29.5781 27.8813,28.2969 L27.8813,27.1406 Q27.8813,25.8125 28.4906,24.6719 Q29.1156,23.5156 30.2094,22.9063 Q31.3031,22.2813 32.5375,22.2813 Q33.2719,22.2813 33.9125,22.4531 Q34.5688,22.6094 35.1156,22.9688 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="83" x="95.15" y="26.5332">EntityFactory</text><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="176" x="48.65" y="39.9902">nz.ac.vuw.ecs.swen225.gp22.domain</text><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="237" y1="47.1875" y2="47.1875"/><ellipse cx="18" cy="61.4922" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="205" x="27" y="65.7207">createEntity(String, Point): Entity</text></g></a><rect fill="none" height="12.5781" style="stroke:none;stroke-width:1.0;" width="184" x="30" y="79.7969"/><text fill="#888888" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="184" x="30" y="90.1777">UMLDoclet 2.0.19, PlantUML 1.2022.8</text><!--MD5=[e0eff4911405693a6b7b5bb092f6a79f]
+@startuml
+    set namespaceSeparator none
+    hide empty fields
+    hide empty methods
+
+    class "<size:14>EntityFactory\n<size:10>nz.ac.vuw.ecs.swen225.gp22.domain" as nz.ac.vuw.ecs.swen225.gp22.domain.EntityFactory [[EntityFactory.html]] {
+        +createEntity(String, Point): Entity
+    }
+
+    center footer UMLDoclet 2.0.19, PlantUML 1.2022.8
+@enduml
+
+PlantUML version 1.2022.8(Sun Sep 25 22:00:33 NZDT 2022)
+(APACHE source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1252
+Language: en
+Country: NZ
+--></g></svg>
