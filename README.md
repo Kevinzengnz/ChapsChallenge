@@ -17,3 +17,12 @@ Right click on project -> Build Path -> Add Libraries -> JUnit -> JUnit 5
 
 # Running the program
 Start the game by running nz.ac.vuw.ecs.swen225.gp22.app.Main
+
+# Authors
+Alicia Robinson   
+Hayden Curtis  
+Kevin Zeng  
+Leon Zhou  
+Oliver Silk  
+Sankeerth Alookaran  
+
